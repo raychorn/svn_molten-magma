@@ -1,0 +1,11 @@
+<% if @articles.any? %>
+
+<h3>Magma Design News</h3>
+
+<% @articles.each do |article| %>
+<p>
+<%= link_to article.name, :controller => 'articles', :action => 'show', :id => article %>
+</p>
+<% end %>
+
+<% end %>

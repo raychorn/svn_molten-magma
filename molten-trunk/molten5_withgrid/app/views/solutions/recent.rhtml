@@ -1,0 +1,15 @@
+<h1><%= @title = "Recently Added Solutions (last 30 days)"%></h1>
+
+<h2 class="gray" style="margin:0px auto">
+        Solutions <%= start = (@solutions.offset + 1) and start > 0 ? start : 0 %>-<%= @solutions.last_item%> of <%= @solutions.total_entries %>
+</h2>
+
+<%= pages %>
+
+<%= render :partial => 'solutions/search/solution', :collection => @solutions %>
+
+<%= pages %>
+
+<% content_for "sidebar" do %>
+<%= render :partial => 'sidebar' %>
+<% end %>

@@ -1,0 +1,11 @@
+<tr class="<%= cycle('shaded','') %>">
+	<td><%= support_case.stripped_case_number %></td>
+	<td class="subject">
+		<%= link_to truncate(support_case.subject,AppConstants::CASE_SUBJECT_LENGTH), 
+			:controller => 'cases', :action => 'show', :id => support_case %>
+	</td>
+	<td><%= support_case.sf_type %></td>
+	<td><%= support_case.customer_priority__c %></td>
+	<td><%= support_case.status %></td>
+    <td><%= format_time(ct(support_case.last_updated__c)) %></td>
+</tr>

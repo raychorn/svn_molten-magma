@@ -1,0 +1,2 @@
+module CategoryNodeHelper
+end

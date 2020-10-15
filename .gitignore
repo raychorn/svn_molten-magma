@@ -1,0 +1,8 @@
+!.gitignore
+molten-trunk/molten5/db/salesforce.sql
+molten-trunk/molten5/db/sfcontact.sql
+molten-trunk/molten5/public/flash/training/HydraWebinar/voip.flv
+molten-trunk/molten5/public/flash/training/Molten_Demo_Final/Molten_Demo_Final.camrec
+molten-trunk/molten5_withgrid/db/salesforce.sql
+molten-trunk/molten5_withgrid/db/sfcontact.sql
+molten-trunk/molten5_withgrid/public/flash/training/Molten_Demo_Final/Molten_Demo_Final.camrec

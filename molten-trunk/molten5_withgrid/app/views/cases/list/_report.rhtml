@@ -1,0 +1,16 @@
+<li class="slim" id="<%= "report_#{report.id}" %>">
+  <%= link_to report.name, {:controller => 'cases', :action => 'report', :id => report.id},
+                           {:class => "#{@case_report and @case_report == report ? 'bold' : ''}"}%>
+  <% unless (@case_report and @case_report == report) or !report.editable?(current_contact) %>
+  <div class="list-action">
+    <%= link_to_remote "[Delete]", 
+    :url => {:controller => 'case_reports', :action => 'destroy', :id => report.id}, 
+    :confirm => "Are you sure you want to delete this report?" %>
+  </div>
+  <% end %>
+  <div>
+    <!-- <%= report.cases rescue "??" %> Cases -->
+    <%= report.shared? ? "Shared By #{report.contact == current_contact ? 'You' : report.contact.first_and_last if report.contact}" : "" %>
+    <br/>
+  </div>
+</li>

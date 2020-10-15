@@ -1,0 +1,3 @@
+page.toggle tag_for_cases(params[:status])
+page.toggle tag_for_hide_cases(params[:status])
+page.toggle tag_for_show_cases(params[:status])

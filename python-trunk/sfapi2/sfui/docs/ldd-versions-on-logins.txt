@@ -1,0 +1,27 @@
+
+
+lxlogin7 & lxlogin8 & lxlogin4
+
+bash-2.05$ ldd -v /lib/libc.so.6
+        /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x0e000000)
+
+        Version information:
+        /lib/libc.so.6:
+                ld-linux.so.2 (GLIBC_2.1.1) => /lib/ld-linux.so.2
+                ld-linux.so.2 (GLIBC_2.2.3) => /lib/ld-linux.so.2
+                ld-linux.so.2 (GLIBC_2.1) => /lib/ld-linux.so.2
+                ld-linux.so.2 (GLIBC_2.2) => /lib/ld-linux.so.2
+                ld-linux.so.2 (GLIBC_2.0) => /lib/ld-linux.so.2
+
+lxlogin 5 & lxlogin6 - cannot login
+
+
+lxlogin3 & lxlogin2 & lxlogin1
+bash$ ldd -v /lib/libc.so.6
+        /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x40000000)
+
+        Version information:
+        /lib/libc.so.6:
+                ld-linux.so.2 (GLIBC_2.1.1) => /lib/ld-linux.so.2
+                ld-linux.so.2 (GLIBC_2.1) => /lib/ld-linux.so.2
+                ld-linux.so.2 (GLIBC_2.0) => /lib/ld-linux.so.2

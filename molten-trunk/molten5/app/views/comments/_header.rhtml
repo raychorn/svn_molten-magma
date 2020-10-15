@@ -1,0 +1,8 @@
+<h2 class="gray buried_header" id="comments_header">
+	<span>
+		  <%= link_to_toggle_add_comment image_tag('buttons/add_comment.gif', 
+												   :alt => "Add Comment", :width => 121, 
+												   :height => 20) %>
+	</span>
+	<%= comments_count(commentable) %>
+</h2>

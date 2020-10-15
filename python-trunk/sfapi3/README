@@ -1,0 +1,62 @@
+Requirements:
+
+Python 2.3.5 (python 2.4 should work, but is untested)
+	fpconst 0.6.0 or later
+	pyXML 0.8.3 or later
+	SOAPpy 0.12.0_rc1 (patched as instructed in Installation section)
+	
+	
+
+Installation:
+
+(Assumes that user's shell is bash. Modify commands for setting environment vars accordingly if using another shell)
+
+1) Install *patched* SOAPpy 0.12.0_rc1 or later:
+
+   Get it from:
+   http://sourceforge.net/project/showfiles.php?group_id=26590&package_id=18246
+   or if that doesn't work, go to http://pywebsvcs.sf.net and find it from there
+   
+   This toolkit was built against 0.12.0_rc1. Later versions may work flawlessly but
+   this cannot be known at this time.
+   
+   Following the install instructions in the SOAPpy README, you will be downloading 
+   and installing two support packages first:
+
+    - fpconst 0.6.0 or later,
+      <http://research.warnes.net/projects/rzope/fpconst/>
+
+    - pyXML 0.8.3 or later, <http://pyxml.sourceforge.net>
+
+   After installing these, but BEFORE installing SOAPpy itself, patch the SOAPpy source tree
+   with both patches in the install directory:
+   
+   1) cd into the SOAPpy distribution directory (i.e., SOAPpy-0.12.0)
+   2) apply the first patch:  $ patch -p1 < /your/path/to/pysfdc/patches/SOAPpy/SOAPpy_force_refs_off.patch
+   3) apply the second patch: $ patch -p1 < /your/path/to/pysfdc/patches/SOAPpy/SOAPpy_force_typed_map_elements.patch
+   
+   Now, continue the SOAPpy install as per the SOAPpy README
+   
+   
+ 2) Place sForce partner WSDL file in the WSDL directory for the version of the sForce API you wish to use.
+    NB: This toolkit was developed against API 6.0. 7.0 should work, although the upsert command has not
+    yet been developed as of 12/16/2005
+    
+ 
+ 3) Create a pysfdc.conf file. Copy the starter file and edit the entries necessary
+ (i.e., those dealing with pathnames, and optionally usernames and passwords for the tests).
+ 
+ 
+ 4) set PYSFDC_HOME environment variable to be the path to the pysfdc package directory:
+ 
+ $ export PYSFDC_HOME=/your/path/to/pysfdc
+ 
+ 
+ 5) Include PYSFDC_HOME/src in your PYTHONPATH:
+ 
+ $ export PYTHONPATH=PYTHONHPATH:$PYSFDC_HOME/src
+ 
+ 
+ 6) in src/tests run runAllTests.py
+
+ $ python runAllTests.py

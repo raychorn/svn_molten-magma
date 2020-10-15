@@ -1,0 +1,17 @@
+<tr class="<%= cycle('shaded','') %>">
+	<td class="attachment_icon" valign="top">
+	<%= image_tag file_kind_image_path('file_icons', attachment.extension), :alt => 'doc', :width => 16, :height => 16 %></td>
+	<td class="attachment_name">
+		<%= link_to attachment.name, :controller => 'attachments', :action => 'download', :id => attachment %>
+		<span class="private">
+			<%= image_tag('icons/private.gif', :alt => "Private", :width => 49, :height => 12) if attachment.is_private? %>
+		</span>
+		<!-- <div>This is the attachment description.</div> -->
+		<div><%= format_time ct(attachment.created_date) %></div>
+	</td>
+	<td valign="top" class="attachment_uploader">
+		<% if attachment.last_modified_by %>
+		Uploaded by <%= attachment.last_modified_by %>
+		<% end %>
+	</td>
+</tr>

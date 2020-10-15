@@ -1,0 +1,13 @@
+<h1><%= @title = "Settings" %></h1>
+
+<table class="listing">
+	<tr>
+		<th>Setting</th>
+		<th>Value</th>
+		<th>Last Updated</th>
+		<th><!-- login --></th>
+	</tr>
+	<%= render :partial => 'admin/settings/list/setting', :collection => @settings %>
+</table>
+
+<%= pages %>

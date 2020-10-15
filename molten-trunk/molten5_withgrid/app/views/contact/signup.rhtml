@@ -1,0 +1,30 @@
+<h1><%= @title = "MOLTEN: New User Registration" %></h1>
+
+
+<%= error_messages_for 'lead' %>
+
+<!-- <%= form_salesforce_tag({:oid => "00D3000000002QQ" }, 'WebToLead',
+        :return_url => url_for(:action => 'signup_confirmation', :only_path => false)) %> -->
+        <%= form_tag :action => 'signup' %>
+        <!-- <%= hidden_field_tag 'lead_source', 'MoltenReq' %>
+                <%= hidden_field_tag '00N30000001VHWp', 'Member' %>      -->
+
+Please use this form to request <b>NEW MOLTEN account</b>. If you already have MOLTEN account, and you want to <b>Reset your password, <a href="/contact/forgot_password">click here</a></b>.
+<br><br>
+
+        <%= render :partial => 'contact/signup/required' %>
+        <%= render :partial => 'contact/signup/optional' %>
+
+        <br/><br/>
+        <%= image_submit_tag 'buttons/submit.gif', :alt => "Submit", :width => 81, :height => 22 %>
+        </form>
+
+ <!-- use forgot pw -->
+
+        <!-- Molten Account Reset:<select  title="Molten Account Reset" id="00N30000000bzSj" name="00N30000000bzSj"><option value="">--None--</option><option value="No">No</option>
+        <option value="Yes">Yes</option>
+        </select><br> -->
+
+<!-- what's this for? -->
+
+<!--    Subject:<input  maxlength="255" type="text" id="00N30000001EwwZ" size="20" name="00N30000001EwwZ"><br> -->

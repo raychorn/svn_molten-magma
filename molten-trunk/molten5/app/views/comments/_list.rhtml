@@ -1,0 +1,27 @@
+<div id="comments_header_container">
+<%= render :partial => 'comments/header', :locals => {:commentable => commentable} %>
+</div>
+
+<div id="add_comment_form" style="display:none">
+	<!--
+	<div class="gray" style="margin-top:10px"><%= current_contact.name %> said...</div>
+	-->
+	<%= form_remote_tag :url => {:controller => 'comments', :action => 'create'},
+						:loading => "Element.show('indicator')", 
+						:complete => "Element.hide('indicator')" %>
+		<%= hidden_field_tag 'comment[parent_id]', commentable.id %>
+		<br/>
+		<%= text_area 'comment', 'comment_body', :id => 'comment_form_body', :rows => 20 %><br/><br/>
+		<%= image_submit_tag 'buttons/post_comment.gif', 
+							 :alt => 'Post Comment', :width => 115, :height => 23 %>
+        <%= link_to_toggle_add_comment %>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= link_to_faq('Can\'t post comment?') %>
+        <%= ajax_indicator %>
+	</form>
+</div>
+
+<div id="<%= tag_for_comments_list %>">
+<%= render :partial => 'comments/comment', :collection => commentable.comments %>	
+</div>
+

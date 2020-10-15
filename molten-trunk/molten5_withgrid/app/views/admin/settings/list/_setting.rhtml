@@ -1,0 +1,6 @@
+<tr class="<%= cycle('shaded','') %>">
+	<td><%= setting.name %></td>
+	<td><%= setting.value %></td>
+	<td><%= clean_age(setting.updated_at) %> Ago</td>
+	<td><%= link_to 'Edit', :action => 'edit', :id => setting %></td>
+</tr>

@@ -1,0 +1,41 @@
+<% if (request.env['SERVER_NAME'] != 'localhost') %>
+	<% form_for :weekly_notes, :url => url_for_filters, :html => {:onsubmit => "javascript: return submitNotes();",:method => 'get', :id => 'weekly_notes_form'} do |f| %>
+		<table id="weekly_notes" style="display: none;">
+				<tr>
+					<td width="400" height="200">
+						  <script language="JavaScript" type="text/javascript">
+							function submit_button_clicked_for_weekly_notes() {
+								toggleNotesOverlay();
+							}
+							
+							function cancel_button_clicked_for_weekly_notes() {
+								toggleNotesOverlay();
+							}
+						  </script>
+							<% if (request.env['SERVER_NAME'] == 'localhost') %>
+								<iframe id="Molten2" name="Molten2" src="/flex/Molten2.html?x=c3adc3afc3acc3b4c3a5c3aec39fc3a1c3a4c3adc3a9c3aec380c3adc3a1c3a7c3adc3a1c2adc3a4c3a1c2aec3a3c3afc3ad" width="400" height="220" scrolling="No"></iframe>
+							<% else %>
+								<iframe id="Molten2" name="Molten2" width="400" height="220" scrolling="No"></iframe>
+							<% end %>
+					</td>
+				</tr>
+		</table>
+	<% end %>
+	
+	<script type="text/javascript" charset="utf-8">
+	  var weeklyNotesForm = $('weekly_notes_form');
+	  
+	  function submitNotes() {
+		return false;
+	  }
+	</script>
+<% end %>
+<% if (request.env['SERVER_NAME'] == 'localhost') %>
+	<table id="weekly_notes" style="display: none;">
+		<tr>
+			<td width="400" height="200">
+				<iframe id="Molten2" name="Molten2" width="400" height="220" scrolling="No"></iframe>
+			</td>
+		</tr>
+	</table>
+<% end %>

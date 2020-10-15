@@ -1,0 +1,5 @@
+Case Number: <%= @data[:case_number] %>
+Time: <%= @data[:time].strftime("%d %b %Y %H:%M:%S") %>
+<% if contact = @data[:contact] %>
+Contact: <%= contact.email %>
+<% end %>

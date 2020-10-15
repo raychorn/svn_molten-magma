@@ -1,0 +1,50 @@
+<style>            
+			div.auto_complete {
+              width: 350px;
+              background: #fff;
+			  z-index:100;
+			  margin-top:100px;
+            }
+            div.auto_complete ul {
+              border:1px solid #888;
+              margin:0;
+              padding:0;
+              width:100%;
+              list-style-type:none;
+            }
+            div.auto_complete ul li {
+              margin:0;
+              padding:3px;
+            }
+            div.auto_complete ul li.selected { 
+              background-color: #ffb; 
+            }
+            div.auto_complete ul strong.highlight { 
+              color: #800; 
+              margin:0;
+              padding:0;
+            }
+</style>
+
+<div class="search">
+<%= form_tag url_for(:controller => 'solutions', :action => 'search'), :method => 'get' %>
+        <table>
+                <td valign="top" style="height:35px"><%= text_field_tag 'term',nil, :class => 'search_term_field',
+                                                                                   :autocomplete => 'off' %>
+                        <%= ajax_indicator('search_indicator') %>
+                        <div class="auto_complete" id="term_auto_complete"></div>
+                        <%= auto_complete_field 'term',
+                                {:url => url_for(:controller => 'solutions', :action => 'auto_complete_for_term',
+                                                                 :from => request.env['PATH_INFO']),
+                                                                 :indicator => 'search_indicator'} %>
+                </td>
+                <td valign="top">
+                        <%= image_submit_tag 'buttons/search.gif', :alt => "Search",
+                                :width => 81, :height => 22, :class => 'search_button' %>
+                </td>
+          <tr><td colspan="2">As you type, Molten will offer suggestions. Use the arrow keys to navigate the results. <a href="/FAQ.html#SearchSuggestion">Learn more</a>.</td></tr>
+          <tr><td colspan="2"><a href="/FAQ.html#HowToSearch">How to search in MOLTEN</a>?</td></tr>
+
+        </table>
+</form>
+</div>

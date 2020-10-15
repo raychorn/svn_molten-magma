@@ -1,0 +1,12 @@
+update_cases:
+  id: 1
+  command: Case.update
+  interval_string: 12.hours
+  every: <%= 12.hours %>
+  start: <%= Time.now %>
+update_solutions:
+  id: 2
+  command: Solution.update
+  interval_string: 12.hours
+  every: <%= 12.hours %>
+  start: <%= Time.now %>

@@ -1,0 +1,19 @@
+<h2 class="gray buried_header"><%= @title = "Check Your Registration Status" %></h2>
+<br/>
+If you have registered for an account but have not yet received your login information, 
+type your email address below to view your registration status.
+<br/><br/>
+<%= form_tag url_for(:action => 'status'), :method => 'get' %>
+<table class="form">
+	<tr>
+		<td class="prompt">Email:</td>
+		<td class="value"><%= text_field_tag 'email', params[:email] %></td>
+	</tr>
+	<tr>
+		<td class="prompt"></td>
+		<td><%= submit_tag 'Get Registration Status' %></td>
+	</tr>
+</table>
+</form>
+
+

@@ -1,0 +1,12 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+chip:
+  id: 1
+  sf_id: chip
+derek:
+  id: 2
+  sf_id: xyz
+derek_haynes:
+  id: 3
+  user_contact_id__c: 0033000000Ka6moAAB # derek_haynes
+  sf_id: derek_haynes_user
+  username: derek.haynes@highgroove.com

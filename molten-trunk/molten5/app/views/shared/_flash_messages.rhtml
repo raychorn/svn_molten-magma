@@ -1,0 +1,13 @@
+<% if flash[:notice] %>
+  <div id="notice">
+  <%= image_tag '/images/icons/check.gif', :align => 'absmiddle' %>
+  <span><%= flash[:notice] %></span>
+  </div>
+<% end %>	
+	  
+<% if flash[:warning] %>
+  <div id="warning">
+  <%= image_tag '/images/icons/exclamation.gif', :align => 'absmiddle' %>
+  <span><%= flash[:warning] %></span>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<%= @contact.name %>,
+
+Every 6 months, we ask that you confirm your <%= AppConstants::APP_NAME %> account. 
+
+Please click the following link to verify your account:
+
+<%= AppConstants::APP_URL %>/contact/confirm/<%= @contact.id %>?token=<%= @contact.token %>
+
+The <%= AppConstants::APP_NAME %> Team.

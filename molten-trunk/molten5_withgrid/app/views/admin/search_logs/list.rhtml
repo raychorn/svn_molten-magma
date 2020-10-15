@@ -1,0 +1,13 @@
+<h1><%= @title = "Search Logs" %></h1>
+
+<table class="listing">
+	<tr>
+		<th>Term</th>
+		<th># of Resuts</th>
+		<th>Contact</th>
+		<th>Executed</th>
+	</tr>
+	<%= render :partial => 'admin/search_logs/list/search', :collection => @solution_search_logs %>
+</table>
+
+<%= will_paginate @solution_search_logs %>

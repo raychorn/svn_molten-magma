@@ -1,0 +1,11 @@
+<h2><%= link_to 'Back to Articles', :action => 'list' %></h2>
+<div style="line-height:160%">
+<h1 class="small_margin">
+	<%= @title = @article.title %>
+</h1>
+<div class="gray" style="padding:10px 0px">Posted <%= format_time(ct(@article.created_date)) %></div>
+
+
+<%= simple_format(@article.body) %>
+
+</div>

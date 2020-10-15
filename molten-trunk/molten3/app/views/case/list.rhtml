@@ -1,0 +1,12 @@
+<html>
+<body>
+<% @cse.each do |cs| %>
+<%= cs.name %>---------------- <%= cs.type %><br>
+<% end %>
+<% count=0%>
+<% @sfcse.each do |css| %>
+<%count=count+1%>
+<%end%>
+<%=count%>
+</body>
+</html>

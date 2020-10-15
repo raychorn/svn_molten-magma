@@ -1,0 +1,39 @@
+<p>
+<h4>New Case Comment</h4>
+
+<%= start_form_tag :action => 'createcomment' %>
+  
+  <%= error_messages_for 'case_comment' %>
+
+<input id="case_comment_is_published" name="case_comment[is_published]" 
+    type="hidden" value="true" >
+
+<p><%= text_area  'case_comment', 'comment_body'  %></p>
+
+
+ <input id="parent_id" name="case_comment[parent_id]" 
+    type="hidden" value=<%=@caseid%> >
+   
+   <%= getcontactid(@caseid) %> 
+   
+    <% if @ssf_id %>
+    
+    	<!--%=@ssf_id.id%-->    
+   		<input id="created_by_id" name="case_comment[created_by_id]" 
+   		 type="hidden" value=<%=@ssf_id.id %> >
+   	<% elsif  @usr_id %>
+   	
+   		<!--%=@usr_id.id %-->   		
+   		<input id="created_by_id" name="case_comment[created_by_id]" 
+   		 type="hidden" value=<%=@usr_id.id %> >
+   <% end %>
+    
+  
+  <%= submit_tag "Create" %> 
+  
+  <%= start_form_tag :action => 'detail' %> <%= submit_tag "Back" %>
+   <!--%= link_to 'Back', :action => 'detail', :id => @caseid %-->
+<%= end_form_tag %> 
+
+
+</p>

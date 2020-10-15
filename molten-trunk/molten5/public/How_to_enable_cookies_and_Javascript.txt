@@ -1,0 +1,37 @@
+Internet Explorer (6.0)
+
+   1. Select 'Tools' from the top menu
+   2. Choose 'Internet Options'
+   3. Click on the 'Security' tab
+   4. Click on 'Custom Level'
+   5. Scroll down until you see section labled 'Scripting'
+   6. Under 'Active Scripting', select 'Enable' and click OK
+
+Netscape Navigator (4.8)
+
+   1. Select 'Edit' from the top menu
+   2. Choose 'Preferences'
+   3. Choose 'Advanced'
+   4. Choose 'Scripts & Plugins'
+   5. Select the 'Enable JavaScript' checkbox and click OK
+
+Mozilla Firefox (1.0)
+
+   1. Select 'Tools' from the top menu
+   2. Choose 'Options'
+   3. Choose 'Web Features' from the left navigation
+   4. Select the checkbox next to 'Enable JavaScript' and click OK
+
+Mozilla Firefox (1.5)
+
+   1. Select 'Tools' from the top menu
+   2. Choose 'Options'
+   3. Choose 'Content' from the top navigation
+   4. Select the checkbox next to 'Enable JavaScript' and click OK
+
+Apple Safari (1.0)
+
+   1. Select 'Safari' from the top menu
+   2. Choose 'Preferences'
+   3. Choose 'Security'
+   4. Select the checkbox next to 'Enable JavaScript'

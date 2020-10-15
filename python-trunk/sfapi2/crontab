@@ -1,0 +1,33 @@
+# Subversion properties
+#
+# $LastChangedDate: 2006-06-23 09:03:35 -0700 (Fri, 23 Jun 2006) $
+# $Author: misha $
+# $Revision: 61 $
+# $HeadURL: http://capps.moltenmagma.com/svn/sfsrc/trunk/sfapi2/crontab $
+# $Id: crontab 61 2006-06-23 16:03:35Z misha $
+#
+#47 * * * * /home/sfscript/util/nis2ldap/bin/syncldap --auto >> /home/sfscript/log/details/syncldap.log
+#15 0 * * 0 /home/sfscript/sfdcexport/bin/sfdcexport >> /home/sfscript/log/details/sfdcexport.log
+### New world cron jobs
+30 0 * * 1-5 /home/sfscript/src/sfapi2/sfutil/bin/reportgen         > /home/sfscript/log/details/reportgen.log
+0-59/15 * * * * /home/sfscript/src/sfapi2/sfadminui/walkscm         > /home/sfscript/log/details/walkscm.log
+*/30 * * * * /home/sfscript/src/sfapi2/sfadminui/checkbuildobject   > /home/sfscript/log/details/checkbuildobject.log
+27 0-23/4 * * * /home/sfscript/src/sfapi2/sfcron/bin/eventmgr -b 1  > /home/sfscript/log/details/eventmgr.log
+45 2 * * * /home/sfscript/src/sfapi2/sfcron/bin/usercontactxref -cx > /home/sfscript/log/details/usercontactxref.log
+8 3,15 * * * /home/sfscript/src/sfapi2/sfcron/bin/crcustcontact     > /home/sfscript/log/details/crcustcontact.log
+1 * * * * /home/sfscript/src/sfapi2/sfcron/bin/hidecases            > /home/sfscript/log/details/hidecases.log
+31 * * * * /home/sfscript/src/sfapi2/sfcron/bin/solpub              > /home/sfscript/log/details/solpub.log
+15 1 * * * /home/sfscript/src/sfapi2/sfcron/bin/leadmatcher         > /home/sfscript/log/details/leadmatcher.log
+### new query specifc walkers
+0-50/10 * * * * /home/sfscript/src/sfapi2/sfadminui/walkact -xmgr   >> /home/sfscript/log/details/walkact.log
+2-52/10 * * * * /home/sfscript/src/sfapi2/sfadminui/walkact -xpe    >> /home/sfscript/log/details/walkact.log
+4-54/10 * * * * /home/sfscript/src/sfapi2/sfadminui/walkact -xpart  >> /home/sfscript/log/details/walkact.log
+1-46/15 * * * * /home/sfscript/src/sfapi2/sfadminui/walkact -xscm   >> /home/sfscript/log/details/walkact.log
+6-51/15 * * * * /home/sfscript/src/sfapi2/sfadminui/walkact -xteam  >> /home/sfscript/log/details/walkact.log
+5-44/20 * * * * /home/sfscript/src/sfapi2/sfadminui/walkact -xae    >> /home/sfscript/log/details/walkact.log
+30 1 * * *      /home/sfscript/src/sfapi2/sfadminui/walkact -xautoae > /home/sfscript/log/details/walkact.log
+
+#CR Notification Geneartor for Case Watcher
+5 * * * * /home/sfscript/src/sfapi2/sfcron/bin/casewatcher_list -l >> /home/sfscript/log/cron.log
+7 * * * * /home/sfscript/src/sfapi2/sfcron/bin/custom_notify -l >> /home/sfscript/log/cron.log
+11 * * * * /home/sfscript/src/sfapi2/sfcron/bin/custom_sendnotif -l >> /home/sfscript/log/cron.log

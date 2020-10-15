@@ -1,0 +1,49 @@
+sfdcexport
+
+$ID: $
+
+The sfdcexport project provides a utility to automatically request and
+download a weekly export as provided by Salesforce.com Professional
+and Enterprise editions. sfdcexport operates by accessing the
+Salesforce.com website and 'scraping' the html to simulate a user with
+a web browser.
+
+
+Requirements: 
+
+Python 2.3.4. Has not been tested with earlier or later
+versions of Python.  Earlier versions may work, but may also require
+additional libraries that have been included in 2.3.4. 2.4 is expected to work "out of the box."
+
+This utility requires that the ClientCookie 1.0.3 library be
+installed. This can be downloaded from:
+http://wwwsearch.sourceforge.net/ClientCookie/ 
+
+Note that Python 2.4 contains cookielib, which provides most of
+ClientCookie. sfdcexport is not currently configured to make use of
+this, though this is on the TODO list.
+
+
+Installation:
+
+Copy the example config file in the config directory to 'example.conf'.
+Go through the file and set the config parameters as necessary.
+
+Any passwords must be base64 encoded to provide a slight increase in the
+security of storing passwords in a config file. Don't fool yourself - this
+isn't secure, it just hides the key under a mat.
+
+Use the passencode script in the bin directory to prompt for a password and
+provide the base64 encoded version to include in the config file.
+
+
+Usage:
+
+Once completely configured, just run sfdcexport in the bin directory
+and wait. An export may take several hours to become ready for
+download and then to do the actual download. The script will make the
+initial request and then periodically check the status of the export
+until it is finally ready to be downloaded. If the script is
+interupted for any reason, restarting it should allow it to pick up
+where it left off.
+

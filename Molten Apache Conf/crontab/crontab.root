@@ -1,0 +1,9 @@
+# Restart Molten M-F at 7:30am
+#30 7 * * 1-5 /home/admin/restart_molten.sh >> /home/admin/restart_molten.log
+
+# Restart Molten Quickly M-F at 7:30am
+#30 7 * * 1-5 /home/admin/restart_molten_quickly.sh >> /home/admin/restart_molten_quickly.log
+
+# Force Monit Restart in case it has gone dead...
+0-59/5 * * * * /home/admin/start_monit.sh >> /home/admin/start_monit.log 2>/dev/null
+

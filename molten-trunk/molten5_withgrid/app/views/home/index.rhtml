@@ -1,0 +1,17 @@
+<%= render(:partial => 'marketing_message') if @marketing %>
+
+<h1>MOLTEN Dashboard for <%= current_contact.company.name %></h1>
+
+<% if current_contact.custom_home_page %>
+<h3>
+	<%= image_tag 'icons/bullet_go.png', :size => '16x16', :style => 'vertical-align:middle'%>
+	<%= link_to "View the #{current_contact.company.name} customized home page",
+	 			:action => 'custom' %>
+</h3>
+<% end %>
+
+<%= render(:partial => 'home/index/cases') %>
+<%= render :partial => 'home/index/solutions' %>
+<%= render(:partial => 'home/index/news') if @articles.any? %>
+<%# render(:partial => 'attachments/list', :locals => {:attachable => current_contact}) if current_contact.attachments.any? %>
+

@@ -1,0 +1,12 @@
+<div class="comment_container" id="<%= tag_for_comment(comment) %>">
+	<div class="small gray">
+		<% if author = comment.author_name %>
+			On <%= format_time ct(comment.created_date) %> <%= comment.author_name %> said...
+		<% else %>
+			<%= format_time ct(comment.created_date) %>
+		<% end %>
+	</div>
+	<span style="width: 100%;">
+	<%= comment.comment_body.gsub(10.chr, '<br/>') %>
+	</span>
+</div>

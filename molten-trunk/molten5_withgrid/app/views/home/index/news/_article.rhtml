@@ -1,0 +1,7 @@
+<tr class="<%= cycle('shaded','') %>">
+	<td class="subject">
+		<%= link_to truncate(article.title, AppConstants::ARTICLE_LIST_TITLE_LENGTH), 
+			:controller => 'articles', :action => 'show', :id => article %>
+	</td>
+	<td class="news_date">Posted <%= format_time(ct(article.created_date)) %></td>
+</tr>

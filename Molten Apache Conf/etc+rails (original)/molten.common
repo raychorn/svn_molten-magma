@@ -1,0 +1,84 @@
+  ServerName tide.moltenmagma.com
+  ServerAlias www.tide.moltenmagma.com
+  DocumentRoot /var/www/apps/molten/current/public
+  UseCanonicalName Off
+  
+  <Directory "/var/www/apps/molten/current/public">
+    Options FollowSymLinks
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+  <Directory "/var/www/static/user_guides">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+	IndexOptions FancyIndexing FoldersFirst SuppressDescription SuppressLastModified NameWidth=60
+#	IndexOptions HTMLTable
+	AddIcon (IMG,/icons/image.gif) .gif .jpg .xbm
+        AddIcon (PDF,/icons/pdf.gif) .pdf
+	AddIcon /icons/dir.gif ^^DIRECTORY^^
+	DefaultIcon /icons/generic.gif
+	HeaderName README.html
+#	ReadmeName README.html
+  </Directory>
+#Alias /user_guides /var/www/static/user_guides
+
+
+  <Directory "/usr/local/apache2/icons">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+  </Directory>
+Alias /icons /usr/local/apache2/icons
+Alias /images /var/www/apps/molten/current/public/images
+
+  RewriteEngine On
+
+  # Uncomment for rewrite debugging
+  RewriteLog logs/molten_rewrite_log
+  RewriteLogLevel 9
+
+#  RewriteCond %{HTTP_HOST} ^tide.moltenmagma.com$ [OR]
+#  RewriteCond %{HTTP_HOST} ^www.tide.moltenmagma.com$
+#  RewriteRule ^/?(.*)$ http://tide2.moltenmagma.com [R=301,L]
+
+#  RewriteRule ^/user_guides  - [L]
+  RewriteRule ^/icons  - [L]
+  RewriteRule ^/images  - [L]
+
+  # Check for maintenance file and redirect all requests
+  RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+  RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+  RewriteRule ^.*$ /system/maintenance.html [L]
+
+  # Rewrite index to check for static
+  # RewriteRule ^/$ /index.html [QSA]
+
+  # Rewrite to check for Rails cached page
+  # RewriteRule ^([^.]+)$ $1.html [QSA]
+
+  # Redirect everything to HTTPS
+  RewriteCond %{SERVER_PORT} !^443$
+  RewriteRule ^/(.*) https://%{SERVER_NAME}/$1 [L,R]
+
+  # Redirect all non-static requests to cluster
+  RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f
+  RewriteRule ^/(.*)$ balancer://molten_mongrel_cluster%{REQUEST_URI} [P,QSA,L]
+
+  # Deflate
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml application/xhtml+xml text/javascript text/css
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4.0[678] no-gzip
+  BrowserMatch bMSIE !no-gzip !gzip-only-text/html
+
+  # Uncomment for deflate debugging
+  #DeflateFilterNote Input input_info
+  #DeflateFilterNote Output output_info
+  #DeflateFilterNote Ratio ratio_info
+  #LogFormat '"%r" %{output_info}n/%{input_info}n (%{ratio_info}n%%)' deflate
+  #CustomLog logs/molten_deflate_log deflate
+

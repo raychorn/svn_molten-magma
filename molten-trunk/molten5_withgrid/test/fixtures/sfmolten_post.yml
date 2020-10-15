@@ -1,0 +1,10 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+silicon_article:
+  id: 1
+  sf_id: silicon_article
+  name: The article
+  body__c: The article body. 
+  record_type_id: <%= SfmoltenPost::ARTICLE_TYPE %>
+  created_date: <%= Time.now.to_s(:db) %>
+another:
+  id: 2

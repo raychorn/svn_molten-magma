@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us">
+<head>
+  <title>MOLTEN &ndash; Magma Design Automation, Inc.</title>
+</head>
+<body style="direction: ltr;" class="blank">
+  <table align="center">
+    <tbody>
+      <tr><td><h2>MOLTEN &ndash; Magma Design Automation, Inc.</h2></td></tr>
+      <tr>
+        <td>
+           MOLTEN is down for <%= reason ? reason : "maintenance" %>
+           as of <%= Time.now.strftime("%D, %H:%M %Z") %>.
+         <BR>
+           It'll be back <%= deadline ? "by #{deadline}" : "shortly" %>.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</body>
+</html>

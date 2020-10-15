@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	applicationComplete="login();"      
+	xmlns:salesforce="*"
+	xmlns:salesforce1="com.salesforce.*">
+	<mx:Style source="styles.css"/>
+	<mx:Script>
+		<![CDATA[
+			import com.salesforce.objects.SObject;
+			import com.hurlant.util.der.Integer;
+			import com.hurlant.crypto.symmetric.BlowFishKey;
+			import com.salesforce.results.QueryResult;
+			import mx.controls.Alert;
+			import mx.collections.SortField;
+			import mx.collections.Sort;
+			import com.salesforce.objects.PicklistValue;
+			import com.salesforce.results.PickListEntry;
+			import mx.collections.ArrayCollection;
+			import com.salesforce.results.Field;
+			import com.salesforce.events.SendEvent;
+			import com.salesforce.AsyncResponder;
+			import com.salesforce.objects.LoginRequest;
+			import com.moltenmagma.events.LoggedInEvent;
+		  	import mx.utils.ObjectUtil;
+		  	import com.hurlant.util.Hex;
+			import mx.managers.ToolTipManager;
+			import com.custom.HtmlToolTip;
+		  	
+		  	private var isSSL:Boolean = false;
+		  	
+		  	[Bindable]
+		  	private var s_waiting_tooltip:String = "Waiting for data from SalesForce... Please stand-by... This might take a few seconds...";
+		  	
+		  	// BEGIN: Do not make this [Bindable] or bad evil things will happen... 
+		  	private var _protocol:String = 'http';
+		  	// END!  Do not make this [Bindable] or bad evil things will happen... 
+		  	
+			private var _username:String = 'c3adc3afc3acc3b4c3a5c3aec39fc3a1c3a4c3adc3a9c3aec380c3adc3a1c3a7c3adc3a1c2adc3a4c3a1c2aec3a3c3afc3ad';
+			private var _password:String = 'c3b5c2b2c3a3c3a1c3aec3b3c3acc3a5c3a5c3b0c3b2c397c389c2b2c398c2b9c38ac3a1c3abc384c3acc3b8c3aac3a3c3b5c381c3afc3a6c3a8c3a7c3a7c386c3a2c3a1c3a6';
+			
+			private var _id:String = '';
+			private var _selector:String = '';
+
+		  	private var record:SObject;
+		  	
+		  	private function do_query(soql:String,className:String,selector:String):* {
+				apex.query(soql, 
+					new AsyncResponder(function (qr:QueryResult):void
+					  {
+					    ta_contents.text = ObjectUtil.toString(qr.records);
+					    for (var j:int=0;j<qr.records.length;j++) { 
+					    	_id = qr.records[j].Id;
+					    	txt_case_id.text = _id;
+						    data_contents.text = qr.records[j][selector];
+					    	_selector = selector;
+					    	record = new SObject(className);
+						  	record.Id = _id;
+						  	data_contents.enabled = true;
+						  	data_contents.toolTip = '';
+						  	btn_submit.enabled = true;
+						  	btn_submit.toolTip = 'Click this button to submit your changes directly to SalesForce.  Molten may require some time to notice this change.';
+						  	btn_cancel.enabled = true;
+						  	btn_cancel.toolTip = 'Click this button to dismiss this dialog without making any changes to the data being displayed.';
+					    	break;
+					    }
+					  } )
+				);
+		  	}
+			
+			public function get_case_for_number(number:String):ArrayCollection {
+				this.txt_case_number.text = number;
+				var soql:String = "Select c.CaseNumber, c.Id, c.Weekly_Notes__c from Case c  WHERE c.CaseNumber = '" + number + "'";
+				var ar:ArrayCollection = this.do_query(soql,'Case','Weekly_Notes__c');
+				return ar;
+			}
+
+			private function set_bit_seven(input:String):String {
+				var i:int;
+				var out:String = '';
+				for (i = 0; i < input.length; i++) {
+					out += String.fromCharCode(input.charCodeAt(i) | 128);
+				}
+				return out;
+			}
+			
+			private function unset_bit_seven(input:String):String {
+				var i:int;
+				var out:String = '';
+				for (i = 0; i < input.length; i++) {
+					out += String.fromCharCode(input.charCodeAt(i) & 127);
+				}
+				return out;
+			}
+			
+			private function encode(str:String):String {
+				return Hex.fromString(this.set_bit_seven(str));
+			}
+			
+			private function decode(str:String):String {
+				return this.unset_bit_seven(Hex.toString(str));
+			}
+			
+			public function set_case_number(number:String):void {
+				var pad_len:int = 0;
+				if (number.length < 8) {
+					pad_len = 8 - number.length;
+					var s:String = '';
+					for (var i:int = 0; i < pad_len; i++) {
+						s += '0';
+					}
+					number = s + number;
+				}
+				this.get_case_for_number(number);
+			}
+			
+			private function isRunningLocal():Boolean {
+			 	var url:String = Application.application.url;
+			 	return (url.indexOf('file:') > -1);
+			}
+			
+			private function isNotRunningLocal():Boolean {
+			 	return (this.isRunningLocal() == false);
+			}
+			
+			private function login():void {
+				ToolTipManager.toolTipClass = HtmlToolTip;
+
+			 	var url:String = Application.application.url;
+			 	this.isSSL = (url.indexOf('https://') > -1);
+			 	var toks:Array = url.split(':');
+			 	if (toks[0] != 'file') {
+				 	this._protocol = toks[0];
+			 	}
+			 	
+				ExternalInterface.addCallback('set_case_number',set_case_number);
+
+				var username:String = this.decode(this._username);
+				var password:String = this.decode(this._password);
+				
+				var lr:LoginRequest = new LoginRequest(	{
+					username : username,		// put your own info here to test standalone
+					password : password,		// put your own info here to test standalone	
+					callback : new AsyncResponder(function (result:Object):void
+						{ 
+						    ta_contents.text = "Login successful:\n" + ObjectUtil.toString(result);
+						    var number:String = ExternalInterface.call('fetch_case_number');
+						    set_case_number(number);
+						} )
+					} );
+					
+			    this.ta_contents.text = 'Login started using protocol of "' + this._protocol + '".';
+				this.apex.login(lr); 
+			}
+	
+			private function updResult(result:Object):void {
+				this.ta_contents.text = 'update Result\n' + ObjectUtil.toString(result);
+				var i:Number;
+				var s:String = this.data_contents.text;
+				var t:String = '';
+				var x:String;
+				for (i = 0; i < s.length; i++) {
+					x = s.charAt(i);
+					if (s.charCodeAt(i) < 32) {
+						x = '<BR/>';
+					}
+					t += x;
+				}
+				ExternalInterface.call('submit_button_clicked_for_weekly_notes',t);
+			}
+ 
+			private function onClickSubmitButton(event:MouseEvent):void {
+			  	this.record[_selector] = this.data_contents.text;
+			  	apex.update([this.record], new AsyncResponder(updResult, genericFault) );
+			}
+			
+			private function onClickCancelButton(event:MouseEvent):void {
+				ExternalInterface.call('cancel_button_clicked_for_weekly_notes');
+			}
+			
+			private function onClickDebugButton(event:MouseEvent):void {
+				this.vbox_debug.height = (this.vbox_debug.height == 0) ? 200 : 0;
+	//			this.vbox_debug.visible = (this.vbox_debug.visible == false) ? true : false;
+			}
+
+			private function sendRequestListener(event:SendEvent):void {
+				XML.prettyIndent = 4;
+				XML.prettyPrinting = true;
+				var x:XML = new XML(event.soapRequest);
+				soapLog.text = x.toString();
+			}
+	
+			private function genericFault(fault:Object):void {
+				this.ta_contents.text = 'fault from operation: ' + ObjectUtil.toString(fault);
+			}
+  
+		]]>
+	</mx:Script>
+	<salesforce1:Connection id="apex" protocol="{this._protocol}" sendRequest="sendRequestListener(event)" serverUrl="{this._protocol}://www.salesforce.com/services/Soap/u/11.0"/> 
+	<mx:VBox width="100%" height="100%">
+		<mx:HBox width="100%" horizontalAlign="left">
+			<mx:HBox width="10%" horizontalAlign="left">
+				<mx:Text text="Case Number:"/>
+				<mx:TextInput id="txt_case_number" editable="false" enabled="false" text=""/>
+				<mx:Spacer width="10"/>
+				<mx:Text text="Case Id:"/>
+				<mx:TextInput id="txt_case_id" editable="false" enabled="false" text=""/>
+			</mx:HBox>
+			<mx:HBox width="90%" horizontalAlign="right" visible="false">
+				<mx:Button id="btn_debug" label="Debug" toolTip="Debugging purposes only !  This button will not be visible once deployed to Production." click="onClickDebugButton(event)"/>
+			</mx:HBox>
+		</mx:HBox>
+		<mx:HBox width="100%" height="100%">
+			<mx:TextArea id="data_contents" width="100%" height="100%" toolTip="{this.s_waiting_tooltip}" enabled="false"/>
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="left">
+			<mx:Button id="btn_submit" label="Submit" enabled="false" toolTip="{this.s_waiting_tooltip}" click="onClickSubmitButton(event)"/>
+			<mx:Spacer width="10"/>
+			<mx:LinkButton id="btn_cancel" label="Cancel" enabled="false" toolTip="{this.s_waiting_tooltip}" click="onClickCancelButton(event)"/>
+		</mx:HBox>
+		<mx:VBox id="vbox_debug" width="100%" height="0">
+			<mx:HBox width="100%">
+				<mx:TextArea id="ta_contents" width="100%" height="100" editable="false"/>
+			</mx:HBox>
+			<mx:HBox width="100%">
+		        <mx:TextArea id="soapLog" width="100%" height="100" cornerRadius="5" editable="false"/>
+			</mx:HBox>
+		</mx:VBox>
+	</mx:VBox>
+</mx:Application>

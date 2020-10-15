@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title><%= AppConstants::APP_NAME %> <%= "| #{@title}" if @title %></title>
+
+<%= stylesheet_link_tag "default.css" %>
+<%= stylesheet_link_tag 'pagination' %>
+<%= stylesheet_link_tag("admin.css") if in_admin_area? %>
+<link rel="stylesheet" type="text/css" media="print" href="/stylesheets/print.css" />
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="Expires" CONTENT="<%= (Time.now-(86400*365.25*20)).strftime("%a, %d %b %Y %H:%M:%S") %>">
+<META HTTP-EQUIV="Last-Modified" CONTENT="<%= Time.now.strftime("%a, %d %b %Y %H:%M:%S") %>">
+
+<%= javascript_include_tag :defaults %>
+
+<script language="JavaScript" type="text/javascript" src="/javascripts/anchorpos.js"></script>
+<script language="JavaScript" type="text/javascript" src="/javascripts/viewport.js"></script>
+<script language="JavaScript" type="text/javascript" src="/flex/AC_OETags.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+    _resize_callback = null;
+    window.onresize = function() {
+        if (_resize_callback) {
+          try {
+              _resize_callback();
+          } catch(e) { alert('ERROR in window.OnReSize_Callback().'); };
+        }
+    }
+    
+	function getUUID$() {
+		return (new Date().getTime() + "" + Math.floor(65535 * Math.random()));
+	}
+	
+	function findArrayItemsContaining(a, what, start) {
+		var f = 0;
+		if (start) {
+			startWhere = start 
+		}
+		else {
+			startWhere = 0;
+		}
+		what = ((what != null) ? what.toString() : '');
+		var nWhat = what.length;
+		for(f=startWhere; f < a.length; f++) {
+			if (a[f].toString().substr(0,nWhat) == what) {
+				return f;
+			}
+		}
+		return -1;
+	}
+
+    function setCookie(name, value, path){
+        return document.cookie=name+"="+escape(value)+"; path="+path;
+    }
+	
+    function getCookie(name){
+      var dc=document.cookie;
+      var prefix=name+"=";
+      var begin=dc.lastIndexOf(prefix);
+      if(begin==-1) return null;
+      var end=dc.indexOf(";", begin);
+      if(end==-1) end=dc.length;
+      return unescape(dc.substring(begin+prefix.length, end));
+    }
+    _old_main_width = -1;
+    _old_sidebar_display = -1;
+    function clicked_sidebar_control() {
+      td = $('sidebar');
+	  try {
+	      _old_sidebar_display = td.style.display;
+	  } catch (e) {
+	      _old_sidebar_display = '';
+	  }
+	  try {
+	      td.style.display = 'none';
+	  } catch (e) {
+	  	return;
+	  }
+      
+      td = $('sidebar2');
+	  try {
+	      td.style.display = _old_sidebar_display;
+	      td.style.background = '#AEA7A1';
+	  } catch (e) {
+	  }
+      
+      m = $('main');
+	  try {
+	      _old_main_width = m.style.width;
+	  } catch (e) {
+	  }
+	  try {
+	      m.style.width = '100%';
+	  } catch (e) {
+	  }
+      setCookie('sidebar_state', 0, '/');
+    }
+    
+    function clicked_sidebar_control2() {
+      td = $('sidebar');
+	  try {
+	      td.style.display = _old_sidebar_display;
+	  } catch (e) {
+	  	if (td) {
+		  try {
+		      td.style.display = '';
+		  } catch (e) {
+		  }
+		}
+	  }
+      
+      td = $('sidebar2');
+	  try {
+	      td.style.display = 'none';
+	  } catch (e) {
+	  }
+
+      m = $('main');
+	  try {
+	      m.style.width = _old_main_width;
+	  } catch (e) {
+	  }
+      setCookie('sidebar_state', 1, '/');
+    }
+	
+	function redirectBrowserToUrl(aURL) {
+		if (!!aURL) {
+			window.location.href = aURL;
+		}
+	}
+	
+	function get_sort_dtate_parms() {
+		var url = getCookie('sort_state');
+		var parms = '';
+		if ( (url != null) && (url.length > 0) ) {
+			var toks = url.split('?');
+			parms = '?' + toks[toks.length-1];
+		}
+		return parms;
+	}
+	
+	function switch_to_list_beta() {
+		setCookie('beta_view_state', 1, '/');
+		var parms = get_sort_dtate_parms();
+		redirectBrowserToUrl('/cases/list_beta' + parms);
+	}
+	
+	function switch_to_classic_view() {
+		setCookie('beta_view_state', 0, '/');
+		var parms = get_sort_dtate_parms();
+		redirectBrowserToUrl('/cases/list' + parms);
+	}
+	
+	function switch_to_support_cases() {
+	    if (getCookie('beta_view_state') == 1) {
+	       switch_to_list_beta(); 
+	    } else {
+	       switch_to_classic_view(); 
+	    }
+	}
+</script>
+
+</head>
+
+<body>
+	<% if (@case_mode != 'WeeklyNotes') %>
+		<div id="header">
+	  		<%= in_admin_area? ? render_partial('admin/shared/header') : render_partial('shared/header') %>		
+		</div>
+	<% end %>
+  <table id="container">
+ 	  	<tr>
+ 	  		<td id="main" valign="top" style="position:relative">
+	<div style="text-align:right;margin-right:-30px;margin-top:-10px">
+		<%= image_tag 'sidebar_background_corner.gif' %>
+	</div>
+			<%= render :partial => 'shared/flash_messages' %>
+			<%= @content_for_layout %>
+			
+			<% if (@case_mode != 'WeeklyNotes') %>
+				<div id="footer">
+				 <%= render_partial 'shared/footer' %>		
+				</div>
+			<% end %>
+ 	  		</td>
+			<% if (@case_mode != 'WeeklyNotes') %>
+				<td id="sidebar" valign="top">
+	                          <table width="100%">
+	                            <tr>
+	                              <td id="td_sidebar_control" height="30px" title="Click to close sidebar." bgcolor="#AEA7A1" onclick="clicked_sidebar_control()">
+	                                <img src="/images/icons/next.gif">
+	                              </td>
+	                            </tr>
+	                            <tr>
+	                              <td valign="top">
+					<%= @content_for_sidebar %>
+					<%= @content_for_right %>
+					<%= render_component :controller => 'tips', :action => 'list', 
+							:params => {:tips_controller => params[:controller], :tips_action => params[:action]} %>
+	                              </td>
+	                            </tr>
+	                          </table>
+				</td>
+				<td id="sidebar2" valign="top" style="display: none;">
+	                          <table>
+	                            <tr>
+	                              <td bgcolor="#AEA7A1" title="Click to open sidebar." onclick="clicked_sidebar_control2()">
+	                                <img src="/images/icons/back.gif">
+	                              </td>
+	                            </tr>
+	                          </table>
+				</td>
+			<% end %>
+ 	  	</tr>
+    </table>
+<%= render_partial 'shared/google_analytics' %>		
+<script language="JavaScript" type="text/javascript">
+    if (getCookie('sidebar_state') == 0) {
+       clicked_sidebar_control(); 
+    } else {
+       clicked_sidebar_control2(); 
+    }
+</script>
+</body>
+</html>

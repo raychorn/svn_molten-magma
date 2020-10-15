@@ -1,0 +1,8 @@
+<h3>Similar Cases</h3>
+<ul class="list">
+	<% @suggested_cases.each do |c| %>
+	<li class="<%= cycle('shaded','') %>">
+		<%= link_to truncate(c.subject,100), {:action => 'show', :id => c}, :target => "_blank" %>
+	</li>
+	<% end %>
+</ul>

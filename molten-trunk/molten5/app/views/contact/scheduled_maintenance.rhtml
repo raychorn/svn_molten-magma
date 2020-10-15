@@ -1,0 +1,17 @@
+<h1 class="small_margin">
+        <%= @title = "Important Announcement" %>
+</h1>
+
+<!--- Dashboard --->
+<div id="login">
+        <%= link_to 'Logout', :controller => '/contact', :action => 'logout' %>
+</div>
+
+<div class="article_container">
+        <h2 class="small_margin"><%= @downtime.name %></h2>
+        <br/><%= @downtime.body %>
+        <br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/">Please click here to acknowledge this message and continue</a>
+<a href="/"><img src="/images/icons/check.gif" alt="Continue" width="14" height="14" valign="bottom"></a>
+        <br/><br/>&nbsp;
+</div>

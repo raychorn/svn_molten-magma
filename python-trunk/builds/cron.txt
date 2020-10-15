@@ -1,0 +1,4 @@
+# cron entry for builds: check for new builds in SFDC every hour and create payload
+45 * * * *  /home/sfscript/src/builds/manage_payload.sh > /home/sfscript/log/manage_payload.log
+# cron entry for builds: upload payload once a day
+55 17 * * * /home/sfscript/src/builds/upload_payload.py > /home/sfscript/log/upload_payload.log

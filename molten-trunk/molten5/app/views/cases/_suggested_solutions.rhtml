@@ -1,0 +1,9 @@
+<h3>Matching Solutions</h3>
+<ul class="list">
+	<% @suggested_solutions.each do |s| %>
+	<li class="<%= cycle('shaded','') %>">
+		<%= link_to truncate(s.solution_name,100), 
+		{:controller => 'solutions', :action => 'show', :id => s}, :target => '_blank' %>
+	</li>
+	<% end %>
+</ul>

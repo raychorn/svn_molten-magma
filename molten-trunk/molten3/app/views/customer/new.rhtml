@@ -1,0 +1,23 @@
+<html>
+ <head>
+ <title>New Customer</title>
+ </head>
+ <body>
+ <h1>New Customer</h1>
+ <form action="/customer/create" method="post">
+ <p>
+ <b>Name</b><br/>
+ <input id="customer_name" name="customer[name]" size="30" type="text" value=""/>
+ </p>
+ <p>
+ <b>salary</b><br/>
+ <input id="customer_salary" name="customer[salary]" 
+    size="30" type="text" value=""/>
+ </p>
+ 
+ 
+ <input type="submit" value="Create"/>
+ </form> 
+ <a href="/customer/list">Back</a> 
+ </body>
+</html>

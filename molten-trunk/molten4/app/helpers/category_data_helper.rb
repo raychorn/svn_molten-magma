@@ -1,0 +1,2 @@
+module CategoryDataHelper
+end

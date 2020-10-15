@@ -1,0 +1,28 @@
+<%= javascript_include_tag 'lightwindow.js'%>
+<%= stylesheet_link_tag 'lightwindow.css'%>
+
+<script type="text/javascript" charset="utf-8">
+Event.observe(window, 'load', init, false);
+function init() {
+		
+		myLightWindow = new lightwindow();
+		
+    // create the "page loaded" message
+    myLightWindow.activateWindow({
+    	href: '#marketing', 
+    	type: 'inline',
+    	title: 'Marketing Alert',
+        height: '500',
+    	width: '600'
+    });
+	};
+	
+
+</script>
+
+<div id="marketing" style="display:none">
+    <div style="line-height:140%;">
+      <h2><%= @marketing.name %></h2>
+      <%= simple_format @marketing.body %>
+    </div>
+</div>

@@ -1,0 +1,881 @@
+/magma/scm-release/submissions/:
+total 56
+drwxrwxr-x   15 scmbuild scm          4096 Dec 20  2002 blast3
+drwxrwxr-x   14 alexa    scm          4096 Nov  7  2002 blast3.0
+drwxrwxr-x   10 alexa    scm          4096 Nov  4  2001 blast3.0.fcs
+drwxrwxr-x   15 alexa    scm          4096 Jan 31  2003 blast3.1
+drwxrwxr-x   15 alexa    scm          4096 Sep 17 18:47 blast3.2
+drwxr-xr-x    4 scmbuild scm          4096 Jan 10  2002 blast3_gui8
+drwxrwxr-x   15 javagal  develop      4096 Dec 18 20:00 blast4
+drwxrwxr-x   15 javagal  develop      4096 Dec 16 12:38 blast4.0
+drwxrwxr-x   13 scmbuild develop      4096 Dec 16 13:07 blast4.1
+drwxrwxrwx    5 clfy-scm scm         12288 Oct 28 14:38 clfy-scm
+drwxrwxr-x    4 scmbuild scm          4096 Jan  9  2002 main
+drwxrwxr-x    3 javagal  scm          4096 Dec 29 23:22 sf-scm
+
+
+/magma/scm-release/submissions/blast3.0:
+total 80
+drwxrwxr-x    2 alexa    scm          4096 Jun 12  2002 alexa
+drwxrwxr-x    2 alexa    scm          4096 Nov  7  2002 approved
+drwxrwxr-x    2 alexa    develop      4096 Nov  8  2002 checkedin
+drwxrwxr-x    4 alexa    scm         36864 Nov  9  2002 done
+drwxrwxr-x    2 alexa    scm          4096 Jun  3  2002 hold
+drwxrwxr-x    2 alexa    scm          4096 Feb 24  2002 morning
+drwxrwxr-x    2 alexa    scm          4096 Apr 17  2002 no_test
+drwxrwxr-x    6 alexa    scm          4096 May  9  2002 qor
+drwxrwxr-x    2 alexa    scm          4096 Nov  8  2002 ramesh
+drwxrwxr-x    2 alexa    scm          4096 Oct 30  2002 received
+drwxrwxr-x    2 alexa    scm          4096 Apr 18  2002 rejected
+drwxrwxr-x    2 alexa    scm          4096 Nov  9  2002 today
+
+/magma/scm-release/submissions/blast3.0/alexa:
+total 0
+
+/magma/scm-release/submissions/blast3.0/approved:
+total 0
+
+/magma/scm-release/submissions/blast3.0/checkedin:
+total 0
+
+/magma/scm-release/submissions/blast3.0/done:
+total 1452
+-rw-rw-r--    1 alexa    develop      1125 Jan 26  2002 10087.blast3_joydeep_10024-blast3.0_qorbuild_23
+
+/magma/scm-release/submissions/blast3.0/done/3.0.fcs:
+total 3384
+-rw-rw-rw-    1 javagal  develop      1056 Nov  3  2001 10005_10018.blast3_wsun_oct25-blast3_qorbuild_184
+
+/magma/scm-release/submissions/blast3.0/done/blast3.0:
+total 1076
+-rw-rw-r--    1 javagal  develop       215 Dec 19  2001 10001.blast3_ksleung_10001b-blast3_qorbuild_226
+
+/magma/scm-release/submissions/blast3.0/hold:
+total 0
+
+/magma/scm-release/submissions/blast3.0/morning:
+total 0
+
+/magma/scm-release/submissions/blast3.0/no_test:
+total 140
+-rw-rw-r--    1 alexa    develop      8994 Mar  4  2002 10282_10515_10631_11046_11350_11390_11404_11535.blast3.0_raymond_10515
+
+/magma/scm-release/submissions/blast3.0/qor:
+total 16
+drwxrwxr-x    2 alexa    scm          4096 Apr 25  2002 aborted
+drwxrwxr-x    6 alexa    scm          4096 Nov  7  2002 build
+drwxrwxr-x    2 alexa    scm          4096 Jul  8  2002 results
+drwxrwxr-x    2 alexa    scm          4096 Oct 31  2002 test
+
+/magma/scm-release/submissions/blast3.0/qor/aborted:
+total 0
+
+/magma/scm-release/submissions/blast3.0/qor/build:
+total 16
+drwxrwxr-x    2 alexa    develop      4096 Nov  7  2002 blast3.0_qorbuild1
+drwxrwxr-x    2 alexa    develop      4096 Jul  8  2002 blast3.0_qorbuild2
+drwxrwxr-x    2 alexa    develop      4096 Jul 17  2002 blast3.0_qorbuild3
+drwxrwxr-x    2 alexa    develop      4096 Aug  6  2002 blast3.0_qorbuild4
+
+/magma/scm-release/submissions/blast3.0/qor/build/blast3.0_qorbuild1:
+total 0
+
+/magma/scm-release/submissions/blast3.0/qor/build/blast3.0_qorbuild2:
+total 0
+
+/magma/scm-release/submissions/blast3.0/qor/build/blast3.0_qorbuild3:
+total 0
+
+/magma/scm-release/submissions/blast3.0/qor/build/blast3.0_qorbuild4:
+total 0
+
+/magma/scm-release/submissions/blast3.0/qor/results:
+total 0
+
+/magma/scm-release/submissions/blast3.0/qor/test:
+total 0
+
+/magma/scm-release/submissions/blast3.0/ramesh:
+total 0
+
+/magma/scm-release/submissions/blast3.0/received:
+total 0
+
+/magma/scm-release/submissions/blast3.0/rejected:
+total 12
+-rw-rw-rw-    1 javagal  develop      1146 Mar 12  2002 11722.blast3.0_davidb_11722
+
+/magma/scm-release/submissions/blast3.0/today:
+total 0
+
+
+/magma/scm-release/submissions/blast3.2:
+total 132
+drwxrwxr-x    2 alexa    scm          4096 Sep 26 14:27 alexa
+drwxrwxr-x    2 alexa    scm          4096 Oct  6 11:49 approved
+drwxrwxr-x    2 alexa    scm          4096 Sep 26 14:27 checkedin
+drwxrwxr-x    2 alexa    scm         73728 Aug 20 10:44 done
+drwxrwxr-x    2 alexa    scm          4096 Jul 18 10:35 hold
+drwxrwxr-x    2 javagal  develop      4096 Jan 16  2003 need_blast3.2_branch
+drwxrwxr-x    2 alexa    scm          8192 Feb 24  2003 no_test
+drwxrwxr-x    6 alexa    scm          4096 May  4  2003 qor
+drwxrwxr-x    2 alexa    scm          4096 Aug 12 13:16 ramesh
+drwxrwxr-x    2 alexa    scm          8192 Dec 28 11:54 received
+drwxrwxr-x    2 javagal  develop      4096 May 14  2003 response_statistics
+drwxrwxr-x    2 javagal  develop      4096 Sep  9 21:56 sroy
+drwxrwxr-x    2 alexa    scm          4096 Aug 20 10:44 today
+
+/magma/scm-release/submissions/blast3.2/alexa:
+total 0
+
+/magma/scm-release/submissions/blast3.2/approved:
+total 8
+-rw-rw-r--    1 sroy     develop      2094 Sep 30 16:48 19755.blast3.2_kuldeep_19755-NF-approved
+
+/magma/scm-release/submissions/blast3.2/checkedin:
+total 44
+-rw-rw-r--    1 alexa    develop       843 Sep 23 12:31 17036.blast3.2_tao_17036-blast3.2_qorbuild_156
+
+/magma/scm-release/submissions/blast3.2/done:
+total 3384
+-rw-rw-r--    1 alexa    develop      2857 Feb  6  2003 10476.blast3.2_sroy_10476-blast3.2_qorbuild_66
+-rw-rw-r--    1 alexa    develop     13675 Mar  8  2003 10748_12762_12785_15067_15664_15966_16000_16047_16095_16115_16183.blast3.2_ksleung_ti-blast3.2_qorbuild_76
+
+/magma/scm-release/submissions/blast3.2/hold:
+total 28
+-rw-rw-r--    1 alexa    develop     14417 Jul 14 12:19 14941_15324_16558_17458_17688_17838_17839_18110_18111.BLAST3.2_RTL2_CHKPNT_9-64bit-failures
+
+/magma/scm-release/submissions/blast3.2/need_blast3.2_branch:
+total 0
+
+/magma/scm-release/submissions/blast3.2/no_test:
+total 220
+-rw-rw-r--    1 alexa    develop      3396 Dec  1  2002 13145_14492_14524.blast3.2_jeffrey_14492-NF-blast3.2_qorbuild_24
+
+/magma/scm-release/submissions/blast3.2/qor:
+total 16
+drwxrwxr-x    2 alexa    scm          4096 Jan  6  2003 aborted
+drwxrwxr-x    4 alexa    scm          4096 Oct 15 16:47 build
+drwxrwxr-x    4 alexa    scm          4096 Oct 17 16:09 results
+drwxrwxr-x    2 alexa    scm          4096 Oct 17 15:36 test
+
+/magma/scm-release/submissions/blast3.2/qor/aborted:
+total 0
+
+/magma/scm-release/submissions/blast3.2/qor/build:
+total 8
+drwxrwxr-x    2 alexa    develop      4096 Sep 28 20:16 blast3.2_qorbuild1
+
+/magma/scm-release/submissions/blast3.2/qor/build/blast3.2_qorbuild1:
+total 0
+
+/magma/scm-release/submissions/blast3.2/qor/build/blast3.2_qorbuild2:
+total 0
+
+/magma/scm-release/submissions/blast3.2/qor/results:
+total 8
+drwxrwxr-x    2 sroy     develop      4096 Oct 17 15:36 blast3.2_qorbuild3-master-failure
+drwxrwxr-x    2 alexa    develop      4096 Oct 17 15:24 blast3.2_qorbuild4-master-failure
+
+/magma/scm-release/submissions/blast3.2/qor/results/blast3.2_qorbuild3-master-failure:
+total 28
+-rw-rw-rw-    1 alexa    develop      4300 Sep 25 11:44 15435_19551.blast3.2_etienne_19551-blast3.2_qorbuild_157
+
+/magma/scm-release/submissions/blast3.2/qor/results/blast3.2_qorbuild4-master-failure:
+total 16
+-rw-rw-rw-    1 clfy-scm scm          2488 Sep 17 20:21 18018_18095.blast3.2_rle_18018-blast3.2_qorbuild_158
+
+/magma/scm-release/submissions/blast3.2/qor/test:
+total 0
+
+/magma/scm-release/submissions/blast3.2/ramesh:
+total 0
+
+/magma/scm-release/submissions/blast3.2/received:
+total 56
+-rw-rw-r--    1 alexa    develop      1092 Oct  6 13:35 16171.blast3.2_thomas_16171
+-rw-rw-r--    1 alexa    develop       865 Oct  2 12:38 17580_19572.blast3.2_ed_19572
+
+/magma/scm-release/submissions/blast3.2/response_statistics:
+total 32
+-rw-rw-r--    1 alexa    develop       673 May 14  2003 blast3.2_qorbuild_113
+-rw-rw-r--    1 javagal  develop       570 Apr 21  2003 blast3.2_qorbuild_113~
+-rw-rw-r--    1 alexa    develop       648 Apr 30  2003 blast3.2_qorbuild_116
+-rw-rw-r--    1 alexa    develop       568 Apr 23  2003 blast3.2_qorbuild_116~
+-rw-rw-r--    1 javagal  develop       278 Apr 30  2003 blast3.2_qorbuild_117
+-rw-rw-r--    1 javagal  develop       367 Apr 30  2003 blast3.2_qorbuild_118
+-rw-rw-r--    1 alexa    develop        74 May 14  2003 blast3.2_qorbuild_120
+-rw-rw-r--    1 alexa    develop       783 May 14  2003 blast3.2_qorbuild_121
+
+/magma/scm-release/submissions/blast3.2/sroy:
+total 0
+
+/magma/scm-release/submissions/blast3.2/today:
+total 0
+
+/magma/scm-release/submissions/blast3_gui8:
+total 8
+drwxr-xr-x    2 scmbuild scm          4096 Jan 10  2002 done
+drwxr-xr-x    2 scmbuild scm          4096 Jan 10  2002 today
+
+/magma/scm-release/submissions/blast3_gui8/done:
+total 0
+
+/magma/scm-release/submissions/blast3_gui8/today:
+total 0
+
+/magma/scm-release/submissions/blast4:
+total 128
+drwxrwxr-x    2 javagal  develop      8192 Dec 29 18:56 approved
+drwxrwxr-x    5 alexa    develop      4096 Dec  8 22:49 bundle
+drwxrwxr-x    2 javagal  develop      4096 Nov 17 21:56 checkedin
+drwxrwxr-x    4 javagal  develop     61440 Dec 22 11:33 done
+drwxrwxr-x    2 javagal  develop      4096 Oct 28 14:37 hold
+drwxrwxr-x    2 javagal  develop      8192 Dec 12 11:18 need_blast4_branch
+drwxrwxr-x    2 javagal  develop      4096 Jan 28  2003 no_test
+drwxrwxr-x    6 javagal  develop      4096 Apr 24  2003 qor
+drwxrwxr-x    2 alexa    develop      4096 Dec 17 15:14 ready_to_bundle
+drwxrwxr-x    7 javagal  develop      8192 Oct 28 16:39 received
+drwxrwxr-x    2 javagal  develop      4096 Nov 18 13:35 response_statistics
+drwxrwxr-x    5 alexa    develop      8192 Dec  9 16:44 scmbuild
+drwxrwxr-x    2 javagal  develop      8192 Dec 15 11:23 today
+
+/magma/scm-release/submissions/blast4/approved:
+total 64
+-rw-rw-r--    1 javagal  develop       610 Dec 19 18:47 25171.blast4_zge_ntdsp
+-rw-rw-r--    1 snguyen  develop     16617 Dec 29 18:56 25244_25245_24619_24924_24897_25152_18540_25290_25181_24977_24978_25188_25310_25073_25068_24733_24935_23421_24544_24198_25215_24867_25205.BLAST4.1_RTL1_CHKPNT_1
+
+/magma/scm-release/submissions/blast4/bundle:
+total 12
+drwxrwxr-x    5 alexa    develop      4096 Dec  9 16:21 build
+drwxrwxr-x    2 alexa    develop      4096 Dec  9 16:21 results
+drwxrwxr-x    2 alexa    develop      4096 Dec  1 14:21 test
+
+/magma/scm-release/submissions/blast4/bundle/build:
+total 12
+drwxrwxr-x    2 alexa    develop      4096 Dec  8 22:49 blast4_anqorbld_bundle1
+drwxrwxr-x    2 sroy     develop      4096 Dec  8 22:49 blast4_anqorbld_bundle2
+drwxrwxr-x    2 alexa    develop      4096 Dec  9 16:21 blast4_psqorbld_bundle1
+
+/magma/scm-release/submissions/blast4/bundle/build/blast4_anqorbld_bundle1:
+total 0
+
+/magma/scm-release/submissions/blast4/bundle/build/blast4_anqorbld_bundle2:
+total 0
+
+/magma/scm-release/submissions/blast4/bundle/build/blast4_psqorbld_bundle1:
+total 0
+
+/magma/scm-release/submissions/blast4/bundle/results:
+total 0
+
+/magma/scm-release/submissions/blast4/bundle/test:
+total 0
+
+/magma/scm-release/submissions/blast4/checkedin:
+total 0
+
+/magma/scm-release/submissions/blast4/done:
+total 2652
+-rw-rw-r--    1 alexa    develop      6539 Aug  9 12:00 10335_17304_17396_17766_18075_18115.BLAST4.0_GUI1_CHKPNT_2-F-blast4.0_qorbuild_23
+
+/magma/scm-release/submissions/blast4/done/pre-4.0-split:
+total 3160
+-rw-rw-r--    1 javagal  develop      3280 Apr 19  2003 10476.blast4_sroy_10476-blast4_qorbuild_65
+-rw-rw-rw-    1 javagal  develop      9739 Mar 29  2003 10481_11768_12580_13345_14626_15494_15932_15959_16041_16111_16272_16476_16511_16698.blast4_hong_16041-blast4_qorbuild_52
+
+/magma/scm-release/submissions/blast4/done/pre-4.0-split/4-pre-split:
+total 772
+-rw-rw-r--    1 javagal  develop      3374 Dec 20  2002 10476_15201_15221.blast3_jeffrey_15221-blast3_qorbuild_532
+
+/magma/scm-release/submissions/blast4/done/pre-4.0-split/4-pre-split/3.2-pre-split:
+total 2832
+-rw-rw-r--    1 javagal  develop      1141 Dec 20  2002 10020.blast3_henrik_10020-blast3_qorbuild_392
+-rw-rw-r--    1 javagal  develop      4529 Dec 20  2002 10108_10978_11154_11366_11367_11392_11437.blast3_zge_may21_merge-blast3_qorbuild_391
+
+/magma/scm-release/submissions/blast4/hold:
+total 8
+-rw-rw-r--    1 javagal  develop      4662 Jul 21 13:51 nocr.blast4_cynthia_fuefix-blast4_qorbuild_121
+
+/magma/scm-release/submissions/blast4/need_blast4_branch:
+total 28
+-rw-rw-r--    1 alexa    develop         0 Dec 12 11:18 19288.blast4.0_mandal_19195-blast4.0_qorbuild_an_1-blast4.0_anqorbld_bundle1
+
+/magma/scm-release/submissions/blast4/no_test:
+total 20
+-rw-rw-r--    1 javagal  develop       128 Jan 28  2003 blast3.2_lippens_15586
+
+/magma/scm-release/submissions/blast4/qor:
+total 16
+drwxrwxr-x    2 javagal  develop      4096 Dec 18  2002 aborted
+drwxrwxr-x   11 javagal  develop      4096 Dec 12 16:17 build
+drwxrwxr-x    2 alexa    develop      4096 Dec  2 17:57 results
+drwxrwxr-x    2 javagal  develop      4096 Dec  2 13:19 test
+
+/magma/scm-release/submissions/blast4/qor/aborted:
+total 0
+
+/magma/scm-release/submissions/blast4/qor/build:
+total 36
+drwxrwxr-x    2 alexa    develop      4096 Dec  3 13:26 blast4_anqorbld1
+drwxrwxr-x    2 alexa    develop      4096 Dec  3 19:00 blast4_anqorbld2
+drwxrwxr-x    2 alexa    develop      4096 Dec  3 13:26 blast4_anqorbld3
+drwxrwxr-x    2 javagal  develop      4096 Nov 21 09:44 blast4_beqorbld1
+drwxrwxr-x    2 javagal  develop      4096 Nov 21 09:44 blast4_beqorbld2
+drwxrwxr-x    2 snguyen  develop      4096 Dec 11 13:29 blast4_feqorbld1
+drwxrwxr-x    2 sroy     develop      4096 Dec 18 08:23 blast4_psqorbld2
+drwxrwxr-x    2 sroy     develop      4096 Dec 18 08:32 blast4_psqorbld3
+drwxrwxr-x    2 sroy     develop      4096 Dec 16 16:59 blast4_psqorbld4
+
+/magma/scm-release/submissions/blast4/qor/build/blast4_anqorbld1:
+total 0
+
+/magma/scm-release/submissions/blast4/qor/build/blast4_anqorbld2:
+total 0
+
+/magma/scm-release/submissions/blast4/qor/build/blast4_anqorbld3:
+total 0
+
+/magma/scm-release/submissions/blast4/qor/build/blast4_beqorbld1:
+total 0
+
+/magma/scm-release/submissions/blast4/qor/build/blast4_beqorbld2:
+total 0
+
+/magma/scm-release/submissions/blast4/qor/build/blast4_feqorbld1:
+total 0
+-rw-rw-r--    1 snguyen  develop         0 Dec 11 13:28 BLAST4_ABHIJIT_25073_CHKPNT_1
+
+/magma/scm-release/submissions/blast4/qor/build/blast4_psqorbld2:
+total 0
+
+/magma/scm-release/submissions/blast4/qor/build/blast4_psqorbld3:
+total 0
+
+/magma/scm-release/submissions/blast4/qor/build/blast4_psqorbld4:
+total 0
+
+/magma/scm-release/submissions/blast4/qor/results:
+total 0
+
+/magma/scm-release/submissions/blast4/qor/test:
+total 0
+
+/magma/scm-release/submissions/blast4/ready_to_bundle:
+total 0
+
+/magma/scm-release/submissions/blast4/received:
+total 20
+drwxrwxr-x    2 alexa    develop      4096 Dec  1 18:40 an
+drwxrwxr-x    2 alexa    develop      4096 Dec 28 11:54 be
+drwxrwxr-x    2 alexa    develop      4096 Dec 29 13:49 fe
+drwxrwxr-x    2 alexa    develop      4096 Dec  3 18:18 ps
+drwxrwxr-x    2 alexa    develop      4096 Oct 10 15:23 special
+
+/magma/scm-release/submissions/blast4/received/an:
+total 0
+
+/magma/scm-release/submissions/blast4/received/be:
+total 4
+-rw-rw-r--    1 sfscript scm           556 Dec 24 08:44 25482.blast4_ksleung_25482
+
+/magma/scm-release/submissions/blast4/received/fe:
+total 0
+-rw-rw-r--    1 javagal  develop         0 Dec 17 11:09 nocr.BLAST4_ARVIND_STL_FINAL_CHKPNT_1
+
+/magma/scm-release/submissions/blast4/received/ps:
+total 0
+
+/magma/scm-release/submissions/blast4/received/special:
+total 0
+
+/magma/scm-release/submissions/blast4/response_statistics:
+total 92
+-rw-rw-r--    1 javagal  develop       314 Jun  4  2003 blast4_qorbuild_102
+
+/magma/scm-release/submissions/blast4/scmbuild:
+total 12
+drwxrwxr-x    4 alexa    develop      4096 Dec 14 00:44 build
+drwxrwxr-x    2 alexa    develop      4096 Dec 11 20:04 results
+drwxrwxr-x    2 alexa    develop      4096 Dec 15 11:23 test
+
+/magma/scm-release/submissions/blast4/scmbuild/build:
+total 8
+drwxrwxr-x    2 snguyen  develop      4096 Dec 14 00:44 blast4_scmbuild_merge1
+drwxrwxr-x    2 snguyen  develop      4096 Dec 13 21:50 blast4_scmbuild_merge2
+
+/magma/scm-release/submissions/blast4/scmbuild/build/blast4_scmbuild_merge1:
+total 0
+
+/magma/scm-release/submissions/blast4/scmbuild/build/blast4_scmbuild_merge2:
+total 0
+
+/magma/scm-release/submissions/blast4/scmbuild/results:
+total 0
+
+/magma/scm-release/submissions/blast4/scmbuild/test:
+total 0
+
+/magma/scm-release/submissions/blast4/today:
+total 0
+
+/magma/scm-release/submissions/blast4.0:
+total 108
+drwxrwxr-x    4 javagal  develop      4096 Dec 29 18:51 approved
+drwxrwxr-x    5 alexa    develop      4096 Dec 23 15:03 bundle
+drwxrwxr-x    2 javagal  develop      4096 Nov 17 19:21 checkedin
+drwxrwxr-x    3 javagal  develop     53248 Dec 30 06:15 done
+drwxrwxr-x    2 javagal  develop      4096 Aug 12 17:43 hold
+drwxrwxr-x    2 javagal  develop      4096 Oct 24 16:24 need_blast4.0_branch
+drwxrwxr-x    2 javagal  develop      4096 Jun 16  2003 no_test
+drwxrwxr-x    6 javagal  develop      4096 Jun 16  2003 qor
+drwxrwxr-x    2 alexa    develop      4096 Dec 29 15:51 ready_to_bundle
+drwxrwxr-x    7 javagal  develop      4096 Nov 18 18:39 received
+drwxrwxr-x    2 javagal  develop      4096 Jul 10 14:26 response_statistics
+drwxrwxr-x    5 javagal  develop      8192 Dec 19 18:00 scmbuild
+drwxrwxr-x    2 javagal  develop      8192 Dec 30 06:15 today
+
+/magma/scm-release/submissions/blast4.0/approved:
+total 12
+-rw-rw-r--    1 sfscript scm           560 Dec 24 09:29 25482.blast4.0_ksleung_25482-NF
+-rw-rw-r--    1 javagal  develop         0 Dec 29 18:51 25509.blast4.0_indresha_25509
+drwxrwxr-x    4 javagal  develop      4096 Dec 29 17:25 blast4.0_anqorbld_bundle1
+drwxrwxr-x    2 sroy     develop      4096 Dec 29 15:51 blast4.0_psqorbld7
+
+/magma/scm-release/submissions/blast4.0/approved/blast4.0_anqorbld_bundle1:
+total 8
+drwxrwxr-x    2 srani    develop      4096 Dec 24 23:50 blast4.0_anqorbld5
+drwxrwxr-x    2 anqorbld develop      4096 Dec 24 23:51 blast4.0_anqorbld6
+
+/magma/scm-release/submissions/blast4.0/approved/blast4.0_anqorbld_bundle1/blast4.0_anqorbld5:
+total 20
+-rw-rw-r--    1 brendan  develop       553 Nov 11 12:17 23706.blast4.0_lars_23706-blast4.0_anqorbld_5-blast4.0_anqorbld_bundle_3
+
+/magma/scm-release/submissions/blast4.0/approved/blast4.0_anqorbld_bundle1/blast4.0_anqorbld6:
+total 36
+-rw-rw-rw-    1 clfy-scm scm          8880 Sep 12 15:37 16457.blast4.0_petec_16457_continued-NF-blast4.0_anqorbld_6-blast4.0_anqorbld_bundle_3
+
+/magma/scm-release/submissions/blast4.0/approved/blast4.0_psqorbld7:
+total 16
+-rw-rw-r--    1 brendan  develop       556 Nov 13 10:17 23966.BLAST4.0_JOYDEEP_PUSHDOWN_SEGBUCKET_CHKPNT_1-blast4.0_psqorbld_8
+
+/magma/scm-release/submissions/blast4.0/bundle:
+total 12
+drwxrwxr-x    5 alexa    develop      4096 Dec 25 11:34 build
+drwxrwxr-x    2 alexa    develop      4096 Dec 29 17:25 results
+drwxrwxr-x    2 alexa    develop      4096 Dec 26 01:35 test
+
+/magma/scm-release/submissions/blast4.0/bundle/build:
+total 12
+drwxrwxr-x    2 alexa    develop      4096 Dec 21 01:44 blast4.0_anqorbld_bundle2
+drwxrwxr-x    2 sroy     develop      4096 Dec 22 18:33 blast4.0_psqorbld_bundle1
+drwxrwxr-x    2 sroy     develop      4096 Dec 23 15:03 blast4.0_psqorbld_bundle2
+
+/magma/scm-release/submissions/blast4.0/bundle/build/blast4.0_anqorbld_bundle2:
+total 0
+
+/magma/scm-release/submissions/blast4.0/bundle/build/blast4.0_psqorbld_bundle1:
+total 0
+
+/magma/scm-release/submissions/blast4.0/bundle/build/blast4.0_psqorbld_bundle2:
+total 0
+
+/magma/scm-release/submissions/blast4.0/bundle/results:
+total 0
+
+/magma/scm-release/submissions/blast4.0/bundle/test:
+total 0
+
+/magma/scm-release/submissions/blast4.0/checkedin:
+total 0
+
+/magma/scm-release/submissions/blast4.0/done:
+total 2288
+-rw-rw-r--    1 alexa    develop      6539 Aug  3 10:28 10335_17304_17396_17766_18075_18115.BLAST4.0_GUI1_CHKPNT_2-F-blast4.0_qorbuild_23
+drwxrwxr-x    3 javagal  develop     57344 Jun 17  2003 pre-4.0-split
+
+/magma/scm-release/submissions/blast4.0/done/pre-4.0-split:
+total 3160
+-rw-rw-r--    1 javagal  develop      3280 Apr 19  2003 10476.blast4_sroy_10476-blast4_qorbuild_65
+
+/magma/scm-release/submissions/blast4.0/done/pre-4.0-split/4-pre-split:
+total 772
+-rw-rw-r--    1 javagal  develop      3374 Dec 20  2002 10476_15201_15221.blast3_jeffrey_15221-blast3_qorbuild_532
+drwxrwxr-x    2 javagal  develop     69632 Dec 20  2002 3.2-pre-split
+
+/magma/scm-release/submissions/blast4.0/done/pre-4.0-split/4-pre-split/3.2-pre-split:
+total 2832
+-rw-rw-r--    1 javagal  develop      1141 Dec 20  2002 10020.blast3_henrik_10020-blast3_qorbuild_392
+
+/magma/scm-release/submissions/blast4.0/hold:
+total 0
+
+/magma/scm-release/submissions/blast4.0/need_blast4.0_branch:
+total 100
+-rw-rw-r--    1 alexa    develop      3705 Jul 23 19:58 13226_17336_17641_17713_17907_17941_18112_18141.BLAST3.2_MKJIN_DFT10_CHKPNT_7-blast3.2_qorbuild_144
+
+/magma/scm-release/submissions/blast4.0/no_test:
+total 0
+
+/magma/scm-release/submissions/blast4.0/qor:
+total 16
+drwxrwxr-x    2 javagal  develop      4096 Dec 29 15:35 aborted
+drwxrwxr-x   12 javagal  develop      4096 Dec 30 08:52 build
+drwxrwxr-x    3 javagal  develop      4096 Dec 29 11:46 results
+drwxrwxr-x    2 javagal  develop      4096 Dec 30 08:52 test
+
+/magma/scm-release/submissions/blast4.0/qor/aborted:
+total 0
+
+/magma/scm-release/submissions/blast4.0/qor/build:
+total 40
+drwxrwxr-x    2 alexa    develop      4096 Dec 21 01:43 blast4.0_anqorbld1
+drwxrwxr-x    2 anqorbld develop      4096 Dec 21 01:43 blast4.0_anqorbld3
+drwxrwxr-x    2 beqorbld develop      4096 Dec 13 21:38 blast4.0_beqorbld1
+drwxrwxr-x    2 srani    develop      4096 Dec 21 01:43 blast4.0_beqorbld2
+drwxrwxr-x    2 sroy     develop      4096 Dec 23 14:58 blast4.0_psqorbld1
+drwxrwxr-x    2 sroy     develop      4096 Dec 30 08:52 blast4.0_psqorbld2
+drwxrwxr-x    2 sroy     develop      4096 Dec 23 15:01 blast4.0_psqorbld3
+drwxrwxr-x    2 sroy     develop      4096 Dec 23 15:01 blast4.0_psqorbld4
+drwxrwxr-x    2 sroy     develop      4096 Dec 23 15:01 blast4.0_psqorbld5
+drwxrwxr-x    2 snguyen  develop      4096 Dec 29 15:38 blast4.0_qorbuild_misc2
+
+/magma/scm-release/submissions/blast4.0/qor/build/blast4.0_anqorbld1:
+total 0
+
+/magma/scm-release/submissions/blast4.0/qor/build/blast4.0_anqorbld3:
+total 0
+
+/magma/scm-release/submissions/blast4.0/qor/build/blast4.0_beqorbld1:
+total 0
+
+/magma/scm-release/submissions/blast4.0/qor/build/blast4.0_beqorbld2:
+total 0
+
+/magma/scm-release/submissions/blast4.0/qor/build/blast4.0_psqorbld1:
+total 0
+
+/magma/scm-release/submissions/blast4.0/qor/build/blast4.0_psqorbld2:
+total 8
+-rw-rw-r--    1 sfscript scm          1906 Dec 30 08:52 23933_23593_20742_23493_24139.blast4.0_dpl_incl_region-blast4.0_psqorbld_11
+
+/magma/scm-release/submissions/blast4.0/qor/build/blast4.0_psqorbld3:
+total 0
+
+/magma/scm-release/submissions/blast4.0/qor/build/blast4.0_psqorbld4:
+total 0
+
+/magma/scm-release/submissions/blast4.0/qor/build/blast4.0_psqorbld5:
+total 0
+
+/magma/scm-release/submissions/blast4.0/qor/build/blast4.0_qorbuild_misc2:
+total 0
+
+/magma/scm-release/submissions/blast4.0/qor/results:
+total 4
+drwxrwxr-x    2 snguyen  develop      4096 Dec 27 11:23 blast4.0_feqorbld1
+
+/magma/scm-release/submissions/blast4.0/qor/results/blast4.0_feqorbld1:
+total 0
+-rw-rw-r--    1 snguyen  develop         0 Dec 11 10:30 BLAST4.0_ABHIJIT_25073_CHKPNT_1-blast4.0_rtl1
+
+/magma/scm-release/submissions/blast4.0/qor/test:
+total 0
+
+/magma/scm-release/submissions/blast4.0/ready_to_bundle:
+total 0
+
+/magma/scm-release/submissions/blast4.0/received:
+total 20
+drwxrwxr-x    2 javagal  develop      4096 Dec 23 17:09 an
+drwxrwxr-x    2 javagal  develop      4096 Dec 29 17:30 be
+drwxrwxr-x    2 javagal  develop      4096 Dec 10 09:06 fe
+drwxrwxr-x    2 javagal  develop      4096 Dec 26 13:06 ps
+drwxrwxr-x    2 javagal  develop      4096 Oct  9 15:27 special
+
+/magma/scm-release/submissions/blast4.0/received/an:
+total 0
+
+/magma/scm-release/submissions/blast4.0/received/be:
+total 8
+-rw-rw-r--    1 sfscript scm           542 Dec 16 15:31 18487.blast4.0_hong_hardy_19710-NF
+
+/magma/scm-release/submissions/blast4.0/received/fe:
+total 8
+-rw-rw-r--    1 brendan  scm           568 Dec  9 14:25 23785.blast4.0_jeroen_23785
+
+/magma/scm-release/submissions/blast4.0/received/ps:
+total 60
+-rw-rw-r--    1 sfscript scm           536 Dec 16 16:37 18419.blast4.0_henrik_18419
+
+/magma/scm-release/submissions/blast4.0/received/special:
+total 0
+
+/magma/scm-release/submissions/blast4.0/response_statistics:
+total 4
+-rw-rw-r--    1 javagal  develop       160 Jul 10 14:26 blast4.0_qorbuild_9
+
+/magma/scm-release/submissions/blast4.0/scmbuild:
+total 12
+drwxrwxr-x    4 alexa    develop      4096 Dec 18 22:26 build
+drwxrwxr-x    2 alexa    develop      4096 Dec 18 22:26 results
+drwxrwxr-x    2 alexa    develop      4096 Dec 17 09:04 test
+
+/magma/scm-release/submissions/blast4.0/scmbuild/build:
+total 8
+drwxrwxr-x    2 alexa    develop      4096 Dec 29 15:33 blast4.0_scmbuild_merge1
+drwxrwxr-x    2 alexa    develop      4096 Dec 29 18:51 blast4.0_scmbuild_merge2
+
+/magma/scm-release/submissions/blast4.0/scmbuild/build/blast4.0_scmbuild_merge1:
+total 0
+
+/magma/scm-release/submissions/blast4.0/scmbuild/build/blast4.0_scmbuild_merge2:
+total 76
+-rw-rw-rw-    1 javagal  develop      8880 Sep 12 15:37 16457.blast4.0_petec_16457_continued-NF-blast4.0_anqorbld_6-blast4.0_anqorbld_bundle_3
+
+/magma/scm-release/submissions/blast4.0/scmbuild/results:
+total 0
+
+/magma/scm-release/submissions/blast4.0/scmbuild/test:
+total 0
+
+/magma/scm-release/submissions/blast4.0/today:
+total 0
+
+/magma/scm-release/submissions/blast4.1:
+total 44
+drwxrwxr-x    2 scmbuild develop      4096 Dec 29 14:32 approved
+drwxrwxr-x    5 scmbuild develop      4096 Dec 15 19:57 bundle
+drwxrwxr-x    2 scmbuild develop      4096 Dec 15 19:56 checkedin
+drwxrwxr-x    3 scmbuild develop      4096 Dec 22 11:33 done
+drwxrwxr-x    2 scmbuild develop      4096 Dec 29 16:07 hold
+drwxrwxr-x    2 scmbuild develop      4096 Dec 29 15:36 need_blast4.1_branch
+drwxrwxr-x    5 scmbuild develop      4096 Dec 15 19:56 qor
+drwxrwxr-x    2 scmbuild develop      4096 Dec 30 09:06 ready_to_bundle
+drwxrwxr-x    6 scmbuild develop      4096 Dec 15 19:57 received
+drwxrwxr-x    5 scmbuild develop      4096 Dec 15 19:57 scmbuild
+drwxrwxr-x    2 scmbuild develop      4096 Dec 29 18:53 today
+
+/magma/scm-release/submissions/blast4.1/approved:
+total 0
+
+/magma/scm-release/submissions/blast4.1/bundle:
+total 12
+drwxrwxr-x    3 scmbuild develop      4096 Dec 30 09:06 build
+drwxrwxr-x    3 scmbuild develop      4096 Dec 24 16:58 results
+drwxrwxr-x    2 scmbuild develop      4096 Dec 24 08:40 test
+
+/magma/scm-release/submissions/blast4.1/bundle/build:
+total 4
+drwxrwxr-x    4 javagal  develop      4096 Dec 30 09:06 blast4.1_psqorbld_bundle2
+
+/magma/scm-release/submissions/blast4.1/bundle/build/blast4.1_psqorbld_bundle2:
+total 8
+drwxrwxr-x    2 sroy     develop      4096 Dec 30 09:06 blast4.1_psqorbld1
+drwxrwxr-x    2 sroy     develop      4096 Dec 30 09:06 blast4.1_psqorbld4
+
+/magma/scm-release/submissions/blast4.1/bundle/build/blast4.1_psqorbld_bundle2/blast4.1_psqorbld1:
+total 32
+-rw-rw-r--    1 brendan  develop       528 Nov 18 10:13 19336.blast4_amit_19336-blast4.1_psqorbld_1
+
+/magma/scm-release/submissions/blast4.1/bundle/build/blast4.1_psqorbld_bundle2/blast4.1_psqorbld4:
+total 48
+-rw-rw-r--    1 alexa    develop         0 Oct 30 22:40 19451_19461.blast4_hong_pdef-blast4.1_psqorbld_4-blast4.1_psqorbld_4
+
+/magma/scm-release/submissions/blast4.1/bundle/results:
+total 4
+drwxrwxr-x    4 sroy     develop      4096 Dec 24 08:40 blast4.1_psqorbld_bundle1-QOR-review-and-wait-for-full-QOR-approval
+
+/magma/scm-release/submissions/blast4.1/bundle/results/blast4.1_psqorbld_bundle1-QOR-review-and-wait-for-full-QOR-approval:
+total 8
+drwxrwxr-x    2 sroy     develop      4096 Dec 23 08:11 blast4.1_psqorbld2
+drwxrwxr-x    2 sroy     develop      4096 Dec 23 08:11 blast4_psqorbld1
+
+/magma/scm-release/submissions/blast4.1/bundle/results/blast4.1_psqorbld_bundle1-QOR-review-and-wait-for-full-QOR-approval/blast4.1_psqorbld2:
+total 20
+-rw-rw-r--    1 alexa    develop         0 Oct 30 20:47 18599.blast4_hua_18599-blast4.1_psqorbld_2-blast4.1_psqorbld_bundle_1
+
+/magma/scm-release/submissions/blast4.1/bundle/results/blast4.1_psqorbld_bundle1-QOR-review-and-wait-for-full-QOR-approval/blast4_psqorbld1:
+total 36
+-rw-rw-r--    1 brendan  scm           507 Dec 10 11:11 18500.blast4_michel_18500-blast4_psqorbld_6-blast4.1_psqorbld_bundle_1
+
+/magma/scm-release/submissions/blast4.1/bundle/test:
+total 0
+
+/magma/scm-release/submissions/blast4.1/checkedin:
+total 0
+
+/magma/scm-release/submissions/blast4.1/done:
+total 72
+-rw-rw-r--    1 brendan  develop       610 Dec 20 07:15 25171.blast4_zge_ntdsp
+drwxrwxr-x    4 javagal  develop     57344 Dec 15 19:18 pre-4.1-split
+
+/magma/scm-release/submissions/blast4.1/done/pre-4.1-split:
+total 2652
+-rw-rw-r--    1 javagal  develop      6539 Aug  9 12:00 10335_17304_17396_17766_18075_18115.BLAST4.0_GUI1_CHKPNT_2-F-blast4.0_qorbuild_23
+drwxrwxr-x    3 javagal  develop     57344 Jun 22  2003 pre-4.0-split
+
+/magma/scm-release/submissions/blast4.1/done/pre-4.1-split/logfiles:
+total 16
+-rw-rw-r--    1 javagal  develop         0 Jul 16 15:13 commandarchive.log
+
+/magma/scm-release/submissions/blast4.1/done/pre-4.1-split/pre-4.0-split:
+total 3160
+-rw-rw-r--    1 javagal  develop      3280 Apr 19  2003 10476.blast4_sroy_10476-blast4_qorbuild_65
+drwxrwxr-x    3 javagal  develop     16384 Jun 22  2003 4-pre-split
+
+/magma/scm-release/submissions/blast4.1/done/pre-4.1-split/pre-4.0-split/4-pre-split:
+total 772
+-rw-rw-r--    1 javagal  develop      3374 Dec 20  2002 10476_15201_15221.blast3_jeffrey_15221-blast3_qorbuild_532
+drwxrwxr-x    2 javagal  develop     69632 Dec 20  2002 3.2-pre-split
+
+/magma/scm-release/submissions/blast4.1/done/pre-4.1-split/pre-4.0-split/4-pre-split/3.2-pre-split:
+total 2832
+-rw-rw-r--    1 javagal  develop      1141 Dec 20  2002 10020.blast3_henrik_10020-blast3_qorbuild_392
+
+/magma/scm-release/submissions/blast4.1/hold:
+total 0
+-rw-rw-r--    1 alexa    develop         0 Dec 17 18:11 nocr.blast4_niran_scriptfix-issues-with-GUI-Hong-reviewing-19Dec
+
+/magma/scm-release/submissions/blast4.1/need_blast4.1_branch:
+total 20
+-rw-r--r--    1 alexa    develop       556 Dec 17 15:07 19833.blast4.0_tatjana_19833-blast4.0_psqorbld_1-blast4.0_psqorbld_bundle_1
+
+/magma/scm-release/submissions/blast4.1/qor:
+total 12
+drwxrwxr-x    2 scmbuild develop      4096 Dec 29 13:14 build
+drwxrwxr-x    4 scmbuild develop      4096 Dec 29 16:09 results
+drwxrwxr-x    4 scmbuild develop      4096 Dec 29 13:14 test
+
+/magma/scm-release/submissions/blast4.1/qor/build:
+total 0
+
+/magma/scm-release/submissions/blast4.1/qor/results:
+total 8
+drwxrwxr-x    2 anqorbld develop      4096 Dec 25 11:31 blast4.1_anqorbld1-infineon-tricolor-mempeak-increase
+drwxrwxr-x    2 sroy     develop      4096 Dec 21 10:25 blast4.1_psqorbld3-master-failure-QOR-failure-waiting-for-lippens-05Jan
+
+/magma/scm-release/submissions/blast4.1/qor/results/blast4.1_anqorbld1-infineon-tricolor-mempeak-increase:
+total 32
+-rw-rw-r--    1 alexa    develop         0 Oct 30 20:44 14366_15805_17979.blast4_billp_spetch-blast4.1_anqorbld_1
+
+/magma/scm-release/submissions/blast4.1/qor/results/blast4.1_psqorbld3-master-failure-QOR-failure-waiting-for-lippens-05Jan:
+total 28
+-rw-rw-r--    1 alexa    develop         0 Oct 27 22:14 20418.blast4_lippens_24018-blast4.1_psqorbld_3
+
+/magma/scm-release/submissions/blast4.1/qor/test:
+total 8
+drwxrwxr-x    2 beqorbld develop      4096 Dec 29 13:14 blast4.1_beqorbld1
+drwxrwxr-x    2 snguyen  develop      4096 Dec 27 11:25 blast4.1_feqorbld1
+
+/magma/scm-release/submissions/blast4.1/qor/test/blast4.1_beqorbld1:
+total 52
+-rw-rw-r--    1 sfscript scm           507 Dec 17 19:14 18486.blast4_zge_18486-blast4.1_beqorbld_1
+
+/magma/scm-release/submissions/blast4.1/qor/test/blast4.1_feqorbld1:
+total 0
+-rw-rw-r--    1 snguyen  develop         0 Dec 23 22:45 24867.blast4_peyman_24867-blast4.1_rtl1
+
+/magma/scm-release/submissions/blast4.1/ready_to_bundle:
+total 0
+
+/magma/scm-release/submissions/blast4.1/received:
+total 16
+drwxrwxr-x    2 scmbuild develop      4096 Dec 29 16:07 an
+drwxrwxr-x    2 scmbuild develop      4096 Dec 28 11:53 be
+drwxrwxr-x    2 scmbuild develop      4096 Dec 23 17:53 fe
+drwxrwxr-x    2 scmbuild develop      4096 Dec 30 09:12 ps
+
+/magma/scm-release/submissions/blast4.1/received/an:
+total 4
+-rw-rw-r--    1 brendan  develop       546 Nov 21 12:12 20856.blast4_ajits_20856-blast4.1_anqorbld_1-HOLD-on-Tao-request
+
+/magma/scm-release/submissions/blast4.1/received/be:
+total 4
+-rw-rw-r--    1 sfscript scm           560 Dec 24 09:47 25482.blast4.1_ksleung_25482-NF
+
+/magma/scm-release/submissions/blast4.1/received/fe:
+total 8
+-rw-rw-r--    1 brendan  develop       588 Nov 17 10:28 23785.blast4_jeroen_23785
+
+/magma/scm-release/submissions/blast4.1/received/ps:
+total 92
+-rw-rw-rw-    1 clfy-scm scm          1248 Jul 11 11:54 16512.blast4_sandeep_16512-WAIT-for-Sandeep-to-fix-QOR-issues-with-Thomas
+
+/magma/scm-release/submissions/blast4.1/scmbuild:
+total 12
+drwxrwxr-x    4 scmbuild develop      4096 Dec 29 14:32 build
+drwxrwxr-x    2 scmbuild develop      4096 Dec 19 18:44 results
+drwxrwxr-x    2 scmbuild develop      4096 Dec 19 07:06 test
+
+/magma/scm-release/submissions/blast4.1/scmbuild/build:
+total 8
+drwxrwxr-x    2 alexa    develop      4096 Dec 19 18:44 blast4.1_scmbuild_merge1
+drwxrwxr-x    2 snguyen  develop      4096 Dec 29 18:53 blast4.1_scmbuild_merge2
+
+/magma/scm-release/submissions/blast4.1/scmbuild/build/blast4.1_scmbuild_merge1:
+total 0
+
+/magma/scm-release/submissions/blast4.1/scmbuild/build/blast4.1_scmbuild_merge2:
+total 0
+
+/magma/scm-release/submissions/blast4.1/scmbuild/results:
+total 0
+
+/magma/scm-release/submissions/blast4.1/scmbuild/test:
+total 0
+
+/magma/scm-release/submissions/blast4.1/today:
+total 56
+-rw-rw-r--    1 snguyen  develop     24711 Dec 29 23:21 25244_25245_24619_24924_24897_25152_18540_25290_25181_24977_24978_25188_25310_25073_25068_24733_24935_23421_24544_24198_25215_24867_25205.BLAST4.1_RTL1_CHKPNT_1
+
+/magma/scm-release/submissions/clfy-scm:
+total 92
+-rw-rw-rw-    1 clfy-scm scm          1250 Sep 18 12:03 18439.blast3.2_indresha_18439_2-WAIT-for-hong
+-rw-rw-rw-    1 clfy-scm scm          1262 Sep  9 09:47 19242.blast4.0_sandeep_18868-HOLD-by-request
+-rw-rw-rw-    1 clfy-scm scm          1233 Sep 22 18:31 19421.blast4.0_billp_19421-WAIT-for-emre
+-rw-rw-rw-    1 clfy-scm scm          3682 Sep 19 13:03 19479_19482_19540.blast4.0_michel_19540-WAIT-for-kam
+drwxrwxrwx    2 clfy-scm scm         12288 Oct  1 11:56 done
+drwxrwxr-x    2 javagal  develop      4096 May 13  2002 hold
+drwxrwxrwx    2 clfy-scm scm          4096 Oct  1 11:56 inprocess
+-rw-rw-r--    1 scmbuild scm         53378 Dec 30 06:15 merged_crs
+
+/magma/scm-release/submissions/clfy-scm/done:
+total 972
+-rw-rw-r--    1 javagal  develop        83 Jun 27  2002 merged_crs.2002_06_27
+-rw-rw-r--    1 javagal  develop      3224 Sep 30 22:25 merged_crs.2003_10_01
+
+/magma/scm-release/submissions/clfy-scm/hold:
+total 0
+-rw-rw-r--    1 javagal  develop         0 Apr 17  2002 11444.blast3_etienne_2
+
+/magma/scm-release/submissions/clfy-scm/inprocess:
+total 0
+
+/magma/scm-release/submissions/main:
+total 8
+drwxrwxr-x    2 scmbuild scm          4096 Jan  9  2002 done
+drwxrwxr-x    2 scmbuild scm          4096 Jan  9  2002 today
+
+/magma/scm-release/submissions/main/done:
+total 0
+
+/magma/scm-release/submissions/main/today:
+total 0
+
+/magma/scm-release/submissions/sf-scm:
+total 4
+drwxr-xr-x    2 brendan  develop      4096 Dec  8 21:21 done
+
+/magma/scm-release/submissions/sf-scm/done:
+total 44
+-rw-r--r--    1 brendan  develop       348 Nov 20 18:07 merged_crs.2003_09_20
+-rw-r--r--    1 brendan  develop        86 Nov 20 18:16 merged_crs.2003_10_05
+-rw-r--r--    1 brendan  develop      6578 Dec  5 09:35 merged_crs.2003_11_18
+-rw-r--r--    1 brendan  develop      1817 Dec  3 00:35 merged_crs.2003_11_22
+-rw-r--r--    1 brendan  develop      1660 Dec  3 00:35 merged_crs.2003_11_26
+-rw-r--r--    1 brendan  develop      2449 Dec  3 00:40 merged_crs.2003_12_01
+-rw-r--r--    1 brendan  develop      1975 Dec  4 17:03 merged_crs.2003_12_03
+-rw-r--r--    1 brendan  develop      3555 Dec  4 17:47 merged_crs.2003_12_04
+-rw-r--r--    1 brendan  develop      2185 Dec  8 09:41 merged_crs.2003_12_06
+-rw-r--r--    1 brendan  develop        79 Dec  8 21:21 merged_crs.2003_12_08

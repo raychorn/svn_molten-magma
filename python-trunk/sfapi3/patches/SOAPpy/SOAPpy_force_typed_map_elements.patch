@@ -1,0 +1,64 @@
+diff -Naur SOAPpy-0.12.0_orig/SOAPpy/Config.py SOAPpy-0.12.0_patched/SOAPpy/Config.py
+--- SOAPpy-0.12.0_orig/SOAPpy/Config.py	2005-02-09 07:21:04.000000000 -0800
++++ SOAPpy-0.12.0_patched/SOAPpy/Config.py	2005-12-05 00:05:05.000000000 -0800
+@@ -110,6 +110,17 @@
+             # authorization error.
+             self.authMethod = None
+ 
++            # if force_typed_map_elems is a True value,
++            # each element of a mapped object
++            # (i.e., SOAPBuilder.build.dump_dictionary and
++            # SOAPBuilder.build.dump_instance (for structType))
++            # will be typed as it is marshaled
++            # regardless of the setting of Config.typed
++            # This is set to 1 by default for backwards compatibility.
++            # Setting this to a false value will heed the setting of
++            # Config.typed when marshaling the dictionary elements
++            self.force_typed_map_elements = 1
++
+             # Globus Support if pyGlobus.io available
+             try:
+                 from pyGlobus import io;
+diff -Naur SOAPpy-0.12.0_orig/SOAPpy/SOAPBuilder.py SOAPpy-0.12.0_patched/SOAPpy/SOAPBuilder.py
+--- SOAPpy-0.12.0_orig/SOAPpy/SOAPBuilder.py	2005-02-21 12:24:13.000000000 -0800
++++ SOAPpy-0.12.0_patched/SOAPpy/SOAPBuilder.py	2005-12-05 00:01:49.000000000 -0800
+@@ -517,9 +517,13 @@
+         self.out.append('<%s%s%s%s>\n' % 
+                         (tag, id, a, self.genroot(ns_map)))
+ 
++        dict_element_typed = typed
++        if Config.force_typed_map_elements:
++            dict_element_typed = 1
++
+         for (k, v) in obj.items():
+             if k[0] != "_":
+-                self.dump(v, k, 1, ns_map)
++                self.dump(v, k, dict_element_typed, ns_map)
+ 
+         self.out.append('</%s>\n' % tag)
+ 
+@@ -574,18 +578,22 @@
+                 tag = ns + tag
+             self.out.append("<%s%s%s%s%s>\n" % (tag, ndecl, id, a, r))
+ 
++            struct_element_typed = typed
++            if Config.force_typed_map_elements:
++                struct_element_typed = 1
++
+             keylist = obj.__dict__.keys()
+ 
+             # first write out items with order information
+             if hasattr(obj, '_keyord'):
+                 for i in range(len(obj._keyord)):
+-                    self.dump(obj._aslist(i), obj._keyord[i], 1, ns_map)
++                    self.dump(obj._aslist(i), obj._keyord[i], struct_element_typed, ns_map)
+                     keylist.remove(obj._keyord[i])
+ 
+             # now write out the rest
+             for k in keylist:
+                 if (k[0] != "_"):
+-                    self.dump(getattr(obj,k), k, 1, ns_map)
++                    self.dump(getattr(obj,k), k, struct_element_typed, ns_map)
+ 
+             if isinstance(obj, bodyType):
+                 self.multis = 1

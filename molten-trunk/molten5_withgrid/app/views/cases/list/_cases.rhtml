@@ -1,0 +1,30 @@
+<tr valign="top">
+	<td colspan="<%= rowspan_size %>" class="case_header_container">
+	
+	<h3 class="gray">
+		<% unless search? %>
+		<span id="<%= tag_for_hide_cases(cases.first) %>"
+			  style="display:<%= current_contact.case_viewable?(cases.first) ? '' : 'none' %>">
+			  <%= link_to_remote image_tag('buttons/hide.gif', 
+										   :alt => "Hide", :width => 44, 
+										   :height => 16),
+								 :url => {:action => 'toggle_case_viewable', 
+										  :status => cases.first} %>
+		</span>
+		<span id="<%= tag_for_show_cases(cases.first) %>"
+			  style="display:<%= !current_contact.case_viewable?(cases.first) ? '' : 'none' %>">
+			  <%= link_to_remote image_tag('buttons/show.gif', 
+										   :alt => "Show", :width => 44, 
+										   :height => 16),
+								 :url => {:action => 'toggle_case_viewable', 
+										  :status => cases.first} %>
+		</span>
+		<% end %>
+	<%= pluralize cases.last.size, "#{cases.first} Case" %>
+	</h3></td>
+</tr>
+<tbody id="<%= tag_for_cases(cases.first) %>" 
+	style="display:<%= current_contact.case_viewable?(cases.first) ? '' : 'none' %>">
+<%= render :partial => 'cases/list/support_case', :collection => cases.last %>
+</tbody>
+

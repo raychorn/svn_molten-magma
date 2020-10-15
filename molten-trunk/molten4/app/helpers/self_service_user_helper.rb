@@ -1,0 +1,2 @@
+module SelfServiceUserHelper
+end

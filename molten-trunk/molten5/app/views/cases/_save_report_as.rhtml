@@ -1,0 +1,54 @@
+<% form_for :case_report, :url => {:controller => 'case_reports', :action => 'save_report'}, :html => {:onsubmit => "javascript: return saveReport();",:method => 'post', :id => 'save_report_form'} do |f| %>
+  <% logger.info "params: #{request.parameters}"%>
+  <%= hidden_field_tag 'query', CaseReport.to_query_string(((@case_report and @case_report.to_options) || {}).merge(request.parameters)) %>
+  <%= hidden_field_tag 'order', params['order'] %>
+  <%= hidden_field_tag 'sort', params['sort'] %>
+  <% case_report_status_array.each do |status| %>
+    <%= hidden_field_tag 'case_report_status_array[]', status %>
+  <% end %>
+  <% case_report_account_array.each do |account| %>
+    <%= hidden_field_tag 'case_report_account_array[]', account.id %>
+  <% end %>
+  <% case_report_column_array.each do |col| %>
+    <%= hidden_field_tag 'case_report_column_array[]', col %>
+  <% end %>
+<div id="save_report" class="save_report">
+  <% if @case_report %>
+    <h3>Save Report</h3>
+  <% else %>
+    <h3>Save Report As</h3>
+  <% end %>
+  <div>
+    <label for="case_report_id">Save over:</label><br />
+    <%= f.select :id, [["New report...", "0"], *(current_contact.owned_case_reports.map{|r|[r.name, r.id]})], {:selected => (@case_report and @case_report.id)}, :onchange => "$('case_report_name').clear();" %>
+  </div>
+
+    <div style="text-align:center;"><strong>OR</strong></div>
+    <div>
+      <label for="case_report_name">Name new report</label><br />
+      <%= f.text_field 'name', :onkeypress => "$('case_report_id').selectedIndex = 0;" %>
+    </div>
+
+  <hr />
+  <div>
+    <%= check_box_tag 'share', '1', (@case_report and @case_report.shared?) %>
+    <label for="share">Share report?</label>
+  </div>
+  <div>
+  	<%= submit_tag 'Save Report'%> 
+  	(<%= link_to_function 'Cancel', "toggleSaveReportOverlay();"%>)
+  </div>
+</div>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  var saveReportForm = $('save_report_form');
+  
+  function saveReport() {
+    if($('case_report_name').value == "" && !$('case_report_id').selectedIndex > 0) {
+      alert('Cannot leave Case Report name blank.')
+      return false;
+    }
+    return true;
+  }
+</script>

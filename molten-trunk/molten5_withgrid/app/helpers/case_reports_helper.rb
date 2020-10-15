@@ -1,0 +1,2 @@
+module CaseReportsHelper
+end

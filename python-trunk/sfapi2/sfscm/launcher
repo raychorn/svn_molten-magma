@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+#
+# Subversion properties
+#
+# $LastChangedDate: 2007-02-21 13:52:58 -0800 (Wed, 21 Feb 2007) $
+# $Author: ramya $
+# $Revision: 1295 $
+# $HeadURL: http://capps.moltenmagma.com/svn/sfsrc/trunk/sfapi2/sfscm/launcher $
+# $Id: launcher 1295 2007-02-21 21:52:58Z ramya $
+#
+# if 'bash' gives us bash v1, try to relaunch script bash v2 by name
+BASHVER=`echo $BASH_VERSION | cut -b 1 -`
+if [ $BASHVER = "1" ]; then
+    exec bash2 $0 $*
+fi
+RAWPATH=$0
+while [ -L $RAWPATH ]; do
+    RAWPATH=`readlink $RAWPATH`;
+done
+
+LAUNCHERNAME=`basename $RAWPATH`
+LAUNCHERDIR=`echo $RAWPATH | sed -e 's/\/[^\/]*$//'`
+
+# get the absolute pathname of LAUNCHERDIR
+CURDIR=`pwd`
+if [ $LAUNCHERNAME != $LAUNCHERDIR ]; then
+    cd $LAUNCHERDIR
+fi
+LAUNCHERDIR=`pwd -P`
+cd $CURDIR
+SFORCE_HOME=$LAUNCHERDIR/..
+SFLIBDIR=$SFORCE_HOME/sflib
+SFUTILDIR=$SFORCE_HOME/sfutil
+
+. $SFLIBDIR/paths.sh
+
+PYTHONPATH=$SFLIBDIR
+export PYTHONPATH
+
+scriptlist=(branchset scmrejectbranch \
+            teamhold teamsubmitbranch teambranchset teammv teamsetstat \
+            teamqor teamqorbuild teamqortest teamqorresult teamconvertqor \
+            check walk walkscm resetapi teammvpe gentoken)
+
+case $LAUNCHERNAME in
+
+    branchset)         RUNCMD="sfTaskBranchList.py -cbranchset $* do";;
+    scmrejectbranch)   RUNCMD="sfTaskBranchAction.py $0 -ascmreject $*";;
+    ccset | statset)   RUNCMD="walkSCM.py -wccSet $*";;
+
+    teamhold)          RUNCMD="sfTeamBranch.py -csweephold $*";;
+    teamsubmitbranch)  RUNCMD="sfTeamBranch.py -cteamsubmit $*";;
+    teambranchset)     RUNCMD="walkSF.py -cteambranchset $* do";;
+    teammv)            RUNCMD="sfTeamBranch.py -cteammv $*";;
+    teamsetstat)       RUNCMD="sfTeamBranch.py -cstatus $*";;
+    
+    teamqor)           RUNCMD="sfTeamBranch.py -csweepqor $*";;
+    teamqorbuild)      RUNCMD="sfTeamBranch.py -cteamqorstat -xqorbuild $*";;
+    teamqortest)       RUNCMD="sfTeamBranch.py -cteamqorstat -xqortest $*";;
+    teamqorresult)     RUNCMD="sfTeamBranch.py -cteamqorstat -xqorresult $*";;
+    teamconvertqor)    RUNCMD="sfTeamBranch.py -cconvert $*";;
+
+    check)             RUNCMD="walkSF.py -ccheck  -b $* do";;
+    walk)              RUNCMD="walkSF.py -ccheck  -b $* do";;
+    walkscm)           RUNCMD="walkSCM.py -b $*";;    
+    resetapi)          RUNCMD="sfBase3.py -capi -preset do $*";;
+    teammvpe)          RUNCMD="sfTeamBranch.py -cteammvpe $*";;
+    gentoken)          RUNCMD="sfTeamBranch.py -csubmittoscm $*";;
+
+    launcher)
+        # get a copy of the scriptlist
+        launcherlist=${scriptlist[*]}
+
+        # add "mklinks" to the end of it
+        #launcherlist[${#launcherlist[*]}]=mklinks
+
+        CURDIR=`pwd`
+        cd $LAUNCHERDIR
+
+        for script in ${launcherlist[@]};
+        do
+            if [[ $1 == 'rm' ]]; then
+                echo "removing $script"
+                rm -f $script
+            fi
+            if [ ! -e $script ]; then
+                ln $LAUNCHERNAME $script
+            fi
+        done
+
+        cd $CURDIR
+        ## commands to hard link launcher script to all the individual
+        ## command names
+        exit;;
+
+    *)
+        echo "ERROR: launcher unhandled case"
+        exit;;
+esac
+
+# use it as the basis of the python script name
+if [[ -z $SCRIPTPATH ]]; then
+    SCRIPTPATH=$SFLIBDIR/$RUNCMD
+fi
+
+PYTHON_EXE=`which python2.3`
+
+UNAME=`uname`
+if [ $UNAME = 'Linux' ]; then
+    $PYTHON_EXE $SCRIPTPATH
+else
+    echo 'Solaris not supported!'
+fi

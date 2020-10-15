@@ -1,0 +1,30 @@
+<div id="login_container">
+<%= image_tag('header/magma_logo.gif', :width => 346, :height => 39, :alt => "Magma Design Automation, Inc.") %>
+
+<h2>MOLTEN has encountered an error. We apologize for the inconvenience.</h2>
+
+A support case has been automatically created for you. 
+
+<% if current_contact %>
+Our technical support team will contact you with an estimated resolution time using your email address <%= current_contact.email %>.
+<% end %> 
+
+<p>If you feel you would like to share some other information about the problem you experience then please send us and email at <%= mail_to AppConstants::SUPPORT_EMAIL %> and include Case# <%= @case_number %> in the subject</p>
+
+
+<%= link_to 'To the Homepage', url_for(home_url) %>
+
+</div>
+
+<!--
+	Error Message
+	
+	Exception: <%= @exception %>
+	
+	Stack Trace ==
+	
+	<%= @exception.backtrace.inject(String.new) do |output, line|
+	  output += line.gsub(/(.{1,80}|\S{81,})(?: +|$\n?)/, "\\1\n")
+	end if @exception %>
+	
+-->

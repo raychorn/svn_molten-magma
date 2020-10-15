@@ -1,0 +1,15 @@
+<% @attachment = @attachment || Attachment.new %>
+
+<div id="upload_form" style="display:none">
+	<h2 class="small_margin">Add a New File</h2>
+	<%= form_tag url_for(:controller => 'attachments', :action => 'create', :from => params[:controller]), :multipart => true %>
+		<%= hidden_field_tag 'attachment[is_private]', 0 %>
+		<%= hidden_field_tag 'attachment[parent_id]', attachable.id %>
+		<div class="small gray">Uploads limited to 5 MB</div>
+		<%= file_field 'attachment', 'body' %><br/><br/>
+		<%= image_submit_tag 'buttons/upload_file.gif', :alt => 'Upload File', :width => 94, :height => 20 %>
+		<%= link_to_toggle_attach_file unless controller.controller_name == 'home' %>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= link_to_faq('Can\'t attach new file?') %>
+	</form>
+</div>

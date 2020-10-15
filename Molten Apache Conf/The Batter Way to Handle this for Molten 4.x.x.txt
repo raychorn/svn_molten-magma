@@ -1,0 +1,18 @@
+Put each of the following into separate svn projects:
+
+/etc/rails
+
+/etc/monit.d
+
+/etc/mongrel_cluster
+
+/usr/local/apache2/conf
+
+
+Deploy each separately from the others by doing an "svn update" via a Cron job.
+
+Each of the above would then be deployed from a known "tag" or sorts known as "production" or the like.
+The "production" tag would contain a series of versions, one after another rather than a specific tag such
+as "4.1.2" or the like.  This allows for automatic deployments of code with a watcher process that knows
+when a new version has been rolled that then leads to a service reset or some other post-deployment action
+to make the newly deployed config change "live" so to speak.

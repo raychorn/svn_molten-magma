@@ -1,0 +1,36 @@
+diff -Naur SOAPpy-0.12.0_orig/SOAPpy/Config.py SOAPpy-0.12.0_patched/SOAPpy/Config.py
+--- SOAPpy-0.12.0_orig/SOAPpy/Config.py	2005-02-09 07:21:04.000000000 -0800
++++ SOAPpy-0.12.0_patched/SOAPpy/Config.py	2005-11-15 21:45:26.000000000 -0800
+@@ -110,6 +110,17 @@
+             # authorization error.
+             self.authMethod = None
+ 
++            # if force_refs_off != 0, checkref in SOAPBuilder will not raise
++            # a RecursionError if a duplicate data element is found. Normally
++            # checkref raises this error to force the build to restart with
++            # refs turned on, which generates SOAP that may be incompatible
++            # with modern web services. Setting this config option
++            # forces checkref to just go ahead and serialize the duplicate
++            # data elements appropriately. In other words, try this if your
++            # SOAP suddenly explodes with a lot of href="#i1" type
++            # nonsense. This is off be default for backwards compatibility.
++            self.force_refs_off = 0
++
+             # Globus Support if pyGlobus.io available
+             try:
+                 from pyGlobus import io;
+diff -Naur SOAPpy-0.12.0_orig/SOAPpy/SOAPBuilder.py SOAPpy-0.12.0_patched/SOAPpy/SOAPBuilder.py
+--- SOAPpy-0.12.0_orig/SOAPpy/SOAPBuilder.py	2005-02-21 12:24:13.000000000 -0800
++++ SOAPpy-0.12.0_patched/SOAPpy/SOAPBuilder.py	2005-11-15 21:48:39.000000000 -0800
+@@ -264,7 +264,10 @@
+             self.multirefs.append((obj, tag))
+         else:
+             if self.use_refs == 0:
+-                raise RecursionError, "Cannot serialize recursive object"
++                if self.config.force_refs_off == 0:
++                    raise RecursionError, "Cannot serialize recursive object"
++                else:
++                    return ''
+ 
+             n = self.ids[id(obj)]
+ 

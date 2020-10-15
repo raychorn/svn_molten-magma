@@ -1,0 +1,15 @@
+<div class="solution_category">
+<%= link_to "#{category.name}(#{category.solutions.size})", {:action => 'category', :id => category}, 
+						   :class => "top_level_category" %>
+<span>
+<% category.children.each do |second_level| %>
+	<%= link_to "#{second_level.name}(#{second_level.solutions.size})", {:action => 'category', :id => second_level} %>	
+	<span style="display:inline">
+		<% second_level.children.each do |third_level| %>
+			<%= link_to third_level.name, {:action => 'category', :id => third_level} %>
+		<% end %>	
+	</span>
+<% end %>
+</span>
+
+</div>

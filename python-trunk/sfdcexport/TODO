@@ -1,0 +1,34 @@
+$Id: TODO 25 2006-05-24 18:12:14Z misha $
+TODO list for sfdcexport
+
+
+Direct-to-disk spooling of segment downloads:
+
+Exporter currently spools downloads to memory completely, then to
+disk. Spooling directly to disk would make export much lighter on
+memory consumption making it more feasible to run multiple download
+threads.
+
+--
+Threading
+
+Would speed up downloads, but requires Direct-to-disk first.
+
+--
+Python 2.4 compatibility
+
+Make use of Python 2.4's cookielib in lieu of having to install ClientCookie
+General compatibility test
+
+--
+Windows compatibility
+
+sfdcexport was not built with Windows in mind. Perhaps a Python expert on 
+Windows might adapt the code (withtout breaking UNIX compatibility) and 
+write the necessary batch files to set up environment and launch 
+the exporter.
+
+--
+MacOS X compatibility
+
+Should just work, but I've got no machine to test it on.

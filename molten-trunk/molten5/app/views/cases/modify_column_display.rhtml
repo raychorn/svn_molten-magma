@@ -1,0 +1,92 @@
+<h1 class="small_margin">
+	<%= @title = 'Support Case Columns' %>
+</h1>
+
+Configure the columns you would like to view below. <!-- A minimum of 6 and a maximum of 8 columns
+can be displayed. -->
+
+<%= error_messages_for 'setting' %>
+
+<h2>
+	Columns to Display When Viewing Your Support Cases
+</h2>
+
+<%= form_tag :action => 'modify_column_display' %>
+<%= hidden_field_tag 'case_report_id', params[:case_report_id] %>
+<%= hidden_field_tag 'from', params[:from] %>
+
+<table class="form">
+	<tr>
+		<td class="prompt">
+			Case #
+		</td>
+		<td class="value">
+			Mandatory
+		</td>
+	</tr>
+	<!-- <tr>
+		<td class="prompt">
+			Status
+		</td>
+		<td class="value">
+			Mandatory
+		</td>
+	</tr> -->
+	<tr>
+		<td class="prompt">
+			Subject
+		</td>
+		<td class="value">
+			Mandatory
+		</td>
+	</tr>
+	<% @setting.your_case_columns.each do |col| %>
+	<tr>
+		<td class="prompt">
+			<%= col[:desc] %>
+		</td>
+		<td class="value">
+			<%= check_box 'setting', col[:attr] %>
+		</td>
+	</tr>
+	<% end %>
+</table>
+
+<h2>
+	Columns to Display When Viewing All Support Cases
+</h2>
+
+<table class="form">
+	<tr>
+		<td class="prompt">
+			Case #
+		</td>
+		<td class="value">
+			Mandatory
+		</td>
+	</tr>
+	<tr>
+		<td class="prompt">
+			Subject
+		</td>
+		<td class="value">
+			Mandatory
+		</td>
+	</tr>
+	<% @setting.all_case_columns.each do |col| %>
+	<tr>
+		<td class="prompt">
+			<%= col[:desc] %>
+		</td>
+		<td class="value">
+			<%= check_box 'setting', col[:attr] %>
+		</td>
+	</tr>
+	<% end %>
+	<tr>
+		<td></td>
+		<td><%= submit_tag 'Update Columns' %></td>
+	</tr>
+</table>
+
+</form>

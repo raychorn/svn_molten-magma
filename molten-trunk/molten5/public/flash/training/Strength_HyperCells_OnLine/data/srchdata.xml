@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document-metadata version="1.0" xmlns="http://breeze.macromedia.com/">
+	<document-info>
+		<title>Strength_HyperCells_OnLine</title>
+		<summary></summary>
+		<author/>
+		<keywords/>
+		<thumbnail href="data/thumb/thumb_slide_000001.jpg"/><view-link href="/Viewer.swf?slide={position}"/>
+	</document-info>
+	<section type="slide" position="1" xmlns="">
+		<title>Strength-Based Synthesis with HyperCell Models </title>
+		<content>Strength-Based Synthesis with HyperCell Models Talus Basics Training </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000001.jpg"/></section>
+	<section type="slide" position="2" xmlns="">
+		<title>Agenda </title>
+		<content>Magma Confidential - 2 HyperCell Agenda How cells work Abstracting to HyperCell models Trimming Timing Checkpoint  </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000002.jpg"/></section>
+	<section type="slide" position="3" xmlns="">
+		<title>Delay vs. Load vs. Size – Turned Sideways </title>
+		<content>Magma Confidential - 3 HyperCell Delay vs. Load vs. Size – Turned Sideways Load is unknown Placement dependent Size is controllable Delay is the moving target Solution: Fix the target Vary what you can control to respond to the unknown Let size vary with load Select size when load is known Only one model Pick a  size to  control delay Slope varies with cell  size Slope is fixed    fixed z-axis Load Size Delay    fixed z-axis Size Load Delay </content>
+		<related-content>Presumably,&amp;#x20;everyone&amp;#x20;is&amp;#x20;familiar&amp;#x20;with&amp;#x20;the&amp;#x20;Delay&amp;#x20;vs.&amp;#x20;Load&amp;#x20;graph.&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;Delay&amp;#x20;increases&amp;#x20;as&amp;#x20;the&amp;#x20;load&amp;#x20;increases,&amp;#x20;with&amp;#x20;the&amp;#x20;slope&amp;#x20;dependent&amp;#x20;on&amp;#x20;the&amp;#x20;cell&amp;#x20;size.&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;The&amp;#x20;load&amp;#x20;is&amp;#x20;unknown,&amp;#x20;because&amp;#x20;it&amp;#x2019;s&amp;#x20;placement&amp;#x20;dependent&amp;#x20;and&amp;#x20;we&amp;#x2019;re&amp;#x20;still&amp;#x20;doing&amp;#x20;synthesis.&amp;#x20;The&amp;#x20;cell&amp;#x20;size&amp;#x20;is&amp;#x20;controllable;&amp;#x20;pick&amp;#x20;the&amp;#x20;size&amp;#x20;appropriate&amp;#x20;to&amp;#x20;the&amp;#x20;load&amp;#x20;to&amp;#x20;avoid&amp;#x20;excess&amp;#x20;delay.&amp;#x20;But&amp;#x20;size&amp;#x20;isn&amp;#x2019;t&amp;#x20;on&amp;#x20;this&amp;#x20;graph,&amp;#x20;so&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;let&amp;#x2019;s&amp;#x20;put&amp;#x20;it&amp;#x20;there.&amp;#x20;The&amp;#x20;problem&amp;#x20;is&amp;#x20;that&amp;#x20;what&amp;#x20;we&amp;#x20;want&amp;#x20;to&amp;#x20;control&amp;#x20;is&amp;#x20;the&amp;#x20;delay,&amp;#x20;so&amp;#x20;by&amp;#x20;choosing&amp;#x20;a&amp;#x20;specific&amp;#x20;cell&amp;#x20;size&amp;#x20;before&amp;#x20;the&amp;#x20;load&amp;#x20;is&amp;#x20;known,&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;delay&amp;#x20;becomes&amp;#x20;a&amp;#x20;moving&amp;#x20;target.&amp;#x20;How&amp;#x20;do&amp;#x20;we&amp;#x20;solve&amp;#x20;this&amp;#x20;problem?&amp;#x20;By&amp;#x20;looking&amp;#x20;at&amp;#x20;it&amp;#x20;sideways.&amp;#x20;Let&amp;#x2019;s&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;rotate&amp;#x20;this&amp;#x20;cube&amp;#x20;ninety&amp;#x20;degrees&amp;#x20;toward&amp;#x20;us.&amp;lt;click&amp;gt;&amp;#x20;Now&amp;#x20;delay&amp;#x20;is&amp;#x20;the&amp;#x20;Z&amp;#x20;axis,&amp;#x20;and&amp;#x20;it&amp;#x20;makes&amp;#x20;sense&amp;#x20;that&amp;#x20;delay,&amp;#x20;which&amp;#x20;is&amp;#x20;our&amp;#x20;target,&amp;#x20;should&amp;#x20;be&amp;#x20;chosen,&amp;#x20;and&amp;#x20;cell&amp;#x20;size&amp;#x20;is&amp;#x20;the&amp;#x20;parameter&amp;#x20;that&amp;#x20;should&amp;#x20;vary&amp;#x20;with&amp;#x20;load.&amp;#x20;This&amp;#x20;may&amp;#x20;seem&amp;#x20;like&amp;#x20;wishful&amp;#x20;thinking,&amp;#x20;because&amp;#x20;a&amp;#x20;real&amp;#x20;cell&amp;#x20;can&amp;#x2019;t&amp;#x20;do&amp;#x20;that,&amp;#x20;but&amp;#x20;we&amp;#x20;don&amp;#x2019;t&amp;#x20;need&amp;#x20;real&amp;#x20;cells&amp;#x20;at&amp;#x20;this&amp;#x20;point.&amp;#x20;We&amp;#x20;carefully&amp;#x20;choose&amp;#x20;a&amp;#x20;delay&amp;#x20;that&amp;#x2019;s&amp;#x20;physically&amp;#x20;possible,&amp;#x20;and&amp;#x20;we&amp;#x20;adjust&amp;#x20;the&amp;#x20;cell&amp;#x20;size&amp;#x20;to&amp;#x20;achieve&amp;#x20;that&amp;#x20;delay.&amp;#x20;Another&amp;#x20;advantage&amp;#x20;of&amp;#x20;this&amp;#x20;approach&amp;#x20;is&amp;#x20;that&amp;#x20;there&amp;#x2019;s&amp;#x20;only&amp;lt;click&amp;gt;&amp;#x20;one&amp;#x20;model&amp;#x20;of&amp;#x20;a&amp;#x20;NAND-2&amp;#x20;or&amp;#x20;inverter&amp;#x20;to&amp;#x20;deal&amp;#x20;with,&amp;#x20;not&amp;#x20;one&amp;#x20;per&amp;#x20;size.&amp;#x20;The&amp;#x20;number&amp;#x20;of&amp;#x20;models&amp;#x20;dealt&amp;#x20;with&amp;#x20;by&amp;#x20;synthesis&amp;#x20;is&amp;#x20;much&amp;#x20;smaller.&amp;#x20;Also,&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;the&amp;#x20;slope&amp;#x20;of&amp;#x20;the&amp;#x20;size&amp;#x20;vs.&amp;#x20;load&amp;#x20;line&amp;#x20;is&amp;#x20;fixed&amp;#x20;and&amp;#x20;governed&amp;#x20;by&amp;#x20;one&amp;#x20;simple&amp;#x20;equation.&amp;#x20;The&amp;#x20;cell&amp;#x20;size&amp;#x20;is&amp;#x20;not&amp;#x20;fixed&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;until&amp;#x20;after&amp;#x20;placement,&amp;#x20;when&amp;#x20;the&amp;#x20;load&amp;#x20;is&amp;#x20;known.&amp;#x20;This&amp;#x20;is&amp;#x20;why&amp;#x20;we&amp;#x20;don&amp;#x2019;t&amp;#x20;use&amp;#x20;wire&amp;#x20;load&amp;#x20;models.&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</related-content>
+		<thumbnail href="data/thumb/thumb_slide_000003.jpg"/></section>
+	<section type="slide" position="4" xmlns="">
+		<title>What Are HyperCell Models? </title>
+		<content>Magma Confidential - 4 HyperCell What Are HyperCell Models? After library import, all cells (models) are grouped by function type (entity)  A single HyperCell is created for each function type (entity)  The HyperCell includes an adaptive buffer The HyperCell delay (and area) are governed by one equation, which is quickly solved when you know the input and output load of a particular cell instance There are many library-specific and cell-specific parameters in this equation that are identified during library characterization There is also an instance-specific component that governs the final delay 1X 2X 4X 8X D Q 1X D Q 2X D Q 4X 1X 2X 4X 8X 16X HyperCell HyperCell HyperCell D Q </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000004.jpg"/></section>
+	<section type="slide" position="5" xmlns="">
+		<title>Example: HyperCell Models, Real Cells, Entities </title>
+		<content>Magma Confidential - 5 HyperCell Example: HyperCell Models, Real Cells, Entities Library Entity  Real cells HyperCell </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000005.jpg"/></section>
+	<section type="slide" position="6" xmlns="">
+		<title>HyperCell Variability </title>
+		<content>Magma Confidential - 6 HyperCell HyperCell Variability For small loads, HyperCell adaptive buffer’s size is zero The HyperCell size and strength ranges are limited to the range of the real cell For larger loads, the adaptive buffer strength is non-zero No need to add buffers to impossible cells late in the flow Adding buffers early results in better predictability 1X 8X HyperCell HyperCell n </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000006.jpg"/></section>
+	<section type="slide" position="7" xmlns="">
+		<title>HyperCell Models Before Adjustment </title>
+		<content>Magma Confidential - 7 HyperCell HyperCell Models Before Adjustment HYPER CELL HYPER CELL HYPER CELL HYPER CELL HYPER CELL HYPER CELL Slack = -0.4 Strength = Hi Slack = -0.4 Strength = Hi Slack = -0.4 Strength = Hi Slack = -0.4 Strength = Hi Slack = 1.1 Strength = Hi Slack = 1.1 Strength = Hi During optimization, all cells start with an initial strength This initial strength value produces negative slack on some paths and positive slack on other paths During trimming, strength values are adjusted to achieve zero slack on all paths Because multiple paths might propagate through the same cell, not all paths have zero slack after trimming Positive slack path Negative slack path  </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000007.jpg"/></section>
+	<section type="slide" position="8" xmlns="">
+		<title>HyperCell Models After Adjustment </title>
+		<content>Magma Confidential - 8 HyperCell HyperCell Models After Adjustment HYPER CELL HYPER CELL HYPER CELL HYPER CELL HYPER CELL HYPER CELL Slack = 0 Strength = Max Slack = 0 Strength = Hi Slack = 0 Strength = Max Slack = 0 Strength = Max Slack = 0 Strength = Lo Slack = 0 Strength = Lo On positive slack paths, strength is reduced and the buffer is eliminated On negative slack paths, strength and, if necessary, buffer size are increased Negative slack path  Positive slack path </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000008.jpg"/></section>
+	<section type="slide" position="9" xmlns="">
+		<title>Timing Checkpoint </title>
+		<content>Magma Confidential - 9 HyperCell Timing Checkpoint Timing Analysis after fix time shows achievable performance Strength Report indicates “headroom”   Strength   Count   Pct ---------------------------------- Minimum strength  15479  75.9% Low strength   4346  21.3% High strength    364   1.8% Maximum strength    196   1.0%  Worst slack = -2.2 ps Total negative slack = -6.1 ps Area = 6.943149 mm2 &lt;10% max  strength cells </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000009.jpg"/></section>
+	<section type="slide" position="10" xmlns="">
+		<title>Summary </title>
+		<content>Magma Confidential - 10 HyperCell Summary Strength based timing and modeling is an implementation detail of the Magma flow You do not need to become an expert on strength or HyperCell models This material is presented as background material for your reference Use timing analysis and the strength report after fix time to gauge how achievable a design’s timing goals are  </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000010.jpg"/></section>
+</document-metadata>

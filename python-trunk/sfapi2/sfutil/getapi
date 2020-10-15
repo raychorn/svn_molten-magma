@@ -1,0 +1,38 @@
+#!/usr/bin/env bash2
+
+if [ -L $0 ]; then
+    RAWPATH=`readlink $0`;
+else
+    RAWPATH=$0
+fi
+
+LAUNCHERNAME=`basename $RAWPATH`
+LAUNCHERDIR=`echo $RAWPATH | sed -e 's/\/[^\/]*$//'`
+# get the absolute pathname of LAUNCHERDIR
+CURDIR=`pwd`
+cd $LAUNCHERDIR
+LAUNCHERDIR=`pwd -P`
+cd $CURDIR
+
+SFORCE_HOME=$LAUNCHERDIR/..
+SFLIBDIR=$SFORCE_HOME/sflib
+
+. $SFLIBDIR/paths.sh
+
+PYTHONPATH=$SFLIBDIR
+export PYTHONPATH
+
+RUNCMD="sfBase3.py -d -capi -preset $* do "
+
+# use it as the basis of the python script name
+SCRIPTPATH=$SFLIBDIR/$RUNCMD
+
+PYTHON_EXE=`which python2.3`
+
+UNAME=`uname`
+if [ $UNAME = 'Linux' ]; then
+    $PYTHON_EXE $SCRIPTPATH $*
+else
+    echo 'Solaris not supported!'
+fi
+

@@ -1,0 +1,17 @@
+Logging:
+
+* Make the logging folder based on the date+time of the run - track the last 7 days of logs.
+
+CaseWatcher2.py
+
+* Debug the DBX interactions to make sure the data is correct.
+* Debug the RunWithAnalysis.
+
+** CaseWatchers that do not result in a notification for 30 days are removed.
+
+** CaseWatchers that do not have an email address that is active should be removed.
+
+Deployment Tasks:
+
+** Build the means to allow the SMTP Proxy to fail gracefully whenever it is already running.
+** Check code that knows how to detect when a port is already occupied with a listener.

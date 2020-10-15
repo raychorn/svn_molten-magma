@@ -1,0 +1,2 @@
+module SfuserHelper
+end

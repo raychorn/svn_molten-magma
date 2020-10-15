@@ -1,0 +1,24 @@
+Here are the plans for the development of py_appforce, including the absolutely necessary to the nice-to-haves 
+to the pie-in-the-sky someday-maybe-hopefully enhancements.
+
+Finish all the API calls
+Priority: CRITICAL
+Get all API calls working for a feature-complete beta
+
+
+Finish Batch API calls
+Priority: HIGH
+
+
+Find ways to write unit tests for anything that can be unit tested
+Priority: ONGOING
+
+Use setuptools to satisfy dependencies and install
+Priority: MEDIUM
+
+Support multiple different logins using the same partner WSDL
+
+Support multiple different logins using different partner WSDLs
+
+Support HTTP compression inbound (may require hacking SOAPpy)
+Support HTTP compression outbound (may require hacking SOAPpy)

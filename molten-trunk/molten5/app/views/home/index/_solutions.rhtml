@@ -1,0 +1,12 @@
+<% if current_contact.privilege?(AppConstants::PRIVILEGE[:admin]) or current_contact.privilege?(AppConstants::PRIVILEGE[:marketing_admin]) or current_contact.privilege?(AppConstants::PRIVILEGE[:support_admin]) or current_contact.privilege?(AppConstants::PRIVILEGE[:user_manager]) or current_contact.privilege?(AppConstants::PRIVILEGE[:super_user]) or current_contact.privilege?(AppConstants::PRIVILEGE[:member]) %>
+  <h2 class="gray buried_header">
+    <span>
+      <%= link_to image_tag('buttons/browse_solutions.gif', :alt => "Browse Solutions", :width => 143, :height => 22),
+          :controller => 'solutions' %>
+    </span>
+    Solutions - <%= Sfsolution.number_new_solutions_in_range(current_contact) %> new solutions added in last 30 days.
+  </h2>
+
+  <%= render :partial => 'home/index/solutions/search' %>
+  <%= render :partial => 'home/index/solutions/solutions_list' %>
+<% end %>

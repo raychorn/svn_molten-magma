@@ -1,0 +1,17 @@
+<% @title = @category.name %>
+<h1><%= category_links(@category) %></h1>
+	
+<%= render :partial => 'search' %>
+
+
+<%= render :partial => 'solutions/category/solutions' %>
+
+
+<%= render(:partial => 'solutions/list/browse', 
+		   :locals => {:categories => @category.children,
+					   :title => "#{@category.name} Subcategories"}) if @category.children.any? %>
+					
+
+<% content_for "sidebar" do %>
+	<%= render :partial => 'sidebar' %>
+<% end %>

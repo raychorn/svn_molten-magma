@@ -1,0 +1,40 @@
+<h1>Edit Solution Relevancy Settings</h1>
+
+<%= error_messages_for "relevancy" %>
+
+<%= form_tag :action => 'update' %>
+<table class="form">
+	<tr>
+		<td>Weight for Lowest Rating Value<br/>
+			<%= text_field 'relevancy','rating_value_one' %>
+		</td>
+	</tr>
+	<tr>
+		<td>Weight for 2nd Lowest Rating Value<br/>
+			<%= text_field 'relevancy','rating_value_two' %>
+		</td>
+	</tr>
+	<tr>
+		<td>Weight for 2nd Highest Rating Value<br/>
+			<%= text_field 'relevancy','rating_value_three' %>
+		</td>
+	</tr>
+	<tr>
+		<td>Weight for Highest Rating Value<br/>
+			<%= text_field 'relevancy','rating_value_four' %>
+		</td>
+	</tr>
+	<tr>
+		<td>Weight for Views<br/>
+			<%= text_field 'relevancy','view_value' %>
+		</td>
+	</tr>
+	<tr>
+		<td>Weight for Updates<br/>
+			<%= text_field 'relevancy','update_value' %>
+		</td>
+	</tr>
+</table>
+<br/><br/>
+<%= image_submit_tag 'buttons/submit.gif', :alt => "Submit", :width => 81, :height => 22 %>
+</form>

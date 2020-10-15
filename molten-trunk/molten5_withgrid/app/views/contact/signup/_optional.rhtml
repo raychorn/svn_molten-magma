@@ -1,0 +1,49 @@
+<table class="form">
+	<tr>
+		<td><label for="title">Title</label><br/>
+			<!-- <input  maxlength="80" type="text" id="title" size="20" name="title"> -->
+			<%= text_field 'lead', 'title', :maxlength => 40, :size => 20 %>
+		</td>
+	</tr>
+	<!-- <tr>
+		<td><label for="fax">Fax</label><br/>
+			<input  maxlength="40" type="text" id="fax" size="20" name="fax">
+			<%# text_field 'lead', 'fax', :maxlength => 40, :size => 20 %>
+		</td>
+	</tr> -->
+	<tr>
+		<td><span class ="multi"><label for="street">Street Address</label><br/>
+			<!-- <textarea name="street"></textarea> -->
+			<%= text_field 'lead', 'street', :maxlength => 40, :size => 20 %>
+			</span>
+			<span><label for="city">City</label><br/>
+				<!-- <input  maxlength="40" type="text" id="city" size="20" name="city"> -->
+				<%= text_field 'lead', 'city', :maxlength => 40, :size => 20 %>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td><span class ="multi"><label for="state">State/Province</label><br/>
+			<!-- <input  maxlength="20" type="text" id="state" size="20" name="state"> -->
+			<%= text_field 'lead', 'state', :maxlength => 40, :size => 20 %>
+			</span>
+			<span>
+				<label for="zip">Zip</label><br/>
+				<!-- <input  maxlength="20" type="text" id="zip" size="20" name="zip"> -->
+				<%= text_field 'lead', 'postal_code', :maxlength => 40, :size => 20 %>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="bunit">Business Unit</label><br/>
+			<!-- <input  maxlength="160" type="text" id="00N30000000dwEc" size="20" name="00N30000000dwEc"> -->
+			<%= text_field 'lead', 'business_unit__c', :maxlength => 40, :size => 20 %>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="description">Notes</label><br/>
+			<!-- <textarea name="description"></textarea> -->
+			<%= text_area 'lead', 'description', :rows => 5 %>
+		</td>
+	</tr>
+</table>

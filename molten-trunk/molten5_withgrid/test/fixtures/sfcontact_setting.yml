@@ -1,0 +1,8 @@
+derek_setting:
+  id: 1
+  token: derek_token
+  sfcontact_id: xyz
+derek_haynes_setting:
+  id: 2
+  token: derek_haynes_token
+  sfcontact_id: 0033000000Ka6moAAB #derek_haynes

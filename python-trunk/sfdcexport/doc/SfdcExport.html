@@ -1,0 +1,226 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module SfdcExport</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>SfdcExport</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/surf/sfdcexport/lib/SfdcExport.py">/home/surf/sfdcexport/lib/SfdcExport.py</a></font></td></tr></table>
+    <p><tt>Interactively&nbsp;log&nbsp;in&nbsp;and&nbsp;access&nbsp;the&nbsp;salesforce.com&nbsp;website&nbsp;in&nbsp;order&nbsp;to<br>
+perform&nbsp;a&nbsp;full&nbsp;data&nbsp;export.<br>
+&nbsp;<br>
+Note:&nbsp;This&nbsp;script&nbsp;cannot&nbsp;perform&nbsp;an&nbsp;export&nbsp;in&nbsp;a&nbsp;single&nbsp;pass.&nbsp;&nbsp;Instead,<br>
+it&nbsp;must&nbsp;check&nbsp;that&nbsp;the&nbsp;export&nbsp;window&nbsp;is&nbsp;currently&nbsp;open&nbsp;(only&nbsp;one<br>
+export&nbsp;is&nbsp;allowed&nbsp;every&nbsp;6&nbsp;days).&nbsp;If&nbsp;it&nbsp;is,&nbsp;then&nbsp;it&nbsp;must&nbsp;request&nbsp;the<br>
+export,&nbsp;which&nbsp;will&nbsp;be&nbsp;finished&nbsp;at&nbsp;a&nbsp;later&nbsp;time.&nbsp;Since&nbsp;the&nbsp;script&nbsp;won't<br>
+receive&nbsp;the&nbsp;email&nbsp;notification&nbsp;when&nbsp;the&nbsp;export&nbsp;is&nbsp;finished,&nbsp;it&nbsp;will<br>
+simply&nbsp;have&nbsp;to&nbsp;check&nbsp;back&nbsp;later&nbsp;until&nbsp;a&nbsp;download&nbsp;is&nbsp;available,&nbsp;then<br>
+fetch&nbsp;the&nbsp;package.<br>
+&nbsp;<br>
+Author:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kevin&nbsp;Shuk&nbsp;&lt;kshuk@molten-magma.com&gt;<br>
+Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mar&nbsp;14,&nbsp;2004<br>
+Copyright:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(c)&nbsp;2004&nbsp;-&nbsp;2005,&nbsp;Kevin&nbsp;Shuk&nbsp;and&nbsp;Magma&nbsp;Design&nbsp;Automation,&nbsp;Inc.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All&nbsp;Rights&nbsp;Reserved</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="AuthUtil.html">AuthUtil</a><br>
+<a href="base64.html">base64</a><br>
+<a href="cStringIO.html">cStringIO</a><br>
+</td><td width="25%" valign=top><a href="errno.html">errno</a><br>
+<a href="glob.html">glob</a><br>
+<a href="logging.html">logging</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+<a href="pprint.html">pprint</a><br>
+<a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="smtplib.html">smtplib</a><br>
+<a href="sys.html">sys</a><br>
+<a href="time.html">time</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="SfdcWebScrape.html#SfdcWebScrape">SfdcWebScrape.SfdcWebScrape</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="SfdcExport.html#SfdcExport">SfdcExport</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SfdcExport">class <strong>SfdcExport</strong></a>(<a href="SfdcWebScrape.html#SfdcWebScrape">SfdcWebScrape.SfdcWebScrape</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Class&nbsp;to&nbsp;manage&nbsp;the&nbsp;request&nbsp;and&nbsp;download&nbsp;of&nbsp;an&nbsp;SFDC&nbsp;weekly&nbsp;export.<br>
+&nbsp;<br>
+Instantiating&nbsp;this&nbsp;class&nbsp;and&nbsp;calling&nbsp;the&nbsp;<a href="#SfdcExport-do">do</a>()&nbsp;method&nbsp;will&nbsp;initiate&nbsp;the<br>
+action.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="SfdcExport-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SfdcExport-buildFilename"><strong>buildFilename</strong></a>(self, dlUrl, timestamp, segmentCt)</dt><dd><tt>from&nbsp;the&nbsp;download&nbsp;URL&nbsp;and&nbsp;the&nbsp;export&nbsp;timestamp,&nbsp;build&nbsp;a&nbsp;filename<br>
+for&nbsp;the&nbsp;export&nbsp;segment&nbsp;file.&nbsp;Also&nbsp;recover&nbsp;the&nbsp;segment&nbsp;number.<br>
+&nbsp;<br>
+Parameters:<br>
+dlUrl&nbsp;-&nbsp;the&nbsp;download&nbsp;URL&nbsp;as&nbsp;extracted&nbsp;from&nbsp;the&nbsp;download&nbsp;HTML&nbsp;page<br>
+timestamp&nbsp;-&nbsp;formatted&nbsp;string&nbsp;expressing&nbsp;the&nbsp;scheduled&nbsp;time&nbsp;of&nbsp;the&nbsp;export<br>
+&nbsp;<br>
+Returns:<br>
+tuple&nbsp;of&nbsp;filename&nbsp;for&nbsp;the&nbsp;export&nbsp;segment&nbsp;and&nbsp;the&nbsp;serial&nbsp;number&nbsp;of&nbsp;the&nbsp;segment</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-checkExportDir"><strong>checkExportDir</strong></a>(self, dirPath)</dt><dd><tt>Ensure&nbsp;that&nbsp;specified&nbsp;dir&nbsp;is&nbsp;created&nbsp;and&nbsp;writable</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-do"><strong>do</strong></a>(self)</dt><dd><tt>The&nbsp;main&nbsp;flow&nbsp;for&nbsp;the&nbsp;export&nbsp;process</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-downloadExport"><strong>downloadExport</strong></a>(self, dlPageBody)</dt><dd><tt>Takes&nbsp;the&nbsp;page&nbsp;source&nbsp;of&nbsp;the&nbsp;'export&nbsp;ready'&nbsp;page,&nbsp;regexes&nbsp;for&nbsp;the<br>
+download&nbsp;URL(s)&nbsp;and&nbsp;downloads&nbsp;each&nbsp;component&nbsp;of&nbsp;the&nbsp;export.<br>
+&nbsp;<br>
+Parameters:<br>
+dlPageBody&nbsp;-&nbsp;page&nbsp;source&nbsp;of&nbsp;the&nbsp;'export&nbsp;ready'&nbsp;page.</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-downloadExportFile"><strong>downloadExportFile</strong></a>(self, dlUrl, timestamp, segmentCt)</dt><dd><tt>Downloads&nbsp;the&nbsp;export&nbsp;segment&nbsp;file&nbsp;at&nbsp;the&nbsp;provided&nbsp;URL.<br>
+&nbsp;<br>
+Paramters:<br>
+dlUrl&nbsp;-&nbsp;URL&nbsp;where&nbsp;the&nbsp;download&nbsp;file&nbsp;is&nbsp;to&nbsp;be&nbsp;found<br>
+timestamp&nbsp;-&nbsp;formatted&nbsp;time&nbsp;string&nbsp;as&nbsp;parsed&nbsp;from&nbsp;the&nbsp;download&nbsp;page<br>
+segmentCt&nbsp;-&nbsp;total&nbsp;number&nbsp;of&nbsp;export&nbsp;segment&nbsp;files&nbsp;in&nbsp;the&nbsp;export<br>
+&nbsp;<br>
+Returns:<br>
+boolean&nbsp;indicating&nbsp;success&nbsp;or&nbsp;failure&nbsp;of&nbsp;the&nbsp;file&nbsp;download</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-emailReport"><strong>emailReport</strong></a>(self, subject)</dt><dd><tt>Send&nbsp;an&nbsp;email&nbsp;with&nbsp;the&nbsp;contents&nbsp;of&nbsp;the&nbsp;class&nbsp;report&nbsp;buffer</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-enforceRetentionPolicy"><strong>enforceRetentionPolicy</strong></a>(self)</dt><dd><tt>Look&nbsp;into&nbsp;the&nbsp;backup&nbsp;directory&nbsp;and&nbsp;prune&nbsp;exports&nbsp;that<br>
+we&nbsp;no&nbsp;longer&nbsp;wish&nbsp;to&nbsp;keep&nbsp;and&nbsp;store&nbsp;exports&nbsp;eligible&nbsp;for<br>
+long-term&nbsp;archival.<br>
+&nbsp;<br>
+The&nbsp;policy&nbsp;we&nbsp;support&nbsp;is&nbsp;to&nbsp;keep&nbsp;N&nbsp;most&nbsp;recent&nbsp;exports&nbsp;(N&nbsp;is<br>
+configurable&nbsp;via&nbsp;the&nbsp;properties&nbsp;file)&nbsp;and&nbsp;also&nbsp;to&nbsp;archive&nbsp;the<br>
+first&nbsp;backup&nbsp;of&nbsp;each&nbsp;month.&nbsp;Anything&nbsp;beyond&nbsp;this&nbsp;is&nbsp;up&nbsp;to&nbsp;the&nbsp;user.</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-extractExportForm"><strong>extractExportForm</strong></a>(self, body)</dt><dd><tt>Finds&nbsp;the&nbsp;editPage&nbsp;form&nbsp;in&nbsp;the&nbsp;body&nbsp;of&nbsp;the&nbsp;main&nbsp;export&nbsp;page<br>
+&nbsp;<br>
+Parameters:<br>
+body&nbsp;-&nbsp;complete&nbsp;HTML&nbsp;page&nbsp;source<br>
+&nbsp;<br>
+Returns:<br>
+string&nbsp;text&nbsp;of&nbsp;the&nbsp;form&nbsp;named&nbsp;editPage,&nbsp;or&nbsp;None&nbsp;if&nbsp;this&nbsp;can't&nbsp;be&nbsp;found</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-extractHiddenFormElts"><strong>extractHiddenFormElts</strong></a>(self, formBody)</dt><dd><tt>Extracts&nbsp;elements&nbsp;of&nbsp;type&nbsp;'hidden'&nbsp;from&nbsp;a&nbsp;form.<br>
+&nbsp;<br>
+Parameters:<br>
+formBody&nbsp;-&nbsp;string&nbsp;contiaining&nbsp;an&nbsp;entire&nbsp;HTML&nbsp;form,&nbsp;including&nbsp;the&nbsp;opening&nbsp;and&nbsp;closing&nbsp;form&nbsp;tags.<br>
+&nbsp;<br>
+Returns:<br>
+List&nbsp;of&nbsp;tuples&nbsp;with&nbsp;name-value&nbsp;pairs&nbsp;of&nbsp;the&nbsp;hidden&nbsp;form&nbsp;fields.</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-extractTitleTag"><strong>extractTitleTag</strong></a>(self, body)</dt><dd><tt>Given&nbsp;HTML&nbsp;page&nbsp;source,&nbsp;extract&nbsp;and&nbsp;return&nbsp;the&nbsp;string&nbsp;within&nbsp;the<br>
+title&nbsp;tags<br>
+&nbsp;<br>
+Parameters:<br>
+body&nbsp;-&nbsp;complete&nbsp;HTML&nbsp;page&nbsp;source<br>
+&nbsp;<br>
+Returns:<br>
+string&nbsp;contents&nbsp;of&nbsp;HTML&nbsp;title&nbsp;tags</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-requestExport"><strong>requestExport</strong></a>(self, pageBody)</dt><dd><tt>Sends&nbsp;a&nbsp;POST&nbsp;request&nbsp;to&nbsp;the&nbsp;export&nbsp;URL&nbsp;(set&nbsp;in&nbsp;properties)&nbsp;requesting<br>
+a&nbsp;data&nbsp;export.<br>
+&nbsp;<br>
+Options&nbsp;(also&nbsp;set&nbsp;in&nbsp;properties)&nbsp;include:<br>
+*&nbsp;Whether&nbsp;to&nbsp;include&nbsp;attachaments&nbsp;and&nbsp;docs&nbsp;in&nbsp;the&nbsp;export<br>
+*&nbsp;Whether&nbsp;to&nbsp;replace&nbsp;carriags&nbsp;returns&nbsp;with&nbsp;spaces&nbsp;in&nbsp;the&nbsp;export<br>
+*&nbsp;Which&nbsp;object&nbsp;types&nbsp;to&nbsp;export<br>
+*&nbsp;The&nbsp;encoding&nbsp;for&nbsp;the&nbsp;export<br>
+&nbsp;<br>
+Parameters:<br>
+pageBody&nbsp;-&nbsp;complete&nbsp;HTML&nbsp;source<br>
+&nbsp;<br>
+Returns:<br>
+boolean&nbsp;indicating&nbsp;success&nbsp;of&nbsp;request</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-scanExportPage"><strong>scanExportPage</strong></a>(self)</dt><dd><tt>Access&nbsp;the&nbsp;export&nbsp;page&nbsp;and&nbsp;by&nbsp;parsing&nbsp;the&nbsp;title&nbsp;of&nbsp;the&nbsp;page,<br>
+determine&nbsp;the&nbsp;action&nbsp;to&nbsp;be&nbsp;taken,&nbsp;then&nbsp;take&nbsp;that&nbsp;action.<br>
+&nbsp;<br>
+Possible&nbsp;actions&nbsp;are:<br>
+-&nbsp;Request&nbsp;the&nbsp;export<br>
+-&nbsp;Wait&nbsp;for&nbsp;the&nbsp;export<br>
+-&nbsp;Download&nbsp;the&nbsp;waiting&nbsp;export<br>
+&nbsp;<br>
+Returns&nbsp;a&nbsp;tuple&nbsp;consisting&nbsp;of&nbsp;a&nbsp;state&nbsp;code&nbsp;and&nbsp;a&nbsp;corresponding&nbsp;message.<br>
+State&nbsp;codes&nbsp;(and&nbsp;meanings)&nbsp;are:<br>
+ERR&nbsp;-&nbsp;an&nbsp;expected&nbsp;response&nbsp;was&nbsp;recieved&nbsp;or&nbsp;the&nbsp;page&nbsp;didn't&nbsp;contain&nbsp;information&nbsp;we&nbsp;were&nbsp;expecting<br>
+WAIT&nbsp;-&nbsp;export&nbsp;has&nbsp;ben&nbsp;requested,&nbsp;but&nbsp;is&nbsp;not&nbsp;yet&nbsp;ready&nbsp;for&nbsp;download<br>
+NA&nbsp;-&nbsp;export&nbsp;is&nbsp;not&nbsp;available&nbsp;at&nbsp;this&nbsp;time&nbsp;(previously&nbsp;requested&nbsp;export&nbsp;is&nbsp;no&nbsp;longer&nbsp;available,&nbsp;but&nbsp;org&nbsp;is&nbsp;not&nbsp;eligible&nbsp;for&nbsp;another&nbsp;export&nbsp;yet)<br>
+DONE&nbsp;-&nbsp;export&nbsp;has&nbsp;been&nbsp;completely&nbsp;downloaded</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>cookieJar</strong> = None</dl>
+
+<dl><dt><strong>fileOpener</strong> = None</dl>
+
+<dl><dt><strong>report</strong> = &lt;cStringIO.StringO object&gt;</dl>
+
+<dl><dt><strong>urlOpener</strong> = None</dl>
+
+<hr>
+Methods inherited from <a href="SfdcWebScrape.html#SfdcWebScrape">SfdcWebScrape.SfdcWebScrape</a>:<br>
+<dl><dt><a name="SfdcExport-login"><strong>login</strong></a>(self, uname, pw)</dt><dd><tt>Attempts&nbsp;a&nbsp;login&nbsp;page&nbsp;authentication&nbsp;with&nbsp;sfdc.<br>
+&nbsp;<br>
+Parameters:<br>
+uname&nbsp;-&nbsp;sfdc&nbsp;username<br>
+pw&nbsp;-&nbsp;unencoded&nbsp;sfdc&nbsp;password<br>
+&nbsp;<br>
+Returns:<br>
+True&nbsp;if&nbsp;login&nbsp;was&nbsp;successful,&nbsp;otherwise&nbsp;False</tt></dd></dl>
+
+<dl><dt><a name="SfdcExport-sendRequest"><strong>sendRequest</strong></a>(self, URL, opener<font color="#909090">=None</font>, params<font color="#909090">=None</font>, method<font color="#909090">='GET'</font>)</dt><dd><tt>Executes&nbsp;a&nbsp;request&nbsp;and&nbsp;returns&nbsp;the&nbsp;response.<br>
+&nbsp;<br>
+Parameters:<br>
+URL&nbsp;-&nbsp;the&nbsp;URL&nbsp;to&nbsp;fetch<br>
+opener&nbsp;-&nbsp;urrlib2&nbsp;(by&nbsp;way&nbsp;of&nbsp;ClientCookie)&nbsp;opener&nbsp;object.&nbsp;Two&nbsp;are<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;available&nbsp;right&nbsp;now:&nbsp;urlOpener&nbsp;for&nbsp;regular&nbsp;HTML&nbsp;pages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;fileOpener&nbsp;for&nbsp;downloading&nbsp;files&nbsp;(inages,&nbsp;zips,&nbsp;etc.)<br>
+params&nbsp;-&nbsp;dictionary&nbsp;of&nbsp;query&nbsp;parameters&nbsp;to&nbsp;send&nbsp;along&nbsp;with&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request<br>
+method&nbsp;-&nbsp;how&nbsp;to&nbsp;send&nbsp;the&nbsp;query&nbsp;parameters&nbsp;with&nbsp;the&nbsp;request&nbsp;GET&nbsp;or&nbsp;POST<br>
+&nbsp;<br>
+Returns:<br>
+file-like&nbsp;object&nbsp;that&nbsp;is&nbsp;the&nbsp;return&nbsp;of&nbsp;the&nbsp;urlOpener&nbsp;object&nbsp;open&nbsp;call</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-main"><strong>main</strong></a>()</dt></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>ident</strong> = '$ID: $'<br>
+<strong>log</strong> = &lt;logging.RootLogger instance&gt;<br>
+<strong>props</strong> = &lt;Properties.Properties instance&gt;<br>
+<strong>timestampFmt</strong> = '%Y%m%d-%H%M'<br>
+<strong>version</strong> = 1.5</td></tr></table>
+</body></html>

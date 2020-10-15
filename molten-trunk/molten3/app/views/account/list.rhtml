@@ -1,0 +1,15 @@
+<html>
+<body>
+<% @acct.each do |account| %>
+<%= account.name %>---------------- <%= account.type %><br>
+<% end %>
+<% count=0%>
+<% @sfaccts.each do |acct| %>
+<%count=count+1%>
+<%end%>
+<%=count%>
+
+
+
+</body>
+</html>

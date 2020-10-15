@@ -1,0 +1,9 @@
+<h1><%= @title = "New Support Case"%></h1>
+
+<%= form_tag :action => 'create' %>
+	<%= render :partial => 'form' %>
+<% end_form_tag %>
+
+<% content_for "sidebar" do %>
+	<%= render :partial => 'sidebar' %>			
+<% end %>

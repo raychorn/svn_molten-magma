@@ -1,0 +1,59 @@
+<h1 class="small_margin">
+	<span id="subscribe_container" title="Click to subscribe / unsubscribe to the case watcher for your account cases.">
+		<%= link_to_subscribe_to_cases %>
+		<div style="display:none" id='indicator'>
+			<%= image_tag('indicator_arrows_circle.gif', :style => "margin-left:42px;margin-right:42px;padding-top:5px") %>
+		</div>
+	</span>
+	<%= link_to image_tag('buttons/export.gif', :alt => "Export Cases to Excel", :align => 'center'),
+							:action => 'export', :all => params[:all] %>
+	<%= link_to image_tag('buttons/new_case.gif', :alt => "New Case", :width => 81, :height => 22, :align => 'center'),
+				:action => 'new' %>
+    <%= link_to_function image_tag('buttons/beta_view.gif', :id => "list_beta_button", :alt => "Beta View"), "switch_to_list_beta();", :id => 'list_beta_link' %>
+	<% if params[:all] == 'true' %>
+		<%= @title = "Viewing All Support Cases at #{truncate current_contact.company.name, 20}" %> 
+		<div class="small" style="font-size:16px">
+		(<%= link_to "View Just My Cases", :all => 'false' %>)
+		(<%= link_to 'Modify Columns Display', :action => 'modify_column_display', :from => request.request_uri %>)
+		</div>
+	<% else %>
+		<%= @title = "Viewing My Support Cases" %> 
+			<% if current_contact.privilege?(AppConstants::PRIVILEGE[:super_user]) %>
+			<div class="small" style="font-size:16px">
+			(<%= link_to "View All Cases at #{current_contact.company.name}", :all => true %>)
+			(<%= link_to 'Modify Columns Display', :action => 'modify_column_display', :from => request.request_uri %>)
+			</div>
+			<% end %>
+	<% end %>
+
+</h1>
+<br/>
+<%= render :partial => 'search_box' %>
+
+<table class="listing">
+	<tr>
+		<th><%= link_to_sort 'Case #', 'case_number' %></th>
+		<th><%= link_to_sort 'Subject', 'subject' %></th>
+		<% @cols = (params[:all] ? current_contact.settings.case_columns_setting.all_selected_case_columns : current_contact.settings.case_columns_setting.your_selected_case_columns) %>
+		<% @cols.each do |col| %>
+		<th><%= link_to_sort col[:desc], col[:sort] %></th>
+		<% end %>
+	</tr>
+	<%= render :partial => 'cases/list/cases', :collection => @cases_grouped_by_status %>
+</table>
+
+<%= will_paginate(@cases) if search? %>
+
+<% content_for "sidebar" do %>
+<!--	
+	<ul>
+		<li class="selected">All Cases (12)</li>
+		<li><%= link_to "My Cases (6)" %></li>
+		<li><%= link_to "My Closed Cases (4)" %></li>
+		<li><%= link_to "Company Cases (6)" %></li>
+		<li><%= link_to "Closed Company Cases (3)" %></li>
+	</ul>			
+-->	
+	<%= render :partial => 'sidebar' %>
+<% end %>
+

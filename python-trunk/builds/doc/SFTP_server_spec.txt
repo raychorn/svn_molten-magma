@@ -1,0 +1,37 @@
+Intraware connection information
+================================
+
+
+FTP productiom/staging server: upload.subscribenet.com
+Production Upload Username   : lava
+Production Upload Password   : uLz$u25J1%
+
+FTP staging server         : upload.subscribenet.com
+Staging UAT Upload Username: lavauat
+Staging UAT Upload Password: YDBs3^7C76Ne
+
+Production and staging are the same servers, different username
+
+
+
+SSH protocol version = SSH-2
+SSH implementation = OpenSSH_3.6.1p2
+Encryption algorithm = aes
+Compression = No
+File transfer protocol = SFTP (v3)
+------------------------------------------------------------
+Server host key fingerprint
+ssh-rsa 1024 ea:74:15:db:97:cd:23:34:7a:21:ee:88:2d:38:c4:2d
+------------------------------------------------------------
+Can change permissions = Yes
+Can change owner/group = No
+Can execute arbitrary command = No
+Can create symlink/hardlink = Yes/No
+Can lookup user groups = No
+Can duplicate remote files = No
+Can check available space = No
+Native text (ASCII) mode transfers = No
+------------------------------------------------------------
+Additional protocol information
+The server does not support any SFTP extension.
+

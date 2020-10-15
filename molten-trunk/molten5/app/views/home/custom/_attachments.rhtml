@@ -1,0 +1,47 @@
+<h2 class="gray buried_header">
+	<%= pluralize @attachments.size, "Attachment" %>
+	<% if @term %>
+	for term "<%= @term %>"
+	<% end %>
+</h2>
+
+<div class="search">
+<%= form_tag url_for(:controller => 'home', :action => 'custom'), :method => 'get' %>
+  <%= hidden_field_tag 'sort', @sort%>
+  <%= hidden_field_tag 'order', @order%>
+        <table>
+                <td valign="top" style="height:35px">
+                  <%= text_field_tag 'term',@term, :class => 'search_term_field' %>
+                  <% if @term %>
+                  <script type="text/javascript" charset="utf-8">
+                    $('term').focus()
+                  </script>
+                  <% end %>
+                </td>
+                <td valign="top">
+                        <%= image_submit_tag 'buttons/search.gif', :alt => "Search",
+                                :width => 81, :height => 22, :class => 'search_button' %>
+                </td>
+        </table>
+</form>
+</div>
+
+<table id="attachments">
+  <tr>
+    <th><!-- icon --></th>
+    <th>
+      <%= link_to_sort 'File Name', HomeController::ATTACH_COLS[:file_name] %>
+    </th>
+    <th>
+      <%= link_to_sort 'Uploaded', HomeController::ATTACH_COLS[:uploaded] %>
+    </th>
+    <th>
+      <%= link_to_sort 'Uploaded By', HomeController::ATTACH_COLS[:uploaded_by] %>
+    </th>
+  </tr>
+	<%= render :partial => 'home/custom/attachment', :collection => @attachments %>
+</table>
+
+<div style="margin:10px 0px; text-align:center">
+<%= will_paginate @attachments %>
+</div>

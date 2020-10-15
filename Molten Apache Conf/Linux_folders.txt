@@ -1,0 +1,7 @@
+/etc/rails
+
+/etc/monit.d
+
+/etc/mongrel_cluster
+
+/usr/local/apache2/conf

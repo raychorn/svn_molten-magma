@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+open:
+  id: 1
+  name: Open Cases
+  contact_id: xyz
+  query: "&status[]=Open&&commit=Filter&&order=ASC&&sort=customer_priority__c&"
+  created_at: 2008-05-07 12:05:08
+  updated_at: 2008-05-07 12:05:08
+  account_id: abc # highgroove
+  shared: 1
+  columns:
+
+pending:
+  id: 2
+  name: Pending Cases
+  contact_id: xyz
+  query: "&status[]=Open&&status[]=In+Process&&status[]=CR+Pending&&status[]=Enhancement+CR+Pending&&status[]=Awaiting+Cust.+Response&&status[]=Awaiting+R%26D+Input&&status[]=Solving&&status[]=Pending+Complete+Test+Case&&status[]=Not+Started&&status[]=Closed&"
+  created_at: 2008-05-07 12:05:08
+  updated_at: 2008-05-07 12:05:08
+  account_id: abc # highgroove
+  shared: 0
+  columns:

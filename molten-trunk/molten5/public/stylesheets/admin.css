@@ -1,0 +1,9 @@
+#nav {
+	  background:url(/images/header/admin/black_nav_bar.gif) bottom repeat-x;
+	  }
+#nav li {
+		 background:#A8998c url(/images/header/admin/nav_back.gif) no-repeat;
+		 }
+#nav li.selected {background:#E8112D url(/images/header/admin/nav_back_selected.gif) no-repeat;}
+
+#contact_list_links form {display:inline;}

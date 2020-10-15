@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>All Customers</title>
+</head>
+<body>
+
+<h1>Test Database</h1>
+
+<%= @msg1 %>
+<%= @recipes1 %>
+<%= @msg %>
+
+<table border="1">
+ <tr>
+  <td width="80%"><p align="center"><i><b>Id</b></i></td>
+  <td width="20%"><p align="center"><i><b>Name</b></i></td> 
+  <td width="20%"><p align="center"><i><b>salary</b></i></td> 
+  <td width="20%"><p align="center"><i><b>Date</b></i></td> 
+ </tr>
+
+ <% @recipes.each do |recipe| %>
+  <tr>
+   <td><%= link_to recipe.id, {:controller => "customer", :action =>  "show", :id => recipe.id} %></td>
+   <td><%= recipe.name %></td>
+   <td><%= recipe.salary %></td>
+   <td><%= recipe.cdate %></td>
+   
+  </tr>
+ <% end %>
+</table>
+<p><%= link_to "Create new recipe", :action => "new" %></p>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<% form_for :status_filter, :url => url_for_filters, :html => {:onsubmit => "javascript: return submitStatus();",:method => 'get', :id => 'status_form'} do |f| %>
+  <%= hidden_field_tag 'order', params['order'] %>
+  <%= hidden_field_tag 'sort', params['sort'] %>
+<table id="status_filter" style="display: none;">
+	<% AppConstants::CASE_SORT_ORDER.each_slice(2) do |statuses| %>
+		<tr>
+			<% statuses.each do |s| %>
+			<td>
+				<%= check_box_tag 'status[]', s, case_report_status_array.include?(s) %>
+			</td>
+			<td>
+				<%= s %>
+			</td>
+			<% end %>
+		</tr>
+	<% end %>
+	<tr>
+		<td colspan=4>
+			<%= submit_tag 'Filter'%> 
+			(<%= link_to_function 'Select All', "selectAllStatus()"%>)
+			(<%= link_to_function 'Select None', "selectNoneStatus()"%>)
+			(<%= link_to_function 'Cancel', "toggleStatusOverlay();"%>)
+		</td>
+	</tr>
+</table>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  var statusForm = $('status_form');
+  
+  // Used to submit the case status form filter. 
+  // Ensures that at least 1 status is selected and 
+  // grabs the search term. 
+  function submitStatus() {
+    count = false;
+    for (i = 0; i < statusForm.length; i++) {
+	        if (statusForm[i].type == 'checkbox' && statusForm[i].checked == true) count = true;
+	  }
+	  if (count == false) {
+	    alert('Please select at least 1 case status.');
+	    return false;
+	  }
+	  else {
+	    return true;
+	  }
+  }
+  
+  // Selects all case statuses
+  function selectAllStatus(){
+    for (i = 0; i < statusForm.length; i++)
+	        if (statusForm[i].type == 'checkbox') statusForm[i].checked = true;
+  }
+  
+  // Deselects all case statuses
+  function selectNoneStatus(){
+    for (i = 0; i < statusForm.length; i++)
+	        if (statusForm[i].type == 'checkbox') statusForm[i].checked = false;
+  }
+</script>

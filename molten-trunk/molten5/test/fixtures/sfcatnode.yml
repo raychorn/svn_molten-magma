@@ -1,0 +1,18 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+howto:
+  id: 1
+  master_label: How To
+  sf_id: howto
+howto_delete:
+  id: 2
+  master_label: How To Delete
+  sf_id: howto_delete
+  parent_id: howto
+howto_delete_comments:
+  id: 3
+  master_label: How To Delete Commens
+  sf_id: howto_delete_comments
+  parent_id: howto_delete
+another_category:
+  id: 4
+  sf_id: another_category

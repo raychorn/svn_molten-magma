@@ -1,0 +1,77 @@
+== Magma Molten Customer Support Application ==
+
+This application integrates with Magma Design Automation's SalesForce data to create
+a customer support system. 
+
+== Required Gems ==
+* Ferret (for search indexing)
+gem install ferret
+
+* Capistrano (for deployment)
+gem install capistrano
+
+== Rails Version ==
+Rails 2.0.2
+databases.rake #prepare has been modified - getting an SQL error when using as-is.
+
+== ActiveSalesForce ==
+ASF Version 2.0.0 is vendored in /vendor. No need to install the 
+activerecord-activesalesforce-adapter gem.
+
+== Setup Instructions ==
+
+1. Create a database.yml file. An example file is available in config/database_example.yml.
+
+2. Load the initial data into the local MySQL database. 
+The SQL file is on the 64.106.247.195 server in the admin user's home dir:
+mysql molten_development < db/molten_production.sql
+
+3. Run any existing migrations:
+rake db:migrate --trace
+
+4. Start the console:
+ruby script/console
+
+5. Run "SalesforceSync.update_schema" to update the local database with any schema changes that may have occured since the db export. 
+
+5b. (optional - may take a long time). Run "SalesforceSync.update_records" to update the local database with any new or updated records.
+
+6. Run "rake" and ensure all tests pass.
+
+7. Run "rake search:build_index" to build the search index.
+
+8. Run "ruby script/server" to start the web server
+
+Deployment ---
+
+This application is deployed via tags and AppConstants::MOLTEN_VERSION should be updated with the tag being deployed for logging purposes.
+
+Deployment Procedure:
+
+1. Determine the new number for the tag by looking at the existing tags:
+http://bristol.highgroove.com:8080/svn/molten/tags/
+
+2. Set the new version number in AppConstants::MOLTEN_VERSION. 
+
+3. Commit to svn. 
+
+4. Create the tag:
+svn cp https://bristol.highgroove.com:8443/molten/trunk/molten5 https://bristol.highgroove.com:8443/molten/tags/1.4.03
+
+Communication ---
+
+All bug reports and enhancements are filed through Salesforce. Use Basecamp to notify when code is completed and for overall project questions.
+
+Cron Jobs ---
+
+These are configured in the deploy.rb file.
+
+* Sfcontact.send_confirmations (daily)
+  This sends out confirmation emails to accounts that haven't confirmed their account in 6 months (default).
+* Sfsolution.set_relevancies (no more than daily)
+  Updates solution relevancy rankings
+* Syncing the local database with Salesforce
+  Each record type needs to be synced. Example format:
+  SalesforceSync.update_records(Contact)
+* SalesforceSync.update_schema
+  Updates the local database schema.

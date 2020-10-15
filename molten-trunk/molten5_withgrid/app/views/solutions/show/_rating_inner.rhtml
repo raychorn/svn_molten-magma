@@ -1,0 +1,16 @@
+<h2>Was this solution helpful?</h2>
+
+<%= horizontal_bar_graph(*@solution.list_ratings.map { |r| [r[0], r[2]]  }) if @solution.any_votes? %>
+
+<div id="vote_form">
+<%= form_remote_tag :url => {:action => 'rate', :id => @solution} %>
+<ul id="rating">
+	<% @solution.list_ratings.each do |rating| %>
+	<li><%= radio_button_tag 'rating', rating[1] %> <%= rating[0] %></li>
+	<% end %>
+</ul>
+<%= submit_tag 'Vote' %>
+</form>
+</div>
+
+<div class="small gray" id="total_votes"><%= pluralize @solution.total_votes, 'Total Vote'%></div>

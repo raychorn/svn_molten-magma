@@ -1,0 +1,13 @@
+<html>
+<body>
+<% @usr.each do |cs| %>
+<%= cs.name %>---------------- <%= cs.type %><br>
+<% end %>
+<% count=0%>
+<% @usrec.each do |css| %>
+<%=css.forecast_enabled%>
+<%count=count+1%>
+<%end%>
+<%=count%>
+</body>
+</html>

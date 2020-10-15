@@ -1,0 +1,7 @@
+page.insert_html :top, tag_for_comments_list, 
+                 :partial => "comments/comment", :locals => {:comment => @comment}
+page.visual_effect :highlight, tag_for_comment(@comment)
+page << "Field.clear('comment_form_body')"
+page.replace_html "comments_header_container", 
+                  :partial => 'comments/header', :locals => {:commentable => @comment.support_case}
+page << "Element.toggle('add_comment_form')"

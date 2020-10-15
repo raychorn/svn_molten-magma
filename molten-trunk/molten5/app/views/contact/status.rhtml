@@ -1,0 +1,40 @@
+<h1><%= @title = "Registration Status" %></h1>
+
+<table class="collapsed">
+	<tr class="shaded">
+		<td class="prompt">Name:</td>
+		<td><%= @lead_or_contact.name %></td>
+	</tr><tr>
+		<td class="prompt">Company:</td>
+		<td>
+			<% if @lead_or_contact.is_a? Lead %>
+				<%= @lead_or_contact.company %>
+			<% else %>
+				<%= @lead_or_contact.account.name %>
+			<% end %>
+		</td>
+	</tr>
+	<tr class="shaded">
+		<td class="prompt">Email:</td>
+		<td><%= @lead_or_contact.email %></td>
+	</tr><tr>
+		<td class="prompt">Phone:</td>
+		<td><%= @lead_or_contact.phone %></td>
+	</tr>
+	<% if @lead_or_contact.owner %>
+	<tr class="shaded">
+		<td class="prompt">Owner:</td>
+		<td><%= @lead_or_contact.owner.name %></td>
+	</tr>
+	<% end %>
+	<% if @lead_or_contact.is_a? Contact %>
+	<tr>
+		<td class="prompt">Portal Privilege:</td>
+		<td><%= @lead_or_contact.portal_privilege__c %></td>
+	</tr>
+	<% end %>
+</table>
+<br/><br/>
+<% if @lead_or_contact.owner %>
+<%= button_to('Send the Owner a Reminder', :action => 'send_lead_reminder', :id => @lead_or_contact) if @lead_or_contact.is_a? Lead %>
+<% end %>

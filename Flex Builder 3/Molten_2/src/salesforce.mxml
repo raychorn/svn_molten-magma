@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"  
+	color="#1b0d78"	paddingTop="10" paddingRight="10" paddingLeft="10" paddingBottom="10" 
+	 backgroundColor="#CAFFBC"
+	 xmlns:salesforce="*"
+	 applicationComplete="login();"      
+	 xmlns:salesforce1="com.salesforce.*">
+
+  <mx:Script>
+  <![CDATA[
+    import mx.logging.LogEventLevel;
+    import mx.logging.LogEvent;
+  	import mx.managers.PopUpManager;
+  	import mx.validators.ValidationResult;
+  	import mx.controls.dataGridClasses.DataGridColumn;
+ 	import mx.utils.ObjectProxy;
+  	import mx.collections.ArrayCollection;
+  	import mx.logging.Log;
+  	import mx.utils.ObjectUtil;
+  	import mx.controls.Alert; 	
+	import com.salesforce.results.*;
+	import com.salesforce.events.*; 
+  	import com.salesforce.objects.*;
+  	import com.salesforce.*;
+  	import com.salesforce.logging.*;
+  	
+	/* where the test email is sent
+	 */
+	private var yourEmailAddress:String = 'your@email.com'; // change this for the sendEmail() test
+	
+	
+	/*
+	 * sample code / test harness for 
+	 * Flex/ Apollo <=> Salesforce  toolkit
+	 * 
+	 *  User Password and login name enter your information below, recompile, run
+	 * 
+	 */
+	 private function login():void {
+		/* when running from a salesforce server, no need to login as
+		 * we should already have a valid SID, and be ready to query data.
+		 * The SID is passed into the <MX app using flashvars from the scontrol
+		 * otherwise, no session id, we will need to login using username and password here
+		 *
+		 * this code will provide both so our component works local and from an scontrol
+		 * simply fill in the LoginRequest object and call apex.login()
+		 * the AsyncResponder has a default fault method that is used if we don't provide 
+		 * one when constructing the callback object
+		 */
+
+		var lr:LoginRequest = new LoginRequest(	{
+			username : 'raychorn@gmail.com', 		// put your own info here to test standalone
+			password : 'sisko7660boo',			// put your own info here to test standalone	
+			callback : new AsyncResponder(function (result:Object):void
+				{ 
+				    ta.text = "Login successful:\n" + ObjectUtil.toString(result); 
+				    loginButton.enabled = false;
+				} )
+			} );
+			
+		Util.debug(this, 'apex.login ( ' +ObjectUtil.toString(lr) +'\n);' );	
+		apex.login(lr); 
+
+	}
+  
+  
+ 
+  	private function query():void
+  	{
+	    apex.query("Select Id, Name, CreatedDate, CreatedBy.FirstName, (Select Id, Firstname, LastName From Contacts) From Account limit 30", 
+	    	new AsyncResponder(function (qr:QueryResult):void
+			  {
+			  	// simple example of maping query results into a data provider
+				var ar:ArrayCollection = new ArrayCollection();
+			    for (var j:int=0;j<qr.records.length;j++) { 
+			    	// fill the array
+			    	ar.addItem(  { Id:qr.records[j].Id, Name:qr.records[j].Name, CreatedDate:qr.records[j].CreatedDate } );
+			    }
+			    // create the columns and specify the order
+			    dg.columns = [ new DataGridColumn('Id'),new DataGridColumn('Name'),new DataGridColumn('CreatedDate') ];
+			    dg.dataProvider = ar; // assign the array as the data provider
+			
+			  } )
+		);
+	 }
+    
+    
+	private function create():void
+  	{
+		var acc:SObject = new SObject('Account');
+		acc.Name = 'new account nameadd';
+		ta.text = acc.toDebugString();
+	  
+		// test creating two accounts
+	  	apex.create([acc,acc], new AsyncResponder( 
+	  		function (result:Object):void {
+		  		ta.text += 'createResult\n' + ObjectUtil.toString(result);
+		 	}, genericFault
+		 ) );
+  	}
+
+	private function genericFault(fault:Object):void
+	{
+		ta.text = 'fault from operation: ' + ObjectUtil.toString(fault);
+	}
+  
+	  /*
+	   * simple delete test
+	   */
+	  private function delete_one():void
+	  {
+	  	// get an id to delete
+	  	apex.query("Select Id from Account where name like 'new account%' limit 1", 
+	    	new AsyncResponder(function del_queryResult(result:Object):void
+			  {
+			  	var qr:QueryResult = result as QueryResult;
+			  	if (qr.size > 0) {
+				  	var id:String = qr.records[0].Id;
+				  	apex.deleteIds([id], new AsyncResponder(
+					  	function delResult(result:Object):void
+						  {
+						  	ta.text = 'delete Result\n' + ObjectUtil.toString(result);
+						  } ) 
+					);
+			  	} else { 
+			  		ta.text = "no accounts matching \'new account*\' ";
+			  	}
+			  }
+  			)
+  		);
+	  }
+  
+  
+	 /* 
+	  * test for update, query an account, change it's name
+	  */
+	  private function updateone():void
+	  {
+	  apex.query("Select Id from Account where name like 'new account%' limit 1", 
+		new AsyncResponder(upd_queryResult, genericFault));
+	  }
+	  private function upd_queryResult(result:Object):void
+	  {
+		  var qr:QueryResult = result as QueryResult;
+		  if (qr.size > 0) {
+		  	var upd:SObject = new SObject("Account");
+		  	upd.Id = qr.records[0].Id;
+		  	upd.Name	= 'new account updated now';
+		  	apex.update([upd], new AsyncResponder(updResult, genericFault) );
+		  } else {
+		  	ta.text = "no account found to update ";
+		  }
+	  }
+	  
+	  private function updResult(result:Object):void
+	  {
+	  	ta.text = 'update Result\n' + ObjectUtil.toString(result);
+	  
+	  }
+ 
+ 
+	  private function retrievetwo():void
+	  {
+	  	apex.query("Select Id from Account where name like 'new account%' limit 2", 
+	    	new AsyncResponder(retr_queryResult, genericFault));
+	  }
+	  private function retr_queryResult(result:Object):void
+	  {
+	  	var qr:QueryResult = result as QueryResult;
+	  	if (qr.size > 1) {
+	  		var ids:Array = new Array();
+	  		ids.push(qr.records[0].Id);
+	  		ids.push(qr.records[1].Id);
+	  		apex.retrieve("Name,BillingCity","Account", ids, 
+	  			new AsyncResponder(retrResult, genericFault));
+	  	} else {
+		  	ta.text = "no account found named new account* ";
+		  }
+	  	
+	  }
+	  private function retrResult(result:Object):void
+	  {
+	  	ta.text = 'retrieve Result\n' + ObjectUtil.toString(result);
+	  }
+	 
+	  private function notimplemented():void
+	  {
+	  	ta.text = "not implemented";
+	  }
+	  
+	  private function search():void
+	  {
+	  	apex.search("find {new account* } ", 
+	    	new AsyncResponder(search_Result, genericFault));
+	  }
+	  private function search_Result(result:Object):void
+	  {
+	  	ta.text = 'search Result\n' + ObjectUtil.toString(result);
+	  }
+	 
+	  private function describe_global():void
+	  {
+	  	apex.describeGlobal(new AsyncResponder(describeGCallback, genericFault));
+	  }
+	  private function describeGCallback(result:Object):void
+	  {
+	  	ta.text = 'describe Global Result\n' + ObjectUtil.toString(result);
+	    dg.sortableColumns = false;
+	    dg.columns = [ new DataGridColumn('Types') ];
+	    dg.dataProvider = result.types;  
+	  }
+	  
+	  private function describe_layout():void
+	  {
+	  	apex.describeLayout("Account",[],new AsyncResponder(describeLCallback, genericFault));
+	  }
+	  private function describeLCallback(result:Object):void
+	  {
+	  	ta.text = 'describe Layout Result\n' + ObjectUtil.toString(result);
+	  }
+	  
+	  private function getServerTimestamp():void
+	  {
+	  	apex.getServerTimestamp(new AsyncResponder(getServerTimestamp_CB, genericFault));
+	  }
+	  private function getServerTimestamp_CB(result:Object):void
+	  {
+	  	var d:Date = (result as GetServerTimestampResult).toDate();
+	  	ta.text = 'getServerTimestamp Result\n' + ObjectUtil.toString(result) +  '\n ' 
+	  		+ ' Date.toString() ' + d.toString();
+	  }
+	
+	  private function describeTabs():void
+	  {
+	  	apex.describeTabs(new AsyncResponder(describeTabs_CB, genericFault));
+	  }
+	  private function describeTabs_CB(result:Object):void
+	  {
+	  	ta.text = 'getServerTimestamp Result\n' + ObjectUtil.toString(result) ;
+	  }
+	  
+	  private function getDeleted():void
+	  {
+	 	var d:Date = new Date(); // now
+		var start:Date = new Date( d.getFullYear(), d.getMonth(), d.getDate()-5); // five days ago
+	
+	  	apex.getDeleted("Account",start,d, new AsyncResponder(getDeleted_CB, genericFault));
+	  }
+	  private function getDeleted_CB(result:Object):void
+	  {
+	  	ta.text = 'getDeleted Result\n' + ObjectUtil.toString(result) ;
+	  }
+	  
+	  
+	  private function describeSObjects():void
+	  {
+	  	// this call can take one or more object names to describe in full
+	  	apex.describeSObjects(
+	  	//	["Account","Contact"], 
+	  		["Case"], 
+	    	new AsyncResponder(describeSObjects_CB, genericFault));
+	  }
+	  private function describeSObjects_CB(result:Object):void
+	  {
+	  	ta.text = 'describeSObjects_CB Result\n' + ObjectUtil.toString(result);
+	  }
+	  
+
+	  private function upsert():void
+	  {
+	  	apex.query("Select Id from Account where name like 'new account%' limit 2", new AsyncResponder(
+			function (result:Object):void {
+			  	var qr:QueryResult = result as QueryResult;
+			  	if (qr.size > 1) {
+			  		// upsert two accounts , using their ID , change their names
+			  		var sobject:SObject = new SObject("Account");
+			  		sobject.Id = qr.records[0].Id;
+			  		sobject.Name = "new account upserted";
+			  		
+			  		var sobject2:SObject = new SObject("Account");
+			  		sobject2.Id = qr.records[1].Id;
+			  		sobject2.Name = "new account upserted2";
+			  		
+			  		// call upsert with the account we got from query
+					apex.upsert("Id",[sobject,sobject2], new AsyncResponder( function (result:Object):void
+				  		{
+				  			ta.text = 'upsert Result\n' + ObjectUtil.toString(result);
+				  		}, genericFault));
+				  		
+			  	} else {
+				  	ta.text = "no account found named new account* ";
+				  }
+			}, genericFault));
+	  }  
+	  
+	  
+	  private function getUpdated():void
+	  {
+	 	var d:Date = new Date(); // now
+		var start:Date = new Date( d.getFullYear(), d.getMonth(), d.getDate()-5); // five days ago
+	
+	  	apex.getUpdated("Account",start,d, new AsyncResponder(
+	  		function (result:Object):void
+			  {
+			  	ta.text = 'getUpdated Result\n' + ObjectUtil.toString(result) ;
+			  }, 
+			  genericFault));
+	  }
+	
+	
+	  private function queryAll():void
+	  {
+	 	apex.queryAll("Select Id,Name from Account where name like 'new account%' and isdeleted = true limit 2", new AsyncResponder(
+	  		function (result:Object):void  {
+		  		ta.text = 'queryAll Result\n' + ObjectUtil.toString(result) ;
+		  	}, 
+		  	genericFault));
+	  }
+	  
+	  /* 
+	   * to test query more, we will loop thru our database
+	   * this requires an event handler to make subsequent queryMore requests syncronous
+	   * in production, DONT USE this technique, rather SEE QueryResutlIterator, example below.
+	   */ 
+	  private function sendQueryComplete(qr:QueryResult): void  {  dispatchEvent(new QueryEvent(QueryEvent.QUERY_EVENT, qr));	 }
+	  
+	  private function queryMoreProcessBatch(event:QueryEvent):void {
+	  	
+	  	// called when each query or queryMore() batch of records is ready
+	  	// deal with the records passed in the event here
+	  	var qr:QueryResult = event.queryResult; 	
+	  	ta.text += 'query (and queryMore) found records :' + qr.records.length + ' is done :' + qr.done +'\n' ;
+	  
+	  	// setup for another event if we are not done
+	  	if ( qr.done != true ) {  
+	  		apex.queryMore( qr.queryLocator, new AsyncResponder(sendQueryComplete, genericFault ));
+	  	} else {
+	  		removeEventListener(QueryEvent.QUERY_EVENT, queryMoreProcessBatch);  // all done, clean up
+	  	}	
+	  }
+	  
+	  private function queryMore():void
+	  {
+	  	apex.batchSize = 200; // 200 is the smallest batch size we'll allow (except for queries returning blobs)
+	  	ta.text = '';
+	  	
+	 	addEventListener(QueryEvent.QUERY_EVENT, queryMoreProcessBatch); // add an listener for the async event : query complete
+	 	apex.query("Select Id,Name from Account ", new AsyncResponder(sendQueryComplete, genericFault));
+	  }
+	 
+	  /* 
+	   * query/queryMore using QueryResultIterator()
+	   * 
+	   * this method calls query and queryMore, nice because it wraps up the async events for us using an iterator object
+	   * simple, eh?
+	   */
+	  private function queryMoreIterator() : void { 
+	  	apex.batchSize = 200; // this is un-needed, just added here to make sure we can test batches, otherwise we often get 2000 records in a single query
+	  	
+	  	var count:int =0;
+	  	ta.text = '';
+	  	
+	  	var d:QueryResultIterator = new QueryResultIterator(apex, "select id , name, billingcity from Account ",
+	  		function (so:SObject):Boolean { 
+	  			count++; 
+	  			var q:QueryResult = d.queryResult();  
+	  			// q.done is true throught the final batch, done != last
+	  			
+	  			// use a special method to see if we are on the final record
+	  			var lastone:Boolean = d.lastSobject();
+	  			
+	  			ta.text += count + ':' +so.Name + ' ' + lastone+ '\n'; 
+	  			return true; // return true keeps the loop going, false quits it iterator
+	  		} );
+	  		
+	  	// also possible is 
+	  	// d = new QueryResultIterator(c);
+	  	// d.soql = "select id , name from Account";
+	  	// d.forEach( function ); 
+	  }
+	  
+	
+	  private function sendEmail() : void {
+	
+	  	var single: SingleEmailMessage = new SingleEmailMessage();
+	  	single.subject = 'test email';
+	  	single.toAddresses = [yourEmailAddress];
+	  	single.plainTextBody = 'body of email ';
+	  	single.emailPriority = 'Low';
+	  	// everything else defaults
+	  	
+	  	apex.sendEmail( [single] , new AsyncResponder(
+			function (result:SendEmailResult):void  {
+				// SendEmailResult
+		  		ta.text = 'email Result\n' + ObjectUtil.toString(result) ;
+		  	}, 
+		  	genericFault));
+		  	
+		  // TODO test Mass Email
+	  }
+	 
+	 	private function generateFault():void {
+		  	apex.search("find what new account* } ", 
+		    	new AsyncResponder(
+		    	function search_Result(result:Object):void	{
+				  	ta.text = 'search Result\n' + ObjectUtil.toString(result);
+				}, 
+				function search_Fault(result:Fault):void	{
+				  	ta.text = 'EXPECTED: search Fault\n\n' + ObjectUtil.toString(result);
+				}
+				));
+	  	}
+	  
+  
+	// handy for debugging soap messages
+	private function sendRequestListener(event:SendEvent):void {
+		XML.prettyIndent = 4;
+		XML.prettyPrinting = true;
+		var x:XML = new XML(event.soapRequest);
+		soapLog.text = x.toString();
+	}
+	
+	private function b64():void { 	
+	  ta.text ="simple TEST BASE64 CODE:\n"
+	  
+      var unEncoded:String = "This is a test string";
+      ta.text += unEncoded + '\n';
+      var encoded:String = Base64.encode( unEncoded );// works
+	  ta.text +=  "encoded test string:	" + encoded + '\n';
+      var decoded:String = new String( Base64.decode( encoded )) ; // fails
+	
+	   ta.text +=  'decoded test string:	' + decoded	+ '\n';
+	}
+	private function echoToDebugLog(event:DebugEvent):void {
+	  	debugLog.text += event.debugString + "\n";
+	}
+	private function  convertLead():void {
+		var ll:LeadLookup = PopUpManager.createPopUp(this, LeadLookup, true) as LeadLookup;
+		ll.data = { "connection":apex };
+		PopUpManager.centerPopUp(ll);
+	}
+	]]>
+	</mx:Script>
+
+<!--  <salesforce1:TextControlTarget textControl="{debugLog}" level="{LogEventLevel.ALL}" includeDate="true" includeTime="true" includeCategory="true" includeLevel="true">
+    <salesforce:filters>
+      <mx:String>com.salesforce.*</mx:String>    
+    </salesforce:filters>
+  </salesforce1:TextControlTarget>
+-->  
+  <salesforce1:Connection id="apex" sendRequest="sendRequestListener(event)"/>
+  
+  <mx:VBox width="100%" height="100%">
+  	
+   <mx:HBox width="100%" horizontalAlign="center" verticalAlign="top" >
+    <mx:Button label="login" id="loginButton" click="login()"/>
+    <mx:Button label="query" click="query()"/>
+    <mx:Button label="create" click="create()"/>
+    <mx:Button label="delete" click="delete_one()"/>
+    <mx:Button label="update" click="updateone()"/>
+    <mx:Button label="retrieve" click="retrievetwo()"/>
+    <mx:Button label="search" click="search()"/>
+    <mx:Button label="upsert" click="upsert()"/>
+    <mx:Button label="sendEmail" click="sendEmail()"/>
+     
+  </mx:HBox>
+   <mx:HBox width="100%" horizontalAlign="center">
+	 <mx:Button label="describeSObjects" click="describeSObjects()"/>
+	 <mx:Button label="describe all" click="describe_global()"/>
+	 <mx:Button label="describe layout" click="describe_layout()"/>
+	 <mx:Button label="describe tabs" click="describeTabs()"/>
+	 <mx:Button label="get deleted" click="getDeleted()"/>
+   </mx:HBox>
+  
+  <mx:HBox horizontalAlign="center" width="100%">
+  	<mx:Button label="ConvertLead" click="convertLead()"/>
+  	<mx:Button label="base 64" click="b64()"/>
+  	<mx:Button label="fault" click="generateFault()"/>
+  	<mx:Button label="getUpdated" click="getUpdated()"/>
+  	<mx:Button label="server time" click="getServerTimestamp()"/>
+  	<mx:Button label="queryMore" click="queryMoreIterator()"/>
+  	<mx:Button label="queryAll" click="queryAll()"/>
+  	
+  </mx:HBox>
+  <mx:VDividedBox width="100%" height="100%">
+    <mx:VBox height="100%" width="100%">
+    <mx:HDividedBox width="100%" height="100%">
+     	<mx:VBox height="100%" width="100%">
+        		
+        <mx:Label text="Query Results" fontWeight="bold" fontFamily="Courier New" fontSize="12"/>
+       
+        <mx:DataGrid id="dg" width="100%" height="100%" 	enabled="true"  editable="false" cornerRadius="5">
+        </mx:DataGrid>
+  	  </mx:VBox>
+    
+    <mx:VBox height="100%" width="100%">
+        		
+        <mx:Label text="ActionScript Objects" fontWeight="bold" fontFamily="Courier New" fontSize="12"/>
+        <mx:TextArea width="100%" height="100%" id="ta" cornerRadius="5"/>
+      </mx:VBox>
+    </mx:HDividedBox>
+    </mx:VBox>
+    
+      <mx:VBox height="100%" width="100%">
+        <mx:HDividedBox height="100%" width="100%">
+        	<mx:VBox height="100%" width="100%">
+        		
+        <mx:Label text="Soap Log" fontWeight="bold" fontFamily="Courier New" fontSize="12"/>
+        <mx:TextArea id="soapLog" width="100%" height="100%" cornerRadius="5"/>
+        
+        	</mx:VBox>
+        	<mx:VBox height="100%" width="100%">
+        		
+        <mx:Label text="Debug Events" fontWeight="bold" fontFamily="Courier New" fontSize="12"/>
+        <mx:TextArea id="debugLog" width="100%" height="100%" cornerRadius="5"/>
+        
+        	</mx:VBox>
+        	
+        </mx:HDividedBox>
+      </mx:VBox>
+   
+    </mx:VDividedBox>
+  </mx:VBox>
+</mx:Application>

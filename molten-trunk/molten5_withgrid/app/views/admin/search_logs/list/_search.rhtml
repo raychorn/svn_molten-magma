@@ -1,0 +1,8 @@
+<tr class="<%= cycle('shaded','') %>">
+	<td style="font-weight:bold">
+		<%= link_to search.term, :controller => '/solutions', :action => 'search', :term => search.term %>
+	</td>
+	<td><%= search.results_count %></td>
+	<td><%= search.contact.email if search.contact %></td>
+	<td><%= clean_age(search.created_at) %> Ago</td>
+</tr>

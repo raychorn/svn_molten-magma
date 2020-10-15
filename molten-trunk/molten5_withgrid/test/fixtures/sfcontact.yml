@@ -1,0 +1,18 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+derek:
+  id: 1
+  account_id: abc # highgroove
+  sf_id: xyz
+  email: charles_laurent@sdesigns.com
+  contact_status__c: Active
+  portal_privilege__c: <%= AppConstants::PRIVILEGE[:admin] %>
+  portal_password__c: 'asdfdsf'
+# this is a clone of the derek.haynes@highgroove record in the salesforce db.
+derek_haynes:
+  id: 2
+  account_id: abc # highgroove
+  sf_id: 0033000000Ka6moAAB
+  email: derek.haynes@highgroove.com
+  contact_status__c: Active
+  portal_password__c: derek_pass
+  portal_privilege__c: <%= AppConstants::PRIVILEGE[:admin] %>

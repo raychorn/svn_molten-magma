@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+relevancy:
+  id: 1
+  rating_value_one: 25
+  rating_value_two: 60
+  rating_value_three: 90
+  rating_value_four: 100
+  view_value: 50
+  update_value: 100

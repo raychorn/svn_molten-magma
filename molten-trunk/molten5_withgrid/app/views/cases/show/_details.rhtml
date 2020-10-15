@@ -1,0 +1,81 @@
+<h2 class="gray">Case Details</h2>
+
+<table class="listing">
+	<tr>
+		<th>Case #</th>
+		<th>Type</th>
+		<th>Priority</th>
+		<th>Status</th>
+		<th>Opened</th>
+		<th>Last Updated</th>
+	</tr>
+	<tr class="shaded">
+		<td><%= @case.stripped_case_number %></td>
+		<td><%= @case.sf_type  %></td>
+		<td><%= @case.customer_priority__c %></td>
+		<td><%= @case.status %></td>
+		<td><%= format_time(ct(@case.created_date)) %></td>
+		<td><%= format_time(ct(@case.last_updated)) %>
+			<% if @case.last_modified_by %>
+			by 
+			<%= @case.last_modified_by.name %>
+			<% end %>
+		</td>
+	</tr>
+</table>
+
+<h2><%= link_to_toggle_additional_information %> 
+	<span id="show_info"><%= link_to_toggle_additional_information "(show)" %></span>
+	<span style="display:none" id="hide_info"><%= link_to_toggle_additional_information "(hide)" %></span>
+</h2>
+
+<div id="case_additional_information" style="display:none">
+	<table>
+		<tr class="shaded">
+			<td class="prompt">Product(s):</td>
+			<td><%= @case.product %></td>
+			<td class="prompt">Workaround Description:</td>
+			<td><%= @case.workaround_description %></td>
+		</tr>
+		<tr>
+			<td class="prompt">Customer Tracking:</td>
+			<td><%= @case.customer_tracking %></td>
+			<td class="prompt">Version #:</td>
+			<td><%= @case.version_number %></td>
+		</tr>
+		<tr class="shaded">
+			<td class="prompt">Query Builder:</td>
+			<td><%= @case.query_build_view %></td>
+			<td class="prompt">Target Release:</td>
+			<td><%= @case.target_release %></td>
+		</tr>
+		<tr>
+			<td class="prompt">Foundry:</td>
+			<td><%= @case.foundry %></td>
+			<td class="prompt">Operating System:</td>
+			<td><%= @case.operating_system %></td>
+		</tr>	
+		<tr class="shaded">
+			<td class="prompt">Need By Date:</td>
+			<td><%= @case.expected_resolution_date  %></td>
+			<td class="prompt">CR Status:</td>
+			<td><%= @case.cr_status  %></td>
+		</tr>
+		<tr>
+			<td class="prompt">Expected Release:</td>
+			<td><%= @case.target_fix_merged %></td>
+			<td class="prompt">Target Build:</td>
+			<td><%= @case.r_d_submission %></td>
+		</tr>
+		<tr class="shaded">
+			<td class="prompt">Tag:</td>
+			<td><%= @case.tag__c  %></td>
+			<td class="prompt">Expected Build Date:</td>
+			<td><%= @case.expected_build_date__c  %></td>
+		</tr>
+		<tr class="">
+			<td class="prompt">Weekly Notes:</td>
+			<td><%= @case.weekly_notes__c  %></td>
+		</tr>
+	</table>
+</div>

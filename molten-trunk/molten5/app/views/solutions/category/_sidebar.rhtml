@@ -1,0 +1,10 @@
+<% if parent = @category.parent %>
+<h3><%= parent.name %></h3>
+<ul>
+	<% parent.children.each do |c| %>
+	<li class="<%= current_category?(c) ? "selected" : '' %>">
+		<%= current_category?(c) ? c.name : link_to("#{c.name}", :action => 'category', :id => c ) %>
+	</li>
+	<% end %>
+</ul>
+<% end %>

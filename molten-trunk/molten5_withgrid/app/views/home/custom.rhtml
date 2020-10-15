@@ -1,0 +1,13 @@
+<h1><%= current_contact.company.name %> Customized Home Page</h1>
+
+<% if @solution.nil? %>
+	
+	A custom home page does not exist for this company. 
+	
+<% else %>
+
+<p><%= simple_format(@solution.solution_note) if @solution.solution_note %></p>
+
+<%= render :partial => 'home/custom/attachments' %>
+
+<% end %>

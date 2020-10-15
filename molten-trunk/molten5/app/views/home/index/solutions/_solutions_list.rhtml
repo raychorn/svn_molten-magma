@@ -1,0 +1,30 @@
+<table id="solutions_container">
+	<tr>
+		<td class="left" valign="top">
+			<% cache(:action => 'index', :part => 'recent_solutions', :contact_id => current_contact.id) do %>
+			<h2>Recently Viewed</h2>
+			<ul>
+				<%= render :partial => 'home/index/solutions/solution', 
+						   :collection => @recently_viewed_solutions %>
+       		</ul>
+			<% end %>
+		</td>
+		<td valign="top" class="right">
+			<% cache(:action => 'index', :part => 'new_solutions' ) do %>
+			<h2>New Solutions</h2>
+			<ul>
+				<%= render :partial => 'home/index/solutions/solution', 
+						   :collection => @new_solutions %>
+                <li><%= link_to 'More new solutions ...', :controller => 'solutions', :action => 'recent' %>
+			</ul>
+			<% end %>
+			<% cache(:action => 'index', :part => 'popular_solutions' ) do %>
+			<h2>Most Popular</h2>
+			<ul>
+				<%= render :partial => 'home/index/solutions/solution', 
+						   :collection => @popular_solutions %>
+			</ul>
+			<% end %>
+		</td>
+	</tr>
+</table>

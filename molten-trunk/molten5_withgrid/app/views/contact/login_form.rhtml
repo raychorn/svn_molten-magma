@@ -1,0 +1,63 @@
+<div id="login_container">
+<% if 0 %>
+  <% require 'shutdown_dates' %>
+  <% shutdowns = ShutdownDates.new %>
+  <% if ((Date.today() >= shutdowns.start_dates[0]) and (Date.today() <= shutdowns.end_dates[0])) %>
+    <div id="shutdown_login_form">
+    <%= image_tag '/images/icons/exclamation.gif', :align => 'absmiddle' %>
+    <span><%= shutdowns.messages[0] %></span>
+    </div>
+  <% end %>
+<% end %>
+<%= image_tag('header/magma_logo.gif', :width => 346, :height => 39, :alt => "Magma Design Automation, Inc.") %>
+
+<% if flash[:warning] %>
+  <div id="warning_login_form">
+  <%= image_tag '/images/icons/exclamation.gif', :align => 'absmiddle' %>
+  <span><%= flash[:warning] %></span>
+  </div>
+<% end %>
+
+<% if flash[:notice] %>
+  <div id="notice_login_form">
+  <%= image_tag '/images/icons/check.gif', :align => 'absmiddle' %>
+  <span><%= flash[:notice] %></span>
+  </div>
+<% end %>
+
+<h2>Login to <%= AppConstants::APP_NAME%></h2>
+<%= form_tag :action => 'login' %>
+	<%= hidden_field_tag 'contact_time' %>
+<table id="login_form" align="center">
+	<tr>
+		<td class="prompt">Email:</td>
+		<td><%= text_field_tag 'email', params[:email], :style => 'width:200px' %></td>
+	</tr>
+	<tr>
+		<td class="prompt">Password:</td>
+		<td><%= password_field_tag 'password', params[:password], :style => 'width:200px' %></td>
+	</tr>
+	<tr>
+		<td class="prompt"></td>
+		<td class="small gray">
+			<%= check_box_tag 'remember_me' %>Remember Me?<br/>
+			<%= link_to "Forgot Your Password?", :action => 'forgot_password' %> | 
+			<%= link_to "Sign Up", :action => 'signup' %><br/>
+			<%= link_to "Check Registration Status", :action => 'status_form' %> | <%= link_to_faq %> |
+			<%= mail_to "molten_feedback@molten-magma.com", 'Report Problems' %>
+		</td>
+	</tr>
+	<tr>
+		<td class="prompt"></td>
+		<td><%= submit_tag 'Login' %></td>
+	</tr>
+</table>
+</form>
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+	// Used to pass in the user's time, so we can display dates correctly. 
+	var currentTime = new Date();
+	$('contact_time').value = currentTime.getTimezoneOffset();
+</script>

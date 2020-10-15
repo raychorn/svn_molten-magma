@@ -1,0 +1,516 @@
+<%= error_messages_for 'case' %>
+
+<!-- contact fields are taken from current contact -->
+<%= hidden_field_tag 'case[supplied_name]', current_contact.name %>
+<%= hidden_field_tag 'case[supplied_email]', current_contact.email %>
+<%= hidden_field_tag 'case[supplied_phone]', current_contact.phone %>
+<%= hidden_field_tag 'case[record_type_id]', '01230000000001XAAQ' %>
+<%= hidden_field_tag 'case[workaround_available__c]', 'N/A' %>
+<%# API 7 hidden_field_tag 'case[is_visible_in_css]', 1 %>
+<%= hidden_field_tag 'case[is_visible_in_self_service]', 1 %>
+<%= hidden_field_tag 'case[origin]', 'Web' %>
+<%= hidden_field_tag 'case[contact_id]', current_contact.sf_id %>
+<%= hidden_field_tag 'case[status]', AppConstants::CASE_SORT_ORDER.first %>
+
+<h3>Please note that as of November 16, 2007 this form will be unavailable. <br>
+Form "New Case Beta" will become the only available form to open new MOLTEN case.</h3>
+
+<h2 class="gray">Required Information</h2>
+
+<table class="form">
+	<tr>
+		<td>
+			Subject<br/>
+			<%= case_text_field 'case', 'subject', :class => 'full_width' %>
+			<div id="suggestions_container" style="height:20px">
+			<div id="suggestions_box" style="display:none">
+				Searching...
+			</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span class ="multi">Type<br/>
+				<%= case_select_tag 'case[sf_type]', 
+								options_for_select(['Question',
+													'Problem',
+													'Bug Fix',
+													'Benchmark',
+													'Feature Request',
+													'Enhancement',
+													'Information',
+													'Bug',
+													'Usability',
+													'Training',
+													'CR',
+													'Administrative',
+													'Suggestion',
+													'Training Required',
+													'Evaluation',
+													'Tapeout',
+													'Deployment',
+													'QoR',
+													'Crash',
+													'Test Bug'
+													], @case.sf_type)  %>
+			</span>
+			<span>Priority<br/>
+				<%= case_select_tag "case[customer_priority__c]",
+								options_for_select([
+													['--None--', ''],
+													"0 - Critical",
+													"1 - Urgent",
+													"2 - High",
+													"3 - Med",
+													"4 - Low"
+													], @case.customer_priority__c)
+				%>
+				<!-- <select  title="Customer Priority" id="case_customer_priority__c" name="case[customer_priority__c]">
+					 "">--None--</option> "0 - Critical">0 - Critical</option>
+					 "1 - Urgent">1 - Urgent</option>
+					 "2 - High">2 - High</option>
+					 "3 - Med">3 - Med</option>
+					 "4 - Low">4 - Low</option>
+				</select> -->
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Description<br/>
+			<%= case_text_area 'case', 'description', :class => "text_area", :rows => 16, :style => 'height:auto' %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span>Operating System<br/>
+				
+					<%= case_select_tag 'case[operating_system__c]', 
+						options_for_select(
+							[
+								['--None--',''],
+								'Linux 32 bit',
+								'Linux 64 bit',
+								'Solaris 32 bit',
+								'Solaris 64 bit',
+								'HPUX 64 bit',
+								'Windows',
+								'Windows NT',
+							], @case.operating_system__c
+						)%>
+					<!-- <select  title="Operating System" id="case_operating_system__c" name="case[operating_system__c]">
+					 "">--None--</option> "Linux 32 bit">Linux 32 bit</option>
+					 "Linux 64 bit">Linux 64 bit</option>
+					 "Solaris 32 bit">Solaris 32 bit</option>
+					 "Solaris 64 bit">Solaris 64 bit</option>
+					 "HPUX 64 bit">HPUX 64 bit</option>
+					 "Windows">Windows</option>
+					 "Windows NT">Windows NT</option>
+				</select> -->
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span>Product<br/>
+				
+				<!-- <select  title="Product" id="case_product__c" name="case[product__c]"> -->
+				<%= case_select_tag 'case[product__c]',
+						options_for_select([['--None--',''],
+										 "ACC",
+										 "Blast Create, Blast Create SA, Blast RTL, Blast Logic",
+										 "Blast Create, Blast FPGA",
+										 "Blast DFT, Scan, MBIST, LBIST",
+										 "Blast FPGA",
+										 "Blast Fusion, Blast Fusion SA, Blast Plan Pro, Blast Yield",
+										 "Blast Noise, Quartz Time, Quartz RC",
+										 "Blast Rail, Blast Power",
+										 "Blast Time",
+										 "Circuit Simulation",
+										 "Custom Design",
+										 "DPX",
+										 "Libraries",
+										 "Mojave DRC, LVS",
+										 "Prototype",
+										 "Quartz DRC",
+										 "Quartz Formal",
+										 "Quartz LVS",
+										 "QuickCap, QuickInd",
+										 "Silicon Smart CR, FR, MR, IO, & SI",
+										 "Simulator Formats, Model Formats",
+										 "Talus"
+										 ], @case.product__c
+										  )
+					%>
+			</span>
+
+		</td>
+	</tr>
+	<tr>
+		<td><span>Component<br/>
+			<!-- <select  title="Component" id="case_component__c" name="case[component__c]"> -->
+			<%= case_select_tag 'case[component__c]',
+				 	options_for_select(
+						[
+						['--None--',''],
+						"Abstraction-BlackBox",
+						 "Abstraction-GlassBox",
+						 "AO - Area Optimization",
+						 "Budgeting",
+						 "Buffering",
+						 "Capsize",
+						 "Chip assembly",
+						 "Clock Routing",
+						 "Congestion",
+						 "CrossTalk",
+						 "Data Model",
+						 "Data Model - Design",
+						 "Data Model - Verilog",
+						 "Data Model - Volcano",
+						 "DE - Delay Estimation",
+						 "Delay Calculation",
+						 "Detail Routing",
+						 "DFM",
+						 "DFM-CAA",
+						 "DFM-CMP",
+						 "DFM-LithoRouter",
+						 "DFM-Redundant Via",
+						 "DFM-Wire Spreading",
+						 "DFM-Wire Widening",
+						 "DFT",
+						 "DFT ATPG",
+						 "DFT Check",
+						 "DFT Insert",
+						 "DFT JTAG",
+						 "DFT Logic BIST",
+						 "DFT Memory BIST",
+						 "DFT Optimize",
+						 "DFT Repair",
+						 "DFT Scan",
+						 "DI - Design Interface",
+						 "Documentation",
+						 "Documentation - Error Message",
+						 "Documentation - Manpage",
+						 "ECO",
+						 "ElectroMigration",
+						 "Extraction",
+						 "FINESIM",
+						 "FineSimPro",
+						 "FlipChip",
+						 "FloorPlanning",
+						 "Flow",
+						 "FPGA",
+						 "FPGA – Design Interface",
+						 "FPGA – Flow",
+						 "FPGA - Device Modeling",
+						 "FPGA - RTL Synthesis",
+						 "FPGA - Mapping/Optimization",
+						 "FPGA - QA/QR",
+						 "FPGA – Asic Prototyping",
+						 "FPGA – Placement",
+						 "Global Routing",
+						 "GUI",
+						 "GUI - Clock Tree Browser",
+						 "GUI - FPFA NodeFinder",
+						 "GUI - FPGA",
+						 "GUI - FPGA Constraint Editor",
+						 "GUI - FPGA Project Manager",
+						 "GUI - Layout / FP : Flylines",
+						 "GUI - Layout / FP : Pin Menu",
+						 "GUI - Layout / FP : Power Menu",
+						 "GUI - Layout / FP : Selection & Editing",
+						 "GUI - Layout / FP : Viewing",
+						 "GUI - Model Browser",
+						 "GUI - Schematic",
+						 "GUI - Timing Viewer",
+						 "Hierarchical Analysis",
+						 "Hold Buffering",
+						 "Infrastructure",
+						 "Layout",
+						 "Library",
+						 "Library Gdsii",
+						 "Library-Lefdef",
+						 "Library Liberty",
+						 "Licensing - Analysis and Signoff",
+						 "Licensing - Design Implementation",
+						 "Licensing - Logic Design",
+						 "Licensing - Physical Verification",
+						 "Logic Optimization",
+						 "Logic Synthesis",
+						 "Low Power Issues",
+						 "LVS",
+						 "m2i",
+						 "Magma Qualified Library",
+						 "MCAPI",
+						 "mjexe",
+						 "Mojave",
+						 "MPM - Multiple Project Management",
+						 "MTCL",
+						 "NETLIST Import",
+						 "Not Applicable",
+						 "Optimization Flow",
+						 "OS / Runtime Environment",
+						 "Padring placement/routing",
+						 "Physical verification",
+						 "Pin Assignment",
+						 "Placement",
+						 "PL - Placement",
+						 "Power&Rail Analysis",
+						 "Power Grid Syn (APS)",
+						 "Power Routing",
+						 "Prototyping",
+						 "Quartz Formal",
+						 "Quartz Formal Correspondence",
+						 "Quartz Formal GUI",
+						 "Quartz Formal RTL Import",
+						 "Quartz Formal Solvers",
+						 "RLC/QuickCap",
+						 "RTL Formal",
+						 "RTL Synthesis",
+						 "Salesforce.com Workflow Test",
+						 "SA-Packing",
+						 "SA-partitioning",
+						 "SA-Placement",
+						 "SA-Routing",
+						 "Schematic Design",
+						 "SCM",
+						 "SiliconSmart",
+						 "SiliconSmart - Cellrater",
+						 "Simulation Env",
+						 "Snap/Enwrap",
+						 "Special Cell Insertion",
+						 "SPS Backend",
+						 "SPS Frontend",
+						 "Statistical Static Timing Analysis",
+						 "TA - Timing Analyzer",
+						 "TCL",
+						 "Timing",
+						 "Timing-Delay",
+						 "Timing-Sdc",
+						 "Track Routing",
+						 "Training"
+						], @case.component__c
+					 )
+				 %>
+				 
+			</select>
+		</span></td>
+	</tr>
+	<tr>
+		<td><span>Version Number<br/>
+				<!-- <select  title="Version Number" id="case_version_number__c" name="case[version_number__c]"> -->
+					
+					<%= case_select_tag "case[version_number__c]", options_for_select(
+						[
+							["--None--", ''],
+							"1.0",
+							 "2.0",
+							 "2.1",
+							 "2.2",
+							 "2.3",
+							 "2.4",
+							 "2.5",
+							 "2.5.1",
+							 "2.6",
+							 "2.7",
+							 "2.8",
+							 "2.8.1",
+							 "2.8.2",
+							 "2004.20",
+							 "2005.05.02",
+							 "2005.10",
+							 "2005.12",
+							 "2005.12.01",
+							 "2005.12.02",
+							 "2005.12.03",
+							 "2006.07",
+							 "2006.08",
+							 "2006.08.01",
+							 "2006.08.02",
+							 "2006.08.03",
+							 "2006.08.04",
+							 "2006.08.05",
+							 "2006.08.06",
+							 "2006.10",
+							 "2006.12",
+							 "2006.12.01B",
+							 "2006.12.01B2",
+							 "3.0",
+							 "3.2",
+							 "4.0G1",
+							 "4.0G2",
+							 "4.0Y1",
+							 "4.1G1",
+							 "4.1Y1",
+							 "4.2G",
+							 "4.2Y1",
+							 "4.2Y2",
+							 "5.0G",
+							 "5.0G Fast Track",
+							 "5.0Y1",
+							 "5.0Y2",
+							 "Everest",
+							 "Fast Track Build",
+							 "Future Release",
+							 "mcapi1.0",
+							 "Not Applicable",
+							 "qf2.0",
+							 "qf2.1",
+							 "qf2.2",
+							 "talus1.0",
+							 "talus1.0 Fast Track",
+							 "2007.05",
+							 "2007.01",
+							 "2007.03",
+							 "2007.03.01",
+							 "2007.03.02",
+							 "2007.03.03",
+							 "2007.03.04",
+							 "2007.03.05",
+							 "2007.03.06",
+							 "2007.05.01",
+							 "2007.05.02",
+							 "2007.06",
+							 "2007.07",
+							 "2007.08",
+							 "2007.09",
+							 "2007.11",
+							 "2007.12",
+							 "2007.09.01",
+							 "2007.09.02",
+							 "Rio 4.0",
+							 "Rio 5.0",
+							 "Rio 6.0",
+							 "Rio Dev",
+						], @case.version_number__c
+						)					
+					%>
+					 
+				<!-- </select> -->
+		</td>
+	</tr>
+	<tr>
+		<td>Query Build View<br/>
+			<!-- <textarea  maxlength="255" type="text" wrap="soft"
+			id="case_query_build_view__c" name="case[query_build_view__c]" class="full_width">
+			<%= @case.query_build_view__c %>
+			</textarea> -->
+			<%= case_text_area 'case', 'query_build_view__c', :maxlength => '255', :rows => 3, :wrap => 'soft',
+				:class => 'full_width' %>
+		</td>
+	</tr>
+</table>
+<br/><br/>
+<h2 class="gray">Optional Information</h2>
+<br/>
+<table class="form">
+	<tr>
+		<td>
+			<span class ="multi">
+				Need By Date<br/><%= case_date_select 'case', 'expected_resolution_date__c',
+												 :include_blank => true,
+				 								 :start_year => Time.now.year, 
+												 :end_year => 1.years.since.year %>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span class ="multi">
+				Expected Release<br/><%= case_date_select 'case', 'expected_build_date__c',
+												 :include_blank => true,
+				 								 :start_year => Time.now.year, 
+												 :end_year => 1.years.since.year %>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span class ="multi">
+				Data or Test Case Provided<br/>
+				<!-- <select  title="Data or Test Case Provided" id="case_data_or_test_case_provided__c"
+							name="case[dataor_test_case_provided__c]"> -->
+					
+					<%= case_select_tag 'case[dataor_test_case_provided__c]', options_for_select([
+						['--None--',''],
+						"No",
+						"Yes",
+						"Not Needed",
+						"Customer Site",
+						"At Magma"], @case.dataor_test_case_provided__c
+					)%>
+				</select>
+			</span>
+			<span>Customer Tracking Number<br/><%= case_text_field 'case', 'customer_tracking__c' %></span>
+		</td>
+	</tr>
+	<tr>
+		<td>Time Stamp / Build<br/>
+			<%= case_text_field 'case', 'time_stamp_build__c', :class => 'full_width' %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span class ="multi">
+				HDL<br/>
+				<!-- <select  title="HDL" id="case_hdl__c" name="case[hdl__c]"> -->
+					<%= case_select_tag "case[hdl__c]", options_for_select(
+					 [
+					 ['--None--',''],
+					 "Not Applicable",
+					 "Verilog",
+					 "VHDL",
+					 "Verilog & VHDL"
+				 	 ],
+					  @case.hdl__c)
+					%>
+				<!-- </select> -->
+			</span>
+			<span>Design Geometry (nM)<br/><%= case_text_field 'case', 'design_geometryn_m__c' %></span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span class ="multi">
+			Foundry<br/>
+				<!-- <select  title="Foundry" id="case_foundry__c" name="case[foundry__c]"> -->
+					
+					<%= case_select_tag 'case[foundry__c]', options_for_select([
+					 ["--None--", ''],
+					 "IBM",
+					 "Infineon",
+					 "NEC",
+					 "Samsung",
+					 "ST",
+					 "TI",
+					 "Toshiba",
+					 "TSMC",
+					 "UMC",
+					 "SMIC",
+					 "Chartered Semi",
+					 "Jazz"],
+					@case.foundry__c ) %>
+				<!-- </select>	 -->
+			</span>
+			<span>Std Cell Library<br/><%= case_text_field 'case', 'std_cell_library__c' %></span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span class ="multi">
+				Speed (MHz)<br/><%= case_text_field 'case', 'speed_m_hz__c' %>
+			</span>
+			<span>Cell Count (K Objects)<br/><%= case_text_field 'case', 'cell_count_k_objects__c' %></span>
+		</td>
+	</tr>
+</table>
+<br/><br/>
+<% if @case.new_record? %>
+	<% CasesController::SUBMIT_ACTIONS.values.map.each do |name| %>
+		<%= submit_tag name %>
+	<% end %>
+<% else %>
+	<%= submit_tag CasesController::SUBMIT_ACTIONS[:submit] %>
+<% end %>
+<%= link_to 'Cancel', :controller => 'cases' %>

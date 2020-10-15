@@ -1,0 +1,2 @@
+class SelfServiceUserController < ApplicationController
+end

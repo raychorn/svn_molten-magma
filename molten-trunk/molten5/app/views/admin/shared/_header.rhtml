@@ -1,0 +1,20 @@
+<span id="logo">
+<%= link_to image_tag('header/magma_logo.gif', :width => 346, :height => 39, :alt => "Magma Design Automation, Inc."),
+ 			home_url %>
+</span>
+<ul id="nav">
+	<li class="<%= nav_class('home') %>"><a href='/'>MOLTEN Home</a></li>
+	<li class="<%= nav_class('admin/contacts') %>"><%= link_to 'Contacts', :controller => '/admin/contacts' %></li>
+	<% if current_contact.privilege?(AppConstants::PRIVILEGE[:admin]) %>
+	<li class="<%= nav_class('admin/settings') %>"><%= link_to 'Settings', :controller => '/admin/settings' %></li>
+	<li class="<%= nav_class('admin/search_logs') %>"><%= link_to 'Search Logs', :controller => '/admin/search_logs' %></li>
+		<li class="<%= nav_class('/solutions/test_search') %>"><%= link_to 'Search Test', :controller => '/solutions', :action => 'test_search' %></li>
+    <li class="<%= nav_class('admin/solution_relevancy') %>"><%= link_to 'Relevancy', :controller => '/admin/solution_relevancy' %></li>
+	<!-- Not really need anymore plus loads very, very, slow -->
+	<!-- <li class="<%= nav_class('admin/database') %>"><%= link_to 'Database', :controller => '/admin/database' %></li> -->
+	<% end %>
+</ul>
+
+<div id="login">
+	Logged in as <%= current_contact.email %> | <%= link_to 'Logout', :controller => '/contact', :action => 'logout' %>
+</div>

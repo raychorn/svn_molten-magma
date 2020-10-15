@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+howto_make_pizza:
+  id: 1
+  related_sobject_id: make_pizza
+  category_node_id: howto
+howto_wash_dishes:
+  id: 2
+  related_sobject_id: wash_dishes
+  category_node_id: howto_delete
+howto_fold_clothes:
+  id: 3
+  related_sobject_id: fold_clothes
+  category_node_id: howto_delete_comments

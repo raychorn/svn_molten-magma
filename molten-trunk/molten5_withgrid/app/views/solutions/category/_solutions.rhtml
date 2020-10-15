@@ -1,0 +1,8 @@
+<h2 class="gray">
+Solutions <%= @solutions.offset + 1 %>-<%= @solutions.last_item %> of
+<%= @solutions.total_entries %> in <%= @category.name %>
+</h2>
+
+<%= render :partial => 'solutions/search/solution', :collection => @solutions %>
+
+<%= will_paginate @solutions %>

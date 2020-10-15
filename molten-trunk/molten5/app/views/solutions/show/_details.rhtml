@@ -1,0 +1,22 @@
+<p>
+	<% if cats = @solution.categories.compact.uniq and cats.any? %>
+	In <%= cats.map { |cat| category_links(cat)   }.join(' and ') %>
+	<% end %>
+</p>
+
+<h2 class="gray">Solution Details</h2>
+
+<table class="listing">
+	<tr>
+		<th>Product</th>
+		<th>Component</th>
+		<th>Status</th>
+		<th>Last Updated</th>
+	</tr>
+	<tr class="shaded">
+		<td><%= @solution.product_name %></td>
+		<td><%= @solution.component %></td>
+		<td><%= @solution.status %></td>
+		<td><%= format_time ct(@solution.last_modified_date) %></td>
+	</tr>
+</table>

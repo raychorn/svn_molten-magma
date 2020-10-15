@@ -1,0 +1,12 @@
+<h1><%= @title = "Search Testing" %></h1>
+
+<ol>
+	<% @results.each do |r| %>
+		<li>
+			<%= r[:term] %>: <%= r[:count] %>
+			<% if r[:sf_count ] %> 
+			( <%= r[:sf_count] %> in SalesForce )
+			<% end %>
+		</li>
+	<% end %>
+</ol>

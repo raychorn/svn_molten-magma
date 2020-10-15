@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<presentation width="720" height="540" start="play" buildNum="6.0.432.432">
+	<presentationTitle>BlastTalusMigration</presentationTitle>
+	<speakers>
+		<speaker>
+			<name>Bill Gascoyne</name>
+			<speakerTitle>Senior Technical Trainer</speakerTitle>
+			<image>spk10516.JPG</image>
+			<email>billg@molten-magma.com</email>
+			<logo>lgo10516.jpg</logo>
+		</speaker>
+	</speakers>
+	<backgrounds>
+		<background url="Master80000006.swf"/>
+		<background url="Master80000005.swf"/>
+	</backgrounds>
+	<search url="srchdata.xml"/>
+	<slides>
+		<slide id="742" frameRate="30" totalFrames="309" advance="auto" type="normal">
+			<content url="Slide1.swf"/>
+			<slideBackground index="0" frameToPlay="1" duration="2" showAfterFrame="0"/>
+			<slideTitle>Blast to Talus Migration Guidelines </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="1"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x1.mp3"/>
+		</slide>
+		<slide id="744" frameRate="30" totalFrames="1140" advance="auto" type="normal">
+			<content url="Slide2.swf"/>
+			<slideBackground index="1" frameToPlay="1" duration="2" showAfterFrame="0"/>
+			<slideTitle>Agenda </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="2"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x2.mp3"/>
+		</slide>
+		<slide id="727" frameRate="30" totalFrames="2439" advance="auto" type="normal">
+			<content url="Slide3.swf"/>
+			<slideBackground index="1" frameToPlay="3" duration="2" showAfterFrame="0"/>
+			<slideTitle>Talus Volcano Compatibility </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="3"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x3.mp3"/>
+		</slide>
+		<slide id="728" frameRate="30" totalFrames="965" advance="auto" type="normal">
+			<content url="Slide4.swf"/>
+			<slideBackground index="1" frameToPlay="5" duration="2" showAfterFrame="0"/>
+			<slideTitle>Talus Volcano Import Example </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="4"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x4.mp3"/>
+		</slide>
+		<slide id="710" frameRate="30" totalFrames="1982" advance="auto" type="normal">
+			<content url="Slide5.swf"/>
+			<slideBackground index="1" frameToPlay="7" duration="2" showAfterFrame="0"/>
+			<slideTitle>Talus Commonly Used New Commands </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="5"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x5.mp3"/>
+		</slide>
+		<slide id="740" frameRate="30" totalFrames="1958" advance="auto" type="normal">
+			<content url="Slide6.swf"/>
+			<slideBackground index="1" frameToPlay="9" duration="2" showAfterFrame="0"/>
+			<slideTitle>Talus Library Preparation </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="6"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x6.mp3"/>
+		</slide>
+		<slide id="743" frameRate="30" totalFrames="941" advance="auto" type="normal">
+			<content url="Slide7.swf"/>
+			<slideBackground index="1" frameToPlay="11" duration="2" showAfterFrame="0"/>
+			<slideTitle>Talus Library Preparation (contd) </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="7"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x7.mp3"/>
+		</slide>
+		<slide id="746" frameRate="30" totalFrames="818" advance="auto" type="normal">
+			<content url="Slide8.swf"/>
+			<slideBackground index="1" frameToPlay="13" duration="2" showAfterFrame="0"/>
+			<slideTitle>Talus Library Arc Report </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="8"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x8.mp3"/>
+		</slide>
+		<slide id="725" frameRate="30" totalFrames="4140" advance="auto" type="normal">
+			<content url="Slide9.swf"/>
+			<slideBackground index="1" frameToPlay="15" duration="2" showAfterFrame="0"/>
+			<slideTitle>Analyzing a Strength Based Report </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="9"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x9.mp3"/>
+		</slide>
+		<slide id="741" frameRate="30" totalFrames="2775" advance="auto" type="normal">
+			<content url="Slide10.swf"/>
+			<slideBackground index="1" frameToPlay="17" duration="2" showAfterFrame="0"/>
+			<slideTitle>Talus Flow Scripts </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="10"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x10.mp3"/>
+		</slide>
+		<slide id="726" frameRate="30" totalFrames="2925" advance="auto" type="normal">
+			<content url="Slide11.swf"/>
+			<slideBackground index="1" frameToPlay="19" duration="2" showAfterFrame="0"/>
+			<slideTitle>Talus fix… Commands </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="11"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x11.mp3"/>
+		</slide>
+		<slide id="719" frameRate="30" totalFrames="1802" advance="auto" type="normal">
+			<content url="Slide12.swf"/>
+			<slideBackground index="1" frameToPlay="21" duration="2" showAfterFrame="0"/>
+			<slideTitle>Talus fix… Commands (contd) </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="12"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x12.mp3"/>
+		</slide>
+		<slide id="732" frameRate="30" totalFrames="2664" advance="auto" type="normal">
+			<content url="Slide13.swf"/>
+			<slideBackground index="1" frameToPlay="23" duration="2" showAfterFrame="0"/>
+			<slideTitle>Talus Timing Reports </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="13"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x13.mp3"/>
+		</slide>
+		<slide id="733" frameRate="30" totalFrames="1263" advance="auto" type="normal">
+			<content url="Slide14.swf"/>
+			<slideBackground index="1" frameToPlay="25" duration="2" showAfterFrame="0"/>
+			<slideTitle>Talus Logfiles </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="14"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x14.mp3"/>
+		</slide>
+		<slide id="735" frameRate="30" totalFrames="1823" advance="auto" type="normal">
+			<content url="Slide15.swf"/>
+			<slideBackground index="1" frameToPlay="27" duration="2" showAfterFrame="0"/>
+			<slideTitle>Tip #1 for Migration to Talus </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="15"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x15.mp3"/>
+		</slide>
+		<slide id="736" frameRate="30" totalFrames="1230" advance="auto" type="normal">
+			<content url="Slide16.swf"/>
+			<slideBackground index="1" frameToPlay="29" duration="2" showAfterFrame="0"/>
+			<slideTitle>Tip #2 for Migration to Talus </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="16"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x16.mp3"/>
+		</slide>
+		<slide id="737" frameRate="30" totalFrames="1013" advance="auto" type="normal">
+			<content url="Slide17.swf"/>
+			<slideBackground index="1" frameToPlay="31" duration="2" showAfterFrame="0"/>
+			<slideTitle>Tip #3 for Migration to Talus </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="17"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x17.mp3"/>
+		</slide>
+		<slide id="738" frameRate="30" totalFrames="977" advance="auto" type="normal">
+			<content url="Slide18.swf"/>
+			<slideBackground index="1" frameToPlay="33" duration="2" showAfterFrame="0"/>
+			<slideTitle>Tip #4 for Migration to Talus </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="18"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x18.mp3"/>
+		</slide>
+		<slide id="739" frameRate="30" totalFrames="1616" advance="auto" type="normal">
+			<content url="Slide19.swf"/>
+			<slideBackground index="1" frameToPlay="35" duration="2" showAfterFrame="0"/>
+			<slideTitle>Tip #5 for Migration to Talus </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="19"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x19.mp3"/>
+		</slide>
+		<slide id="745" frameRate="30" totalFrames="1329" advance="auto" type="normal">
+			<content url="Slide20.swf"/>
+			<slideBackground index="1" frameToPlay="37" duration="2" showAfterFrame="0"/>
+			<slideTitle>Summary </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="20"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x20.mp3"/>
+		</slide>
+	</slides>
+	<attachments></attachments>
+</presentation>

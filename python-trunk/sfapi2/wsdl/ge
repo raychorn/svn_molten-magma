@@ -1,0 +1,13 @@
+#!/bin/sh 
+SFORCE_HOME=../sflib
+PYTHONPATH=$SFORCE_HOME
+export PYTHONPATH
+echo $PYTHONPATH
+PYTHON_EXE=`which python2.3`
+UNAME=`uname`
+if [ $UNAME = 'Linux' ]; then
+    $PYTHON_EXE sfGenBase.py gen_part/partner.wsdl $*
+else
+    echo 'Solaris not supported!'
+fi
+

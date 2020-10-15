@@ -1,0 +1,42 @@
+<h1><%= @title = "New Support Case"%></h1>
+
+<%= form_tag url_for(:action => 'create'), {:id => 'case_form'} %>
+	<%= render :partial => 'form' %>
+</form>
+
+<% content_for "sidebar" do %>
+	<div id="suggested_solutions_container">
+		
+	</div>	
+	
+	<div id="suggested_cases_container">
+		
+	</div>	
+
+	<%= render :partial => 'sidebar' %>			
+
+<% end %>
+
+
+<script type="text/javascript" charset="utf-8">
+    <% if @case.new_record? %>
+ //   $('case_form').disable();
+    $('case_subject').enable();
+    <% end %>
+	$('case_subject').focus();
+	Event.observe('case_subject', 'keyup', caseSubjectEntered)
+ //	Event.observe('case_subject','blur', function(e) { $('case_form').enable(); });
+	
+	function caseSubjectEntered(e) {
+		if ($F('case_subject').length >= 4) { 
+			$('suggestions_box').show(); 
+			new Ajax.Request('/cases/suggested_solutions_and_cases', {asynchronous:true, evalScripts:true, parameters:'subject=' + $F('case_subject')}) 
+			} 
+	    else { 
+			$('suggested_solutions_container').innerHTML = '' ; 
+			$('suggested_cases_container').innerHTML = ''; 
+			}
+	    $('suggestions_box').innerHTML =''
+	}
+</script>
+

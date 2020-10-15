@@ -1,0 +1,27 @@
+<h2 class="gray">
+	<span>
+		  <%= link_to image_tag('buttons/new_case_gray.gif', :alt => "New Case", :width => 81, 
+								:height => 22),
+					  :controller => 'cases', :action => 'new' %>
+		  <%= link_to image_tag('buttons/browse_cases.gif', :alt => "New Case", :width => 143, 
+								:height => 22),
+					  :controller => 'cases' %>
+	</span>
+	Recent Support Cases Show Here
+</h2>
+<% if @cases.any? %>
+<table class="listing">
+	<tr>
+		<th>Case #</th>
+		<th style="width:48%">Subject</th>
+		<th>Type</th>
+		<th>Priority</th>
+		<th>Status</th>
+		<th>Last Updated</th>
+	</tr>
+	<%= render :partial => 'home/index/cases/support_case', :collection => @cases %>
+</table>
+<% else %>
+<br/>
+You have no recent support cases.
+<% end %>

@@ -1,0 +1,9 @@
+# To-Do:
+
+# First_Name__c should be First_Name
+
+# Asset_Name should be Asset_Names and include a unique list of all Asset Name values for each email address.
+
+# Put data into SalesForce via a custom object with notes as to why this was done.
+
+# Document how users can produce reports on the data.

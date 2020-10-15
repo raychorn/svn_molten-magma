@@ -1,0 +1,21 @@
+<h1 class="small_margin">
+	<%= link_to_function image_tag('buttons/print.gif', :alt => "Print", :width => 55, :height => 21, :align => 'center'),
+				"printpage()", :id => 'print_icon' %>
+	<%= @title = "Solution #" + @solution.solution_number.to_s + ": " + @solution.solution_name.to_s %>
+</h1>
+
+<%= render :partial => 'solutions/show/details' %>
+
+<p><%= simple_format(@solution.solution_note) if @solution.solution_note %></p>
+
+<%= render :partial => 'attachments/list', :locals => {:attachable => @solution} %>
+
+<%# render :partial => 'comments/list', :locals => {:commentable => @solution} %>
+
+<div id="rating">
+<%= render :partial => 'solutions/show/rating' %>
+</div>
+
+<% content_for "sidebar" do %>
+	<%= render :partial => 'sidebar' %>			
+<% end %>

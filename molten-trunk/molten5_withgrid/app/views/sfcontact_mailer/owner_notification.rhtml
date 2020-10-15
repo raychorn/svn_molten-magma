@@ -1,0 +1,20 @@
+<%= @comment.support_case.owner.name %>,
+
+A comment has been posted to a support case on <%= AppConstants::APP_NAME %>. 
+
+Case Subject: <%= @comment.support_case.subject %>
+Case Number: <%= @comment.support_case.stripped_case_number %>
+<% if @comment.author_name %>
+Author: <%= @comment.author_name %>
+<% end %>
+Comment --
+<%= @comment.comment_body %>
+
+Do not respond to this email message. 
+
+View the comment at:
+
+<%= AppConstants::APP_URL %><%= url_for(:controller => '/cases', :action => 'show', :id => @comment.support_case.id)  %>
+
+
+The <%= AppConstants::APP_NAME %> Team.

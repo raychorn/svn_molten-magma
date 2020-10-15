@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+#
+# Subversion properties
+#
+# $LastChangedDate: 2006-09-13 12:43:33 -0700 (Wed, 13 Sep 2006) $
+# $Author: ramya $
+# $Revision: 214 $
+# $HeadURL: http://capps.moltenmagma.com/svn/sfsrc/trunk/sfapi2/sfscm/launcher $
+# $Id: launcher 214 2006-09-13 19:43:33Z ramya $
+#
+# if 'bash' gives us bash v1, try to relaunch script bash v2 by name
+BASHVER=`echo $BASH_VERSION | cut -b 1 -`
+if [ $BASHVER = "1" ]; then
+    exec bash2 $0 $*
+fi
+RAWPATH=$0
+while [ -L $RAWPATH ]; do
+    RAWPATH=`readlink $RAWPATH`;
+done
+
+LAUNCHERNAME=`basename $RAWPATH`
+LAUNCHERDIR=`echo $RAWPATH | sed -e 's/\/[^\/]*$//'`
+
+# get the absolute pathname of LAUNCHERDIR
+CURDIR=`pwd`
+if [ $LAUNCHERNAME != $LAUNCHERDIR ]; then
+    cd $LAUNCHERDIR
+fi
+LAUNCHERDIR=`pwd -P`
+cd $CURDIR
+SFORCE_HOME=$LAUNCHERDIR/..
+SFLIBDIR=$SFORCE_HOME/src/app
+PATH=$PATH:/home/sfscript/python/bin
+#PATH=/home/sfscript/python/bin:$PATH
+#PATH=/home/sfbeta/python/bin:$PATH
+#SFUTILDIR=$SFORCE_HOME/sfutil
+
+#. $SFLIBDIR/paths.sh
+
+
+PYSFDC_HOME=/home/sfscript/src/sfapi3
+PYTHONPATH=PYTHONHPATH:$PYSFDC_HOME/src
+#PYTHONPATH=$SFLIBDIR
+export SFORCE_HOME
+export PYSFDC_HOME
+export PYTHONPATH
+export PATH
+
+scriptlist=(lnpechpnt walkact checkpe syncpe listcrs unlnpechpnt closedcases)
+
+case $LAUNCHERNAME in
+        lnpechpnt)         RUNCMD="SfPECheckpoint.py -clnpechpnt $*";;
+
+        walkact)         RUNCMD="WalkPE.py -cwalkact $*";;
+
+        checkpe)         RUNCMD="WalkPE.py -ccheckpe $*";;
+        
+        syncpe)         RUNCMD="WalkPE.py -csyncpe $*";;
+        
+        listcrs)         RUNCMD="ListCRs.py -clistcrs $*";;
+        
+        closedcases)     RUNCMD="closeCRs.py $*";;
+        
+        unlnpechpnt)     RUNCMD="UnlinkPECheckpoint.py -cunlnpechpnt $*";;
+
+
+
+    launcher)
+        # get a copy of the scriptlist
+        launcherlist=${scriptlist[*]}
+
+        # add "mklinks" to the end of it
+        #launcherlist[${#launcherlist[*]}]=mklinks
+
+        CURDIR=`pwd`
+        cd $LAUNCHERDIR
+
+        for script in ${launcherlist[@]};
+        do
+            if [[ $1 == 'rm' ]]; then
+                echo "removing $script"
+                rm -f $script
+            fi
+            if [ ! -e $script ]; then
+                ln $LAUNCHERNAME $script
+            fi
+        done
+
+        cd $CURDIR
+        ## commands to hard link launcher script to all the individual
+        ## command names
+        exit;;
+
+    *)
+        echo "ERROR: launcher unhandled case"
+        exit;;
+esac
+
+# use it as the basis of the python script name
+if [[ -z $SCRIPTPATH ]]; then
+    SCRIPTPATH=$SFLIBDIR/$RUNCMD
+fi
+
+PYTHON_EXE=`which python2.3`
+
+UNAME=`uname`
+if [ $UNAME = 'Linux' ]; then
+    $PYTHON_EXE $SCRIPTPATH
+else
+    echo 'Solaris not supported!'
+fi
+

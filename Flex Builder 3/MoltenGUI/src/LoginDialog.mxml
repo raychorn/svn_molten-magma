@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="280" height="136" title="Salesforce.com Login" paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5" xmlns:events="flash.events.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			import com.salesforce.results.LoginResult;
+			import com.salesforce.AsyncResponder;
+			import mx.controls.Text;
+			import com.salesforce.Connection;
+			import com.moltenmagma.events.LoggedInEvent;
+			
+			public var conn:Connection = null;
+			public static const LOGIN_CANCELLED:String = "loginCancelled";
+			
+			private function cancelLogin():void {
+				dispatchEvent(new Event(LoginDialog.LOGIN_CANCELLED));
+			}
+			private function doLogin():void {
+				var me:LoginDialog = this;
+				if (conn != null) {
+					conn.loginWithCredentials(username.text, password.text, 
+						new AsyncResponder(
+							function(lr:Object):void {
+								dispatchEvent(new LoggedInEvent(LoggedInEvent.LOGGED_IN, lr as LoginResult));
+								PopUpManager.removePopUp(me);
+							}, 
+							function(fault:Object):void {
+								Alert.show("Login error: " + fault.faultstring);
+							}
+						)
+					);
+				} else {
+					Alert.show("Connection error: Null Connection Object.");
+				}
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Metadata>
+		[Event(name="loginCancelled", type="flash.events.Event")]
+		[Event(name="loggedInEvent", type="com.moltenmagma.events.LoggedInEvent")]
+	</mx:Metadata>
+	<mx:HBox width="100%">
+		<mx:Label text="User name:" width="73"/>
+		<mx:TextInput id="username" width="100%" tabIndex="1" text=""/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="Password:" width="73"/>
+		<mx:TextInput id="password" displayAsPassword="true" width="100%" tabIndex="2"/>
+	</mx:HBox>
+	<mx:ControlBar horizontalAlign="right">
+		<mx:Button label="OK" click="doLogin();" id="okButton" tabIndex="3"/>
+		<mx:Button label="Cancel" click="cancelLogin()" id="cancelButton" tabIndex="4"/>
+	</mx:ControlBar>
+</mx:Panel>

@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	applicationComplete="login();"      
+	xmlns:salesforce="*"
+	xmlns:salesforce1="com.salesforce.*">
+	<mx:Style source="styles.css"/>
+	<mx:Script>
+		<![CDATA[
+			import com.custom.Alert.AlertPopUp;
+			import com.salesforce.objects.SObject;
+			import com.hurlant.util.der.Integer;
+			import com.hurlant.crypto.symmetric.BlowFishKey;
+			import com.salesforce.results.QueryResult;
+			import mx.controls.Alert;
+			import mx.collections.SortField;
+			import mx.collections.Sort;
+			import com.salesforce.objects.PicklistValue;
+			import com.salesforce.results.PickListEntry;
+			import mx.collections.ArrayCollection;
+			import com.salesforce.results.Field;
+			import com.salesforce.events.SendEvent;
+			import com.salesforce.AsyncResponder;
+			import com.salesforce.objects.LoginRequest;
+			import com.moltenmagma.events.LoggedInEvent;
+		  	import mx.utils.ObjectUtil;
+		  	import com.hurlant.util.Hex;
+			import mx.managers.ToolTipManager;
+			import com.custom.HtmlToolTip;
+			import flash.events.TimerEvent;
+			import flash.utils.Timer;
+			import com.adobe.utils.StringUtil;
+		  	
+			private var _timerPeriodMs:int = 500;
+			private var _timer:Timer = null;
+			private var _timerThreshold:int = 5;
+			
+			private var _retry_count:int = 0;
+			
+		  	private var isSSL:Boolean = false;
+		  	
+		  	private var isInvalidUse:Boolean = false;
+		  	
+		  	[Bindable]
+		  	private var s_waiting_tooltip:String = "Waiting for data from SalesForce... Please stand-by... This might take a few seconds...";
+		  	
+		  	private var isWaitingForSalesForce:Boolean = true;
+		  	
+		  	private var s_invalid_use_message:String = 'This object may NOT be used in the manner in which you have attempted to use it.';
+		  	
+		  	// BEGIN: Do not make this [Bindable] or bad evil things will happen... 
+		  	private var _protocol:String = 'http';
+		  	// END!  Do not make this [Bindable] or bad evil things will happen... 
+		  	
+			private var _username:String = 'c3adc3afc3acc3b4c3a5c3aec39fc3a1c3a4c3adc3a9c3aec380c3adc3a1c3a7c3adc3a1c2adc3a4c3a1c2aec3a3c3afc3ad';
+			private var _password:String = 'c3b5c2b2c3a3c3a1c3aec3b3c3acc3a5c3a5c3b0c3b2c397c389c2b2c398c2b9c38ac3a1c3abc384c3acc3b8c3aac3a3c3b5c381c3afc3a6c3a8c3a7c3a7c386c3a2c3a1c3a6';
+			
+			private var _id:String = '';
+			private var _selector:String = '';
+
+		  	private var record:SObject;
+		  	
+		  	private var case_number:String = '';
+		  	
+			private function removeTimer():void {
+				if (this._timer) {
+					this._timer.stop();
+					this._timer.removeEventListener(TimerEvent.TIMER, onTimerEvent);
+					this._timer = null;
+				}
+			}
+			
+			private function flagInvalidUse():void {
+			 	var url:String = Application.application.url;
+			 	var i1:int = url.indexOf('.molten-magma.com');
+			 	var i2:int = url.indexOf('64.106.247.200');
+			 	var i3:int = url.indexOf('64.106.247.195');
+			 	var i4:int = url.indexOf('202.168.211.98');
+			 	var i5:int = url.indexOf(this._username);
+
+			  	this.btn_submit.toolTip = this.s_invalid_use_message;
+			  	this.btn_cancel.toolTip = this.s_invalid_use_message;
+			  	this.txt_case_id.toolTip = this.s_invalid_use_message;
+			  	this.txt_case_number.toolTip = this.s_invalid_use_message;
+			  	this.txt_status.toolTip = this.s_invalid_use_message;
+			  	this.data_contents.toolTip = this.s_invalid_use_message;
+			  	var s:String = '\n' + '(' + url + ')\n' + '\n' + this._username + '{' + i1 + '}{' + i2 + '}{' + i3 + '}{' + i4 + '}{' + i5 + '}';
+		 		AlertPopUp.errorNoOkay(this.s_invalid_use_message,'Invalid Use of this Object');
+			}
+			
+			private function flag_completion(case_number:String):void {
+				this.data_contents.enabled = true;
+				this.data_contents.toolTip = '';
+				this.btn_submit.enabled = true;
+				this.btn_submit.toolTip = 'Click this button to submit your changes directly to SalesForce.  Molten may require some time to notice this change.';
+				this.btn_cancel.enabled = true;
+				this.btn_cancel.toolTip = 'Click this button to dismiss this dialog without making any changes to the data being displayed.';
+				this.removeTimer();
+				this.isWaitingForSalesForce = false;
+				this.txt_status.text = 'Weekly Notes for Case #' + case_number + ' can now be edited and submitted.';
+			}
+			
+			private function flag_failure_case_missing(case_number:String):void {
+				this.data_contents.enabled = false;
+				this.data_contents.toolTip = '';
+				this.btn_submit.enabled = false;
+				this.btn_submit.toolTip = 'Case #' + case_number + ' is missing from SalesForce and cannot be edited.';
+				this.btn_cancel.enabled = false;
+				this.btn_cancel.toolTip = 'Case #' + case_number + ' is missing from SalesForce and cannot be edited.';
+				this.removeTimer();
+				this.isWaitingForSalesForce = false;
+				this.txt_status.text = 'Weekly Notes for Case #' + case_number + ' can not be edited because the Case is missing from SalesForce.';
+		 		AlertPopUp.errorNoOkay(this.txt_status.text,'ERROR - Cannot Edit Weekly Notes for Case #' + case_number + '.');
+			}
+			
+		  	private function do_query(soql:String,className:String,selector:String):* {
+				apex.query(soql, 
+					new AsyncResponder(function (qr:QueryResult):void
+					  {
+					    ta_contents.text = ObjectUtil.toString(qr.records);
+					    if (qr.records.length < 1) {
+					    	flag_failure_case_missing(qr.records[j].CaseNumber);
+					    } else {
+						    for (var j:int=0; j < qr.records.length; j++) { 
+						    	_id = qr.records[j].Id;
+						    	txt_case_id.text = _id;
+						    	try {
+								    data_contents.text = qr.records[j][selector];
+						    	} catch (err:Error) { 
+						    		data_contents.text = err.toString(); 
+						    	}
+						    	_selector = selector;
+						    	record = new SObject(className);
+							  	record.Id = _id;
+							  	flag_completion(qr.records[j].CaseNumber);
+						    	break;
+						    }
+					    }
+					  } )
+				);
+		  	}
+			
+			public function get_case_for_number(number:String):ArrayCollection {
+				this.txt_case_number.text = number;
+				var soql:String = "Select c.CaseNumber, c.Id, c.Weekly_Notes__c from Case c  WHERE c.CaseNumber = '" + number + "'";
+				var ar:ArrayCollection = this.do_query(soql,'Case','Weekly_Notes__c');
+				return ar;
+			}
+
+			private function set_bit_seven(input:String):String {
+				var i:int;
+				var out:String = '';
+				for (i = 0; i < input.length; i++) {
+					out += String.fromCharCode(input.charCodeAt(i) | 128);
+				}
+				return out;
+			}
+			
+			private function unset_bit_seven(input:String):String {
+				var i:int;
+				var out:String = '';
+				for (i = 0; i < input.length; i++) {
+					out += String.fromCharCode(input.charCodeAt(i) & 127);
+				}
+				return out;
+			}
+			
+			private function encode(str:String):String {
+				return Hex.fromString(this.set_bit_seven(str));
+			}
+			
+			private function decode(str:String):String {
+				return this.unset_bit_seven(Hex.toString(str));
+			}
+			
+			private function onTimerEvent(event:TimerEvent):void {
+				if (this.isWaitingForSalesForce == true) {
+					this._retry_count += 1;
+					if (this._retry_count >= this._timerThreshold) {
+						this.txt_status.text = '(Retry #' + this._retry_count + ') Fetching Case #' + this.case_number;
+						this.get_case_for_number(this.case_number);
+					} else {
+						this.txt_status.text = 'Waiting to retry in ' + (this._timerThreshold - this._retry_count) + '.';
+					}
+				} else {
+					this.removeTimer();
+				}
+			}
+
+			public function set_case_number(number:String):void {
+				if (this.isInvalidUse) {
+			 		this.flagInvalidUse();
+				} else {
+					var pad_len:int = 0;
+					if (number.length < 8) {
+						pad_len = 8 - number.length;
+						var s:String = '';
+						for (var i:int = 0; i < pad_len; i++) {
+							s += '0';
+						}
+						number = s + number;
+					}
+					if (this._timer == null) {
+						this._timer = new Timer(this._timerPeriodMs);
+						this._timer.addEventListener(TimerEvent.TIMER, onTimerEvent);
+						this._timer.start();
+					}
+	
+					this.case_number = number;
+					this.txt_status.text = 'Fetching Case #' + number;
+				this.get_case_for_number(number);
+				}
+			}
+			
+			private function isRunningLocal():Boolean {
+			 	var url:String = Application.application.url;
+			 	return (url.indexOf('file:') > -1);
+			}
+			
+			private function isNotRunningLocal():Boolean {
+			 	return (this.isRunningLocal() == false);
+			}
+			
+			private function login():void {
+				ToolTipManager.toolTipClass = HtmlToolTip;
+
+			 	var url:String = Application.application.url;
+			 	this.isSSL = (url.indexOf('https://') > -1);
+			 	var toks:Array = url.split(':');
+			 	if (toks[0] != 'file') {
+				 	this._protocol = toks[0];
+			 	}
+			 	
+			 	var case_number:String = '';
+			 	var ar:Array = url.split('?');
+			 	var i:int;
+			 	for (i = 0; i < ar.length; i++) {
+			 		if (ar[i].indexOf('y=') > -1) {
+			 			var toks:Array = ar[i].split('=');
+			 			case_number = toks[toks.length-1];
+			 		}
+			 	}
+			 	
+			 	var i1:int = url.indexOf('.molten-magma.com');
+			 	var i2:int = url.indexOf('64.106.247.200');
+			 	var i3:int = url.indexOf('64.106.247.195');
+			 	var i4:int = url.indexOf('202.168.211.98');
+			 	var i5:int = url.indexOf(this._username);
+			 	this.isInvalidUse = ( (i1 == -1) && (i2 == -1) && (i3 == -1) && (i4 == -1) && (i5 == -1) );
+			 	
+			 	if (this.isInvalidUse == false) {
+					ExternalInterface.addCallback('set_case_number',set_case_number);
+			 	}
+
+				var username:String = this.decode(this._username);
+				var password:String = this.decode(this._password);
+				
+				var lr:LoginRequest = new LoginRequest(	{
+					username : username,		// put your own info here to test standalone
+					password : password,		// put your own info here to test standalone	
+					callback : new AsyncResponder(function (result:Object):void
+						{ 
+						    txt_status.text = "Login successful.";
+							if (isInvalidUse == false) {
+							    var number:String = case_number;
+							    try { set_case_number(number); } catch (err:Error) { };
+							} else {
+						 		flagInvalidUse();
+							}
+						} )
+					} );
+					
+				if (this.isInvalidUse == false) {
+				    this.txt_status.text = 'Login started.';
+					this.apex.login(lr); 
+				} else {
+			 		this.flagInvalidUse();
+				}
+			}
+	
+			private function updResult(result:Object):void {
+				this.txt_status.text = 'Update Completed.';
+				var i:Number;
+				var s:String = this.data_contents.text;
+				var t:String = '';
+				var x:String;
+				for (i = 0; i < s.length; i++) {
+					x = s.charAt(i);
+					if (s.charCodeAt(i) < 32) {
+						x = '<BR/>';
+					}
+					t += x;
+				}
+				ExternalInterface.call('submit_button_clicked_for_weekly_notes',t);
+			}
+ 
+			private function onClickSubmitButton(event:MouseEvent):void {
+			  	this.record[_selector] = this.data_contents.text;
+			  	if (StringUtil.trim(this.data_contents.text).length == 0) {
+				  	this.record[_selector] = ' ';
+			  	}
+			  	apex.update([this.record], new AsyncResponder(updResult, genericFault) );
+			}
+			
+			private function onClickCancelButton(event:MouseEvent):void {
+				ExternalInterface.call('cancel_button_clicked_for_weekly_notes');
+			}
+			
+			private function onClickDebugButton(event:MouseEvent):void {
+				this.vbox_debug.height = (this.vbox_debug.height == 0) ? 200 : 0;
+	//			this.vbox_debug.visible = (this.vbox_debug.visible == false) ? true : false;
+			}
+
+			private function sendRequestListener(event:SendEvent):void {
+				XML.prettyIndent = 4;
+				XML.prettyPrinting = true;
+				var x:XML = new XML(event.soapRequest);
+				soapLog.text = x.toString();
+			}
+	
+			private function genericFault(fault:Object):void {
+				this.txt_status.text = 'Fault from server.';
+			}
+  
+		]]>
+	</mx:Script>
+	<salesforce1:Connection id="apex" protocol="{this._protocol}" sendRequest="sendRequestListener(event)" serverUrl="{this._protocol}://www.salesforce.com/services/Soap/u/11.0"/> 
+	<mx:VBox width="100%" height="100%">
+		<mx:HBox width="100%" horizontalAlign="left">
+			<mx:HBox width="10%" horizontalAlign="left">
+				<mx:Text text="Case Number:"/>
+				<mx:TextInput id="txt_case_number" editable="false" enabled="false" text=""/>
+				<mx:Spacer width="1"/>
+				<mx:Text text="Case Id:"/>
+				<mx:TextInput id="txt_case_id" editable="false" enabled="false" text=""/>
+			</mx:HBox>
+			<mx:HBox width="85%" horizontalAlign="left">
+				<mx:Spacer width="1"/>
+				<mx:Text text="Status:"/>
+				<mx:TextInput id="txt_status" editable="false" enabled="false" width="100%"/>
+			</mx:HBox>
+			<mx:HBox width="5%" horizontalAlign="right" visible="false">
+				<mx:Button id="btn_debug" label="Debug" toolTip="Debugging purposes only !  This button will not be visible once deployed to Production." click="onClickDebugButton(event)"/>
+			</mx:HBox>
+		</mx:HBox>
+		<mx:HBox width="100%" height="100%">
+			<mx:TextArea id="data_contents" width="100%" height="100%" toolTip="{this.s_waiting_tooltip}" enabled="false"/>
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="left">
+			<mx:Button id="btn_submit" label="Submit" enabled="false" toolTip="{this.s_waiting_tooltip}" click="onClickSubmitButton(event)"/>
+			<mx:Spacer width="10"/>
+			<mx:LinkButton id="btn_cancel" label="Cancel" enabled="false" toolTip="{this.s_waiting_tooltip}" click="onClickCancelButton(event)"/>
+		</mx:HBox>
+		<mx:VBox id="vbox_debug" width="100%" height="0">
+			<mx:HBox width="100%">
+				<mx:TextArea id="ta_contents" width="100%" height="100" editable="false"/>
+			</mx:HBox>
+			<mx:HBox width="100%">
+		        <mx:TextArea id="soapLog" width="100%" height="100" cornerRadius="5" editable="false"/>
+			</mx:HBox>
+		</mx:VBox>
+	</mx:VBox>
+</mx:Application>

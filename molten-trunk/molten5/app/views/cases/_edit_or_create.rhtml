@@ -1,0 +1,23 @@
+<div class="edit_or_create">
+	<table width="100%">
+		<tr>
+			<td>
+				<% attributes = @case.attributes.reject { |key,value| value.blank? } %>
+				<%= form_tag :action => 'new' %>
+				<% attributes.each do |key,value| %>
+					<%= hidden_field_tag "case[#{key}]", value %>
+				<% end %>
+				<%= submit_tag 'Edit' %>
+				</form>
+			</td>
+			<td>
+				<%= form_tag :action => 'create' %>
+				<% attributes.each do |key,value| %>
+					<%= hidden_field_tag "case[#{key}]", value %>
+				<% end %>
+				<%= submit_tag 'Submit Case' %>
+				</form>
+			</td>
+		</tr>
+	</table>
+</div>

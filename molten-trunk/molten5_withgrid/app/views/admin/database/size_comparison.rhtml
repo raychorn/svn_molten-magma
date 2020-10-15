@@ -1,0 +1,21 @@
+<h1><%= @title = "Database Size Comparison"%></h1>
+
+<style type="text/css" media="screen">
+	#size_comparison td {padding:10px;}
+</style>
+
+
+<table id="size_comparison">
+	<tr>
+		<td>Class</td>
+		<td>Salesforce</td>
+		<td>Local</td>
+	</tr>
+	<% AppConstants::CLASS_MAPPINGS.each do |key, value| %>
+		<tr>
+			<td><%= key %></td>
+			<td><%= key.constantize.count %></td>
+			<td><%= value.constantize.count %></td>
+		</tr>
+	<% end %>
+</table>

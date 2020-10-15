@@ -1,0 +1,10 @@
+xml.instruct!
+xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements.1.1" do
+  xml.channel do
+    xml.title "#{AppConstants::APP_NAME} Support Cases Feed Error"
+    xml.link url_for(:only_path => false,
+                     :controller => 'cases')
+   xml.pubDate CGI.rfc1123_date(Time.now)
+   xml.description @error_message
+  end # xml.channel
+end # xml.rss

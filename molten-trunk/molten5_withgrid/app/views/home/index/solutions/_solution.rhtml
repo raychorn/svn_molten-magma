@@ -1,0 +1,5 @@
+<li class="<%= cycle('shaded','') %>">
+<%= link_to truncate(solution.solution_name,AppConstants::SOLUTION_NAME_LIMIT), 
+	:controller => 'solutions', :action => 'show', 
+    :id => solution %>
+</li>

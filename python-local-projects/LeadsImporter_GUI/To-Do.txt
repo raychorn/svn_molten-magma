@@ -1,0 +1,19 @@
+# To-Do:
+
+# Dismiss Login should bring back a new login dialog.
+
+# Disable login button until a password has been entered.
+
+# Failed Login should destroy old login object and create a new one to clear the state of the last attempt.
+
+# Validation adn verification is a MUST for Leads Importer otherwise there is no way of knowing what is happening.
+
+# Data Control Panel to view the data and apply some Quality Assurance to the data before processing.
+
+# De-Dupe the Leads before processing.  Mark those that are dupes in a grid.  Ask for verification before proceeding.
+
+# Use Data Control Panel to view the data as it is being processed to mark-off each Lead along with the category it was supposed to be.
+
+# Add to Data Control Panel the ability to perform a sanity check on the process to ensure the required actions were taken.
+
+# Red check-marks for failures and Gree check-marks for successes.

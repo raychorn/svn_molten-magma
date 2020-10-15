@@ -1,0 +1,14 @@
+<% object = @case ? @case : @account %>
+<tr class="<%= cycle('shaded','') %>">
+	<td>
+		<%= contact.name %>
+	</td>
+	<td>
+		<%= mail_to contact.email %>
+	</td>
+	<td>
+		<%= hidden_field_tag "contacts[]", contact.id %>
+		<%= check_box_tag "subscribers[#{contact.id}]", 1,
+		(object.watcher and object.watcher.contacts.include?(contact) ? true : false) %>
+	</td>
+</tr>

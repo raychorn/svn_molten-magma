@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<recording topic="Better, Faster Floorplanning with Hydra" number="330 595 456 " Date="Wednesday, January 14, 2009" Time="3:02 AM, Local Time (GMT -08:00)" Host="Johnathan Herbert" duration="3745">
+<module name="toc">
+<message timestamp="0" Activity="Recording Start" Time="3:02 AM"/>
+<message timestamp="1" Activity="Teleconference Start" Time="00:00:01"/>
+<message timestamp="14" Activity="Switch to Page:  Better, Faster Floorplanning: Introduction of Hydra" Time="00:00:14"/>
+<message timestamp="90" Activity="Switch to Page:  Better, Faster Floorplanning with Hydra of Hydra" Time="00:01:30"/>
+<message timestamp="144" Activity="Switch to Page:  Hydra: Next Generation Floorplan Synthesis and Hie of Hydra" Time="00:02:24"/>
+<message timestamp="382" Activity="Switch to Page:  Hydra: Next-Generation Floorplan Synthesis &amp; Hiera of Hydra" Time="00:06:22"/>
+<message timestamp="492" Activity="Switch to Page:  Overview of Hydra Technology of Hydra" Time="00:08:12"/>
+<message timestamp="543" Activity="Switch to Page:  Better, Faster Floorplanning with Hydra of Hydra" Time="00:09:03"/>
+<message timestamp="567" Activity="Switch to Page:  Overview of flow stages in Hydra Flow of Hydra" Time="00:09:27"/>
+<message timestamp="785" Activity="Switch to Page:  Stage 1: Prepare Design Data -  Black Boxes - Earl of Hydra" Time="00:13:05"/>
+<message timestamp="888" Activity="Switch to Page:  Stage 1: Prepare Design Data -  Creating a Floorpl of Hydra" Time="00:14:48"/>
+<message timestamp="937" Activity="Switch to Page:  Stage 1: Prepare Design Data - Power Grid Implemen of Hydra" Time="00:15:37"/>
+<message timestamp="1029" Activity="Switch to Page:  Stage 2: Cluster Placement and Partition Decisions of Hydra" Time="00:17:09"/>
+<message timestamp="1126" Activity="Switch to Page:  Reasons to iterate on stage 2 (fix partitions) of Hydra" Time="00:18:46"/>
+<message timestamp="1267" Activity="Switch to Page:  Stage 3: Shape the Partitions - Macro Placer Detai of Hydra" Time="00:21:07"/>
+<message timestamp="1409" Activity="Switch to Page:  Stage 3: Shape the Partitions - Automatic Macro Al of Hydra" Time="00:23:29"/>
+<message timestamp="1448" Activity="Switch to Page:  Stage 3: Shaping the Partitions of Hydra" Time="00:24:08"/>
+<message timestamp="1486" Activity="Switch to Page:  Stage 3: Shaping the Partitions of Hydra" Time="00:24:46"/>
+<message timestamp="1543" Activity="Switch to Page:  Stage 3: Shaping - First iteration unconstrained of Hydra" Time="00:25:43"/>
+<message timestamp="1603" Activity="Switch to Page:  Stage 3: Shaping - Optimizing the RFCs of Hydra" Time="00:26:43"/>
+<message timestamp="1771" Activity="Switch to Page:  Stage 3: Shaping - Floorplan shapes - accomplished of Hydra" Time="00:29:31"/>
+<message timestamp="1799" Activity="Switch to Page:  Reasons to iterate on stage 3 (fix shapes) of Hydra" Time="00:29:59"/>
+<message timestamp="1883" Activity="Switch to Page:  Stage 3: Example of when to stop iterating at shap of Hydra" Time="00:31:23"/>
+<message timestamp="2005" Activity="Switch to Page:  Stage 3: Shaping example with manual edits of Hydra" Time="00:33:25"/>
+<message timestamp="2030" Activity="Switch to Page:  Stage 4: Pin Assignment of Block Candidates of Hydra" Time="00:33:50"/>
+<message timestamp="2108" Activity="Switch to Page:  Reasons to iterate on stage 4 (fix pins) of Hydra" Time="00:35:08"/>
+<message timestamp="2172" Activity="Switch to Page:  Stage 5: Generate Time Budgets - introduction of Hydra" Time="00:36:12"/>
+<message timestamp="2288" Activity="Switch to Page:  Stage 5: Generate Time Budgets - introduction of Hydra" Time="00:38:08"/>
+<message timestamp="2338" Activity="Switch to Page:  Stage 5: Generate Time Budgets - introduction of Hydra" Time="00:38:58"/>
+<message timestamp="2394" Activity="Switch to Page:  Stage 5: Generate Time Budgets -  Building the Hie of Hydra" Time="00:39:54"/>
+<message timestamp="2471" Activity="Switch to Page:  Stage 5: Generate the Time Budgets - Clocks throug of Hydra" Time="00:41:11"/>
+<message timestamp="2524" Activity="Switch to Page:  Stage 5:  Generate the Time Budgets - details of Hydra" Time="00:42:04"/>
+<message timestamp="2571" Activity="Switch to Page:  Stage 5: Generate the Time Budgets -  Re-Budgeting of Hydra" Time="00:42:51"/>
+<message timestamp="2617" Activity="Switch to Page:  Reasons to iterate on stage 5 (optimize and fix bu of Hydra" Time="00:43:37"/>
+<message timestamp="2656" Activity="Switch to Page:  Stage 6: Generate Data for Independent Block Imple of Hydra" Time="00:44:16"/>
+<message timestamp="2775" Activity="Switch to Page:  Stage 7: Re-Assembly and Abstraction of Hydra" Time="00:46:15"/>
+<message timestamp="2833" Activity="Switch to Page:  Summary of Hydra flow stages of Hydra" Time="00:47:13"/>
+<message timestamp="3074" Activity="Switch to Page:  Better, Faster Floorplanning with Hydra of Hydra" Time="00:51:14"/>
+<message timestamp="3095" Activity="Switch to Page:   Hydra is the Ideal Solution for Today’s Complex D of Hydra" Time="00:51:35"/>
+<message timestamp="3210" Activity="Switch to Page:  Hydra: Next Generation Floorplan Synthesis and Hie of Hydra" Time="00:53:30"/>
+<message timestamp="3282" Activity="Switch to Page:  Conclusion of Hydra" Time="00:54:42"/>
+<message timestamp="3745" Activity="Teleconference End" Time="01:02:25"/>
+<message timestamp="3745" Activity="Recording End" Time="4:05 AM"/>
+</module>
+<module name="participants">
+<message timestamp="0" LeaveTimestamp="3744" Id="16822273" Name="Heikki Auriola" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="0" LeaveTimestamp="3744" Id="16805889" Name="Martin Ruane" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="0" LeaveTimestamp="3110" Id="16842753" Name="Jan Orhaug" Time="03:02 AM / 03:54 AM"/>
+<message timestamp="0" LeaveTimestamp="3743" Id="16826369" Name="Anandaraj Sivasubramanian" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="0" LeaveTimestamp="2242" Id="16809985" Name="Andrew Lambert" Time="03:02 AM / 03:40 AM"/>
+<message timestamp="0" LeaveTimestamp="3744" Id="16846849" Name="Jack liu" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="0" LeaveTimestamp="3744" Id="16793601" Name="Daniel Daboul" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="0" LeaveTimestamp="3744" Id="16830465" Name="Alistair Pritchard" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="0" LeaveTimestamp="3744" Id="16814081" Name="Ari Oja" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="0" LeaveTimestamp="3707" Id="16850945" Name="Gonen Eytan" Time="03:02 AM / 04:04 AM"/>
+<message timestamp="0" LeaveTimestamp="3744" Id="16797697" Name="Rene Schaloffsky Bloch" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="0" LeaveTimestamp="3744" Id="16834561" Name="Barry Woodcock" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="0" LeaveTimestamp="3744" Id="16781313" Name="Johnathan Herbert" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="0" LeaveTimestamp="3744" Id="16818177" Name="massimo bertoletti" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="0" LeaveTimestamp="3601" Id="16801793" Name="Richard Wignall" Time="03:02 AM / 04:02 AM"/>
+<message timestamp="0" LeaveTimestamp="3744" Id="16838657" Name="Stuart Vernon" Time="03:02 AM / 04:05 AM"/>
+<message timestamp="107" LeaveTimestamp="3644" Id="16859137" Name="Justin Rees" Time="03:04 AM / 04:03 AM"/>
+<message timestamp="185" LeaveTimestamp="3744" Id="16863233" Name="James Myers" Time="03:05 AM / 04:05 AM"/>
+<message timestamp="342" LeaveTimestamp="3744" Id="16867329" Name="ezra" Time="03:08 AM / 04:05 AM"/>
+<message timestamp="1371" LeaveTimestamp="3744" Id="16871425" Name="Kevin Allen" Time="03:25 AM / 04:05 AM"/>
+</module>
+<module name="screen">
+<video timestamp="1" name="screen.flv" width="1480" height="850" start="0" duration="3744" keyinterval="10"/>
+<action timestamp="0" name="Show"/>
+<action timestamp="3745" name="Hide"/>
+</module>
+<module name="voip">
+<video timestamp="1" name="voip.flv" duration="3711" /> 
+</module>
+<module name="l10n">
+<string id="NBRUI_TXTCHAT" name="Chat"/>
+<string id="NBRUI_TXTQA" name="Q&A"/>
+<string id="NBRUI_TXTVIDEO" name="Video"/>
+<string id="NBRUI_TXTNOTES" name="Notes"/>
+<string id="NBRUI_TXTPOLLING" name="Polling"/>
+<string id="NBRUI_TXTFILET" name="File Transfer"/>
+<string id="NBRUI_TXTPARTT" name="Participants"/>
+<string id="NBRUI_TXTTOC" name="Table of Contents"/>
+<string id="NBRUI_TXTMEETINGNUM" name="Meeting Number: "/>
+<string id="NBRUI_TXTMEETINGDATE" name="Date: "/>
+<string id="NBRUI_TXTMEETINGTIME" name="Time: "/>
+<string id="NBRUI_TXTMEETINGHOST" name="Host: "/>
+<string id="NBRUI_TXTMEETINGNAME" name="Meeting Topic: "/>
+<string id="IDS_NBR2_UL_COL_NAME" name="Name"/>
+<string id="IDS_NBR2_UL_COL_TIME" name="Joining time / Leaving time"/>
+<string id="NBRUI_TXTTOCACT" name="Activity"/>
+<string id="NBRUI_TXTTOCTIME" name="Time"/>
+</module>
+</recording>

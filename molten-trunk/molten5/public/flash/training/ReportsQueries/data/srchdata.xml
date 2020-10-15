@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document-metadata version="1.0" xmlns="http://breeze.macromedia.com/">
+	<document-info>
+		<title>ReportsQueries</title>
+		<summary></summary>
+		<author/>
+		<keywords/>
+		<thumbnail href="data/thumb/thumb_slide_000001.jpg"/><view-link href="/Viewer.swf?slide={position}"/>
+	</document-info>
+	<section type="slide" position="1" xmlns="">
+		<title>Reports and Queries </title>
+		<content>Reports and Queries Talus Basics Training </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000001.jpg"/></section>
+	<section type="slide" position="2" xmlns="">
+		<title>Agenda </title>
+		<content>Magma Confidential - 2 Reports/Queries Agenda Reports Configuring Reports Queries Creating Reports with Snap Procedures  </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000002.jpg"/></section>
+	<section type="slide" position="3" xmlns="">
+		<title>Reports and Queries </title>
+		<content>Magma Confidential - 3 Reports/Queries Reports and Queries Report commands produce readable text output files Most reports are configurable Query commands produce text strings suitable for use as input to other commands You can use Tcl commands to parse the output for readability </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000003.jpg"/></section>
+	<section type="slide" position="4" xmlns="">
+		<title>Some Common Reports </title>
+		<content>Magma Confidential - 4 Reports/Queries Some Common Reports Some of the more common report… commands are: report model report area report dft rule violation report dft scan chain report timing path report timing summary report timing detail  </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000004.jpg"/></section>
+	<section type="slide" position="5" xmlns="">
+		<title>Some Common Queries </title>
+		<content>Magma Confidential - 5 Reports/Queries Some Common Queries Some of the more common query… commands are: query dft rule query measure slack query node predecessors query node successors query timing path list query timing histogram  </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000005.jpg"/></section>
+	<section type="slide" position="6" xmlns="">
+		<title>Report Configurability </title>
+		<content>Magma Confidential - 6 Reports/Queries Report Configurability You can configure most reports Look for an equivalent config report… command report timing path and config report timing path config report… commands allow you to reorder or turn on and off column tokens in the report Man pages give detailed lists of tokens for each report Example column tokens :   PIN_NAME, NET_NAME, ROOT_NET_NAME, MODEL_NAME, ENTITY_NAME, DOMAIN, PHASE, PRIMARY_PHASE, PHASE_ID, EDGE, AT, RT, SLACK, SLEW, PIN_CAP, PIN_LOAD, WIRE_LOAD Add :# or :#.# suffix to control column width Ex: ENTITY_NAME:10 to make the column ten characters wide or PIN_CAP:*.3 to limit the result to three decimal places </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000006.jpg"/></section>
+	<section type="slide" position="7" xmlns="">
+		<title>Report Configurability Example </title>
+		<content>Magma Confidential - 7 Reports/Queries Report Configurability Example To configure timing, area, clock, and most other reports: Enter the config… command with {} or "" to return a list of all the report column tokens Enter the config… command without any options to return the current column token settings Enter the config… command with a list of column tokens  set tpr_orig [config report timing path] Preserves the original configuration of the timing path report  config report timing path "PIN_NAME DELAY SLACK SLEW" Turns on four columns in the timing path report   config report timing path "[config report timing path] PHASE" Appends phase information to the end of the current report timing path configuration  config report timing path $tpr_orig Returns the timing path report to its original setting  </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000007.jpg"/></section>
+	<section type="slide" position="8" xmlns="">
+		<title>Reporting with Snap </title>
+		<content>Magma Confidential - 8 Reports/Queries Reporting with Snap Instead of generating reports directly, you can use the snap system One command pair can create multiple reports Specify locations with wildcards Common naming prefixes change for each report Location is part of file name For a list of locations created by fix… commands, use report snap flow </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000008.jpg"/></section>
+	<section type="slide" position="9" xmlns="">
+		<title>Snap Report Example </title>
+		<content>Magma Confidential - 9 Reports/Queries Snap Report Example These two commands generate a hierarchical area report  the first time an enwrap command with the location  fix-netlist-final is run config snap  procedure "hierarea" {  report area $m -hier -file $outputPrefix${sep}area_hier.rpt } config snap output on default hierarea fix-netlist-final    Procedure  name Location (from enwrap command in fix netlist) Level </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000009.jpg"/></section>
+	<section type="slide" position="10" xmlns="">
+		<title>Summary </title>
+		<content>Magma Confidential - 10 Reports/Queries Summary Reports Configuring Reports Queries Creating Reports with Snap Procedures  </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000010.jpg"/></section>
+</document-metadata>

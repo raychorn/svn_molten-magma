@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<presentation width="720" height="540" start="play" buildNum="6.0.432.432">
+	<presentationTitle>Strength_HyperCells_OnLine</presentationTitle>
+	<speakers>
+		<speaker>
+			<name>Bill Gascoyne</name>
+			<speakerTitle>Senior Technical Trainer</speakerTitle>
+			<image>spk10052.JPG</image>
+			<email>billg@molten-magma.com</email>
+			<logo>lgo10052.jpg</logo>
+		</speaker>
+	</speakers>
+	<backgrounds>
+		<background url="Master80000008.swf"/>
+		<background url="Master80000007.swf"/>
+	</backgrounds>
+	<search url="srchdata.xml"/>
+	<slides>
+		<slide id="362" frameRate="30" totalFrames="342" advance="auto" type="normal">
+			<content url="Slide1.swf"/>
+			<slideBackground index="0" frameToPlay="1" duration="2" showAfterFrame="0"/>
+			<slideTitle>Strength-Based Synthesis with HyperCell Models </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="1"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x1.mp3"/>
+		</slide>
+		<slide id="445" frameRate="30" totalFrames="513" advance="auto" type="normal">
+			<content url="Slide2.swf"/>
+			<slideBackground index="1" frameToPlay="1" duration="2" showAfterFrame="0"/>
+			<slideTitle>Agenda </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="2"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x2.mp3"/>
+		</slide>
+		<slide id="471" frameRate="30" totalFrames="5130" advance="auto" type="normal">
+			<content url="Slide3.swf"/>
+			<slideBackground index="1" frameToPlay="3" duration="2" showAfterFrame="0"/>
+			<clickAnimations>
+				<clickAnimation start="190" end="218"/>
+				<clickAnimation start="546" end="562"/>
+				<clickAnimation start="834" end="862"/>
+				<clickAnimation start="1313" end="1329"/>
+				<clickAnimation start="1652" end="1668"/>
+				<clickAnimation start="1949" end="2008"/>
+				<clickAnimation start="2434" end="2477"/>
+				<clickAnimation start="3342" end="3358"/>
+				<clickAnimation start="4193" end="4209"/>
+				<clickAnimation start="4451" end="4467"/>
+			</clickAnimations>
+			<slideTitle>Delay vs. Load vs. Size – Turned Sideways </slideTitle>
+			<notes isHTML="true">Presumably,&amp;#x20;everyone&amp;#x20;is&amp;#x20;familiar&amp;#x20;with&amp;#x20;the&amp;#x20;Delay&amp;#x20;vs.&amp;#x20;Load&amp;#x20;graph.&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;Delay&amp;#x20;increases&amp;#x20;as&amp;#x20;the&amp;#x20;load&amp;#x20;increases,&amp;#x20;with&amp;#x20;the&amp;#x20;slope&amp;#x20;dependent&amp;#x20;on&amp;#x20;the&amp;#x20;cell&amp;#x20;size.&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;The&amp;#x20;load&amp;#x20;is&amp;#x20;unknown,&amp;#x20;because&amp;#x20;it&amp;#x2019;s&amp;#x20;placement&amp;#x20;dependent&amp;#x20;and&amp;#x20;we&amp;#x2019;re&amp;#x20;still&amp;#x20;doing&amp;#x20;synthesis.&amp;#x20;The&amp;#x20;cell&amp;#x20;size&amp;#x20;is&amp;#x20;controllable;&amp;#x20;pick&amp;#x20;the&amp;#x20;size&amp;#x20;appropriate&amp;#x20;to&amp;#x20;the&amp;#x20;load&amp;#x20;to&amp;#x20;avoid&amp;#x20;excess&amp;#x20;delay.&amp;#x20;But&amp;#x20;size&amp;#x20;isn&amp;#x2019;t&amp;#x20;on&amp;#x20;this&amp;#x20;graph,&amp;#x20;so&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;let&amp;#x2019;s&amp;#x20;put&amp;#x20;it&amp;#x20;there.&amp;#x20;The&amp;#x20;problem&amp;#x20;is&amp;#x20;that&amp;#x20;what&amp;#x20;we&amp;#x20;want&amp;#x20;to&amp;#x20;control&amp;#x20;is&amp;#x20;the&amp;#x20;delay,&amp;#x20;so&amp;#x20;by&amp;#x20;choosing&amp;#x20;a&amp;#x20;specific&amp;#x20;cell&amp;#x20;size&amp;#x20;before&amp;#x20;the&amp;#x20;load&amp;#x20;is&amp;#x20;known,&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;delay&amp;#x20;becomes&amp;#x20;a&amp;#x20;moving&amp;#x20;target.&amp;#x20;How&amp;#x20;do&amp;#x20;we&amp;#x20;solve&amp;#x20;this&amp;#x20;problem?&amp;#x20;By&amp;#x20;looking&amp;#x20;at&amp;#x20;it&amp;#x20;sideways.&amp;#x20;Let&amp;#x2019;s&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;rotate&amp;#x20;this&amp;#x20;cube&amp;#x20;ninety&amp;#x20;degrees&amp;#x20;toward&amp;#x20;us.&amp;lt;click&amp;gt;&amp;#x20;Now&amp;#x20;delay&amp;#x20;is&amp;#x20;the&amp;#x20;Z&amp;#x20;axis,&amp;#x20;and&amp;#x20;it&amp;#x20;makes&amp;#x20;sense&amp;#x20;that&amp;#x20;delay,&amp;#x20;which&amp;#x20;is&amp;#x20;our&amp;#x20;target,&amp;#x20;should&amp;#x20;be&amp;#x20;chosen,&amp;#x20;and&amp;#x20;cell&amp;#x20;size&amp;#x20;is&amp;#x20;the&amp;#x20;parameter&amp;#x20;that&amp;#x20;should&amp;#x20;vary&amp;#x20;with&amp;#x20;load.&amp;#x20;This&amp;#x20;may&amp;#x20;seem&amp;#x20;like&amp;#x20;wishful&amp;#x20;thinking,&amp;#x20;because&amp;#x20;a&amp;#x20;real&amp;#x20;cell&amp;#x20;can&amp;#x2019;t&amp;#x20;do&amp;#x20;that,&amp;#x20;but&amp;#x20;we&amp;#x20;don&amp;#x2019;t&amp;#x20;need&amp;#x20;real&amp;#x20;cells&amp;#x20;at&amp;#x20;this&amp;#x20;point.&amp;#x20;We&amp;#x20;carefully&amp;#x20;choose&amp;#x20;a&amp;#x20;delay&amp;#x20;that&amp;#x2019;s&amp;#x20;physically&amp;#x20;possible,&amp;#x20;and&amp;#x20;we&amp;#x20;adjust&amp;#x20;the&amp;#x20;cell&amp;#x20;size&amp;#x20;to&amp;#x20;achieve&amp;#x20;that&amp;#x20;delay.&amp;#x20;Another&amp;#x20;advantage&amp;#x20;of&amp;#x20;this&amp;#x20;approach&amp;#x20;is&amp;#x20;that&amp;#x20;there&amp;#x2019;s&amp;#x20;only&amp;lt;click&amp;gt;&amp;#x20;one&amp;#x20;model&amp;#x20;of&amp;#x20;a&amp;#x20;NAND-2&amp;#x20;or&amp;#x20;inverter&amp;#x20;to&amp;#x20;deal&amp;#x20;with,&amp;#x20;not&amp;#x20;one&amp;#x20;per&amp;#x20;size.&amp;#x20;The&amp;#x20;number&amp;#x20;of&amp;#x20;models&amp;#x20;dealt&amp;#x20;with&amp;#x20;by&amp;#x20;synthesis&amp;#x20;is&amp;#x20;much&amp;#x20;smaller.&amp;#x20;Also,&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;the&amp;#x20;slope&amp;#x20;of&amp;#x20;the&amp;#x20;size&amp;#x20;vs.&amp;#x20;load&amp;#x20;line&amp;#x20;is&amp;#x20;fixed&amp;#x20;and&amp;#x20;governed&amp;#x20;by&amp;#x20;one&amp;#x20;simple&amp;#x20;equation.&amp;#x20;The&amp;#x20;cell&amp;#x20;size&amp;#x20;is&amp;#x20;not&amp;#x20;fixed&amp;#x20;&amp;lt;click&amp;gt;&amp;#x20;until&amp;#x20;after&amp;#x20;placement,&amp;#x20;when&amp;#x20;the&amp;#x20;load&amp;#x20;is&amp;#x20;known.&amp;#x20;This&amp;#x20;is&amp;#x20;why&amp;#x20;we&amp;#x20;don&amp;#x2019;t&amp;#x20;use&amp;#x20;wire&amp;#x20;load&amp;#x20;models.&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</notes>
+			<slideThumbnail url="thumb.swf" frame="3"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x3.mp3"/>
+		</slide>
+		<slide id="422" frameRate="30" totalFrames="1931" advance="auto" type="normal">
+			<content url="Slide4.swf"/>
+			<slideBackground index="1" frameToPlay="5" duration="2" showAfterFrame="0"/>
+			<slideTitle>What Are HyperCell Models? </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="4"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x4.mp3"/>
+		</slide>
+		<slide id="423" frameRate="30" totalFrames="627" advance="auto" type="normal">
+			<content url="Slide5.swf"/>
+			<slideBackground index="1" frameToPlay="7" duration="2" showAfterFrame="0"/>
+			<slideTitle>Example: HyperCell Models, Real Cells, Entities </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="5"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x5.mp3"/>
+		</slide>
+		<slide id="466" frameRate="30" totalFrames="2079" advance="auto" type="normal">
+			<content url="Slide6.swf"/>
+			<slideBackground index="1" frameToPlay="9" duration="2" showAfterFrame="0"/>
+			<slideTitle>HyperCell Variability </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="6"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x6.mp3"/>
+		</slide>
+		<slide id="465" frameRate="30" totalFrames="2613" advance="auto" type="normal">
+			<content url="Slide7.swf"/>
+			<slideBackground index="1" frameToPlay="11" duration="2" showAfterFrame="0"/>
+			<slideTitle>HyperCell Models Before Adjustment </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="7"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x7.mp3"/>
+		</slide>
+		<slide id="467" frameRate="30" totalFrames="884" advance="auto" type="normal">
+			<content url="Slide8.swf"/>
+			<slideBackground index="1" frameToPlay="13" duration="2" showAfterFrame="0"/>
+			<slideTitle>HyperCell Models After Adjustment </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="8"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x8.mp3"/>
+		</slide>
+		<slide id="468" frameRate="30" totalFrames="1587" advance="auto" type="normal">
+			<content url="Slide9.swf"/>
+			<slideBackground index="1" frameToPlay="15" duration="2" showAfterFrame="0"/>
+			<slideTitle>Timing Checkpoint </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="9"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x9.mp3"/>
+		</slide>
+		<slide id="469" frameRate="30" totalFrames="1392" advance="auto" type="normal">
+			<content url="Slide10.swf"/>
+			<slideBackground index="1" frameToPlay="17" duration="2" showAfterFrame="0"/>
+			<slideTitle>Summary </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="10"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x10.mp3"/>
+		</slide>
+	</slides>
+	<attachments></attachments>
+</presentation>

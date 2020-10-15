@@ -1,0 +1,82 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module SfdcWebScrape</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>SfdcWebScrape</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/surf/sfdcexport/lib/SfdcWebScrape.py">/home/surf/sfdcexport/lib/SfdcWebScrape.py</a></font></td></tr></table>
+    <p><tt>Class&nbsp;with&nbsp;methods&nbsp;to&nbsp;support&nbsp;logging&nbsp;into&nbsp;the&nbsp;salesforce.com&nbsp;website<br>
+in&nbsp;order&nbsp;to&nbsp;support&nbsp;operations&nbsp;that&nbsp;the&nbsp;sforce&nbsp;API&nbsp;does&nbsp;not&nbsp;yet&nbsp;support.<br>
+&nbsp;<br>
+Author:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kevin&nbsp;Shuk&nbsp;&lt;kshuk@molten-magma.com&gt;<br>
+Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mar&nbsp;14,&nbsp;2004<br>
+Copyright:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(c)&nbsp;2004&nbsp;-&nbsp;2005,&nbsp;Kevin&nbsp;Shuk&nbsp;and&nbsp;Magma&nbsp;Design&nbsp;Automation,&nbsp;Inc.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All&nbsp;Rights&nbsp;Reserved</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ClientCookie.html">ClientCookie</a><br>
+</td><td width="25%" valign=top><a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="urllib.html">urllib</a><br>
+</td><td width="25%" valign=top><a href="urllib2.html">urllib2</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="SfdcWebScrape.html#SfdcWebScrape">SfdcWebScrape</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SfdcWebScrape">class <strong>SfdcWebScrape</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="SfdcWebScrape-__init__"><strong>__init__</strong></a>(self, uname, pw)</dt></dl>
+
+<dl><dt><a name="SfdcWebScrape-login"><strong>login</strong></a>(self, uname, pw)</dt><dd><tt>Attempts&nbsp;a&nbsp;login&nbsp;page&nbsp;authentication&nbsp;with&nbsp;sfdc.<br>
+&nbsp;<br>
+Parameters:<br>
+uname&nbsp;-&nbsp;sfdc&nbsp;username<br>
+pw&nbsp;-&nbsp;unencoded&nbsp;sfdc&nbsp;password<br>
+&nbsp;<br>
+Returns:<br>
+True&nbsp;if&nbsp;login&nbsp;was&nbsp;successful,&nbsp;otherwise&nbsp;False</tt></dd></dl>
+
+<dl><dt><a name="SfdcWebScrape-sendRequest"><strong>sendRequest</strong></a>(self, URL, opener<font color="#909090">=None</font>, params<font color="#909090">=None</font>, method<font color="#909090">='GET'</font>)</dt><dd><tt>Executes&nbsp;a&nbsp;request&nbsp;and&nbsp;returns&nbsp;the&nbsp;response.<br>
+&nbsp;<br>
+Parameters:<br>
+URL&nbsp;-&nbsp;the&nbsp;URL&nbsp;to&nbsp;fetch<br>
+opener&nbsp;-&nbsp;urrlib2&nbsp;(by&nbsp;way&nbsp;of&nbsp;ClientCookie)&nbsp;opener&nbsp;object.&nbsp;Two&nbsp;are<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;available&nbsp;right&nbsp;now:&nbsp;urlOpener&nbsp;for&nbsp;regular&nbsp;HTML&nbsp;pages<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;fileOpener&nbsp;for&nbsp;downloading&nbsp;files&nbsp;(inages,&nbsp;zips,&nbsp;etc.)<br>
+params&nbsp;-&nbsp;dictionary&nbsp;of&nbsp;query&nbsp;parameters&nbsp;to&nbsp;send&nbsp;along&nbsp;with&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request<br>
+method&nbsp;-&nbsp;how&nbsp;to&nbsp;send&nbsp;the&nbsp;query&nbsp;parameters&nbsp;with&nbsp;the&nbsp;request&nbsp;GET&nbsp;or&nbsp;POST<br>
+&nbsp;<br>
+Returns:<br>
+file-like&nbsp;object&nbsp;that&nbsp;is&nbsp;the&nbsp;return&nbsp;of&nbsp;the&nbsp;urlOpener&nbsp;object&nbsp;open&nbsp;call</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>ident</strong> = '$ID: $'<br>
+<strong>props</strong> = &lt;Properties.Properties instance&gt;</td></tr></table>
+</body></html>

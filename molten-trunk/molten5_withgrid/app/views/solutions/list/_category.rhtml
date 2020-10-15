@@ -1,0 +1,10 @@
+<div class="solution_category">
+<%= link_to "#{category.name}", {:action => 'category', :id => category}, 
+						   :class => "top_level_category" %>
+<span>
+<% (category.children + category.children.map { |c| c.children if c.respond_to?(:children) }.flatten).sort { |x,y| x.master_label <=> y.master_label }.each do |second_level| %>
+	<%= link_to "#{second_level.name}", {:action => 'category', :id => second_level} %>	
+<% end %>
+</span>
+
+</div>

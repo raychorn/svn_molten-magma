@@ -1,0 +1,22 @@
+xml.instruct!
+xml.rss "version" => "2.0" do
+  xml.channel do
+    xml.title "New MOLTEN Solutions"
+    xml.link url_for(:only_path => false,
+                     :controller => 'solutions',
+                     :action => 'feed',
+                     :id => @contact.token)
+#   xml.pubDate @solutions.any? ? CGI.rfc1123_date(@solutions.first.last_modified_date) : Time.now
+   xml.description "New MOLTEN Solutions"
+   @solutions.each do |new_solution|
+     xml.item do
+       xml.title new_solution.solution_name
+       xml.link url_for(:only_path => false,
+                        :controller => 'solutions',
+                        :action => 'show',
+                        :id => new_solution)
+      xml.pubDate CGI.rfc1123_date(new_solution.last_modified_date)
+    end # xml.item
+   end # @solutions.each
+  end # xml.channel
+end # xml.rss

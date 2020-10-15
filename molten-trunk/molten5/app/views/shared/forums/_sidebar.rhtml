@@ -1,0 +1,74 @@
+<% unless controller.controller_name == 'posts' %>
+<p>
+	<h3>
+		Recent Posts
+		<span class="small">
+			(<%= link_to 'View All', all_recent_posts_path %>)
+		</span>
+	</h3>
+	<ul class="list">
+		<% recent_posts.each do |post| %>
+			<li class="<%= cycle('shaded','') %>">
+			<%= link_to h(post.topic_title), topic_path(post.forum_id, post.topic_id) %>
+				<div>
+					<%= truncate(post.body_html,50)%>
+					Posted <%= format_time ct(post.created_at) %> 
+				</div>
+			</li>
+		<% end %>
+	</ul>
+</p>
+<% reset_cycle %>
+<p>
+	<h3>
+		Most Active Topics
+		<span class="small">
+			(<%= link_to 'View All', all_active_topics_path %>)
+		</span>
+	</h3>
+	<ul class="list">
+		<% active_topics.each do |topic| %>
+			<li class="<%= cycle('shaded','') %>">
+			<%= link_to h(topic.title), topic_path(topic.forum_id, topic) %>
+				<div>
+					<%= pluralize topic.posts_count, 'post' %>
+					<br/>
+					Last Reply <%= format_time ct(topic.replied_at) %> 
+				</div>
+			</li>
+		<% end %>
+	</ul>
+</p>
+<% reset_cycle %>
+<p>
+	<h3>
+		Most Active Users
+		<span class="small">
+			(<%= link_to 'View All', active_users_path %>)
+		</span>
+	</h3>
+	<ul class="list">
+		<% active_users.each do |u| %>
+			<li class="<%= cycle('shaded','') %>">
+			<%= link_to h(u.name), user_path(u.sfcontact_id) %>
+				<div>
+					<%= pluralize u.posts_count, 'post' %>
+				</div>
+			</li>
+		<% end %>
+	</ul>
+</p>
+<% end %>
+
+  <p>
+    <h3><%= link_to 'Hall of Fame'[:recent_posts], all_posts_path %></h3>
+  </p>
+
+  <% if current_contact.forum_admin? %>
+    <h3><%= 'Admin'[:admin_title] %></h3>
+    <p><%= link_to 'Create New Forum'[:create_new_forum], new_forum_path, :class => "utility" %></p>
+    <p>
+    	<%= link_to "Abusive Posts",
+					all_abusive_posts_path, :class => "utility" %>
+    </p>
+  <% end %>

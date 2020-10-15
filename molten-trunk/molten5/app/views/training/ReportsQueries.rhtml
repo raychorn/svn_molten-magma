@@ -1,0 +1,31 @@
+		<script src="/flash/training/ReportsQueries/loadflash.js"> </script>
+		<style type="text/css">
+			<!--
+				body,html {
+					margin:0px;
+					padding:0px;
+					height:100%;
+					overflow:hidden;
+				}
+			-->
+		</style>
+		<script type="text/vbscript" language="VBScript">
+			<!--
+				Sub SlideContent_FSCommand(ByVal command, ByVal args)
+					select case command
+						case "putHREF" location.href = args
+						case "putTitle" document.title = args
+						case else call SlideContent_DoFSCommand(command, args)
+					end select
+				end sub
+			-->
+		</script>
+		<script type="text/javascript" language="JavaScript">
+			<!--
+				function flashPutHref(href) { location.href = href; }
+				function flashPutTitle(title) { document.title = title; }
+			-->
+		</script>
+		<script type="text/javascript" language="JavaScript">
+			showFlash("/flash/training/ReportsQueries/viewer.swf", '700', '500', false);
+		</script>

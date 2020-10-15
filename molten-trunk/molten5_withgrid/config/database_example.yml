@@ -1,0 +1,28 @@
+## Local MySQL Database ##
+### THESE DATABASE NAMES MUST STAY THE SAME
+
+login: &login
+  adapter: mysql
+  host: localhost
+  username: root
+  password:
+
+development:
+  database: molten_development
+  <<: *login
+
+test:
+  database: molten_test
+  <<: *login
+
+production:
+  database: molten_development
+  <<: *login
+
+## SalesForce ##
+
+salesforce:
+  adapter: activesalesforce
+  url: https://www.salesforce.com/services/Soap/u/7.0
+  username: molten_admin@molten-magma.com
+  password: u2cansleeprWI2X9JakDlxjcuAofhggFbaf

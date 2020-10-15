@@ -1,0 +1,122 @@
+#!/usr/bin/env bash
+#
+# Subversion properties
+#
+# $LastChangedDate: 2007-01-29 16:33:26 -0800 (Mon, 29 Jan 2007) $
+# $Author: ramya $
+# $Revision: 1240 $
+# $HeadURL: http://capps.moltenmagma.com/svn/sfsrc/trunk/sfapi2/sfui/launcher $
+# $Id: launcher 1240 2007-01-30 00:33:26Z ramya $
+#
+# if 'bash' gives us bash v1, try to relaunch script bash v2 by name
+BASHVER=`echo $BASH_VERSION | cut -b 1 -`
+if [ $BASHVER = "1" ]; then
+    exec bash2 $0 $*
+fi
+RAWPATH=$0
+while [ -L $RAWPATH ]; do
+    RAWPATH=`readlink $RAWPATH`;
+done
+LAUNCHERNAME=`basename $RAWPATH`
+LAUNCHERDIR=`echo $RAWPATH | sed -e 's/\/[^\/]*$//'`
+
+# get the absolute pathname of LAUNCHERDIR
+CURDIR=`pwd`
+if [ $LAUNCHERNAME != $LAUNCHERDIR ]; then
+    cd $LAUNCHERDIR
+fi
+LAUNCHERDIR=`pwd -P`
+cd $CURDIR
+
+SFORCE_HOME=$LAUNCHERDIR/..
+SFLIBDIR=$SFORCE_HOME/sflib
+SFUTILDIR=$SFORCE_HOME/sfutil
+
+. $SFLIBDIR/paths.sh
+
+PYTHONPATH=$SFLIBDIR
+export PYTHONPATH
+
+scriptlist=( lncr unlinkcr \
+             clonebranch tagcr \
+             lsba lsbr lsbrs branchls teamls teams \
+             approvebranch rejectbranch  submitbranch \
+             teamlnbr teamunlnbr \
+             check sharewareexp  )
+
+case $LAUNCHERNAME in
+
+    branch | task)    RUNCMD="sfTaskBranchAction.py -ataskhelp";;
+    team)             RUNCMD="sfTeamBranch.py -cteamhelp";;
+    
+    lncr)             RUNCMD="sfTaskBranchAction.py $0 -aaddcr $*";;
+    unlinkcr)         RUNCMD="sfTaskBranchAction.py $0 -armcr $*";;
+
+    clonebranch)      RUNCMD="sfTaskBranchAction.py -aclone $* do";;
+    tagcr)            RUNCMD="sfEntity.py -ctag $*";;
+
+    lsba)             RUNCMD="sfTaskBranchAction.py $0 -alsba -bignore $*";;
+    lsbr)             RUNCMD="sfTaskBranchAction.py $0 -als $*";;
+    lsbrs)            RUNCMD="sfTaskBranchAction.py $0 -alsbrs -bignore $*";;
+    branchls)         RUNCMD="sfTaskBranchList.py -cbranchls $* do";;
+    teamls )          RUNCMD="sfTeamBranch.py -clist -xpelist $*";;
+    teams)            RUNCMD="sfTeamBranch.py -cteamlsnames $*";;
+
+    approvebranch)    RUNCMD="sfTaskBranchAction.py $0 -aapprovebranch $*";;
+    rejectbranch)     RUNCMD="sfTaskBranchAction.py $0 -arejectbranch $*";;
+    submitbranch)     RUNCMD="sfTaskBranchAction.py $0 -asubmitbranch $*";;
+
+    teamlnbr)         RUNCMD="sfTeamBranch.py -cadd $*";;
+    teamunlnbr)       RUNCMD="sfTeamBranch.py -crem $*";;
+
+    check)            RUNCMD="walkSF.py -ccheck  -b $* do";;
+    checkbr)          RUNCMD="walkSF.py -ccheck  $* do";;
+    sharewareexp)     RUNCMD="solutionExport.py -i Shareware" SCRIPTPATH=$SFUTILDIR/$RUNCMD;;
+
+
+    launcher)
+        # get a copy of the scriptlist
+        launcherlist=${scriptlist[*]}
+
+        # add "mklinks" to the end of it
+        #launcherlist[${#launcherlist[*]}]=mklinks
+
+        CURDIR=`pwd`
+        cd $LAUNCHERDIR
+
+        for script in ${launcherlist[@]};
+        do
+            if [[ $1 == 'rm' ]]; then
+                echo "removing $script"
+                rm -f $script
+            fi
+
+            if [ ! -e $script ]; then
+                ln $LAUNCHERNAME $script
+            fi
+        done
+
+        cd $CURDIR
+        ## commands to hard link launcher script to all the individual
+        ## command names
+        exit;;
+
+    *)
+        echo "ERROR: launcher unhandled case"
+        exit;;
+esac
+
+# use it as the basis of the python script name
+if [[ -z $SCRIPTPATH ]]; then
+    SCRIPTPATH=$SFLIBDIR/$RUNCMD
+fi
+
+PYTHON_EXE=`which python2.3`
+
+UNAME=`uname`
+if [ $UNAME = 'Linux' ]; then
+    $PYTHON_EXE $SCRIPTPATH
+else
+    echo 'Solaris not supported!'
+fi
+

@@ -1,0 +1,13 @@
+<div class="search" style="margin: 10px 0px">
+<%= form_tag url_for(:action => 'list'), :method => 'get' %>
+	<table>
+		<td valign="top" style="height:35px">
+		<%= text_field_tag 'term',params[:term], :class => 'search_term_field' %>							
+		</td>
+		<td valign="top">
+			<%= image_submit_tag 'buttons/search.gif', :alt => "Search", 
+				:width => 81, :height => 22, :class => 'search_button' %>
+		</td>
+	</table>
+</form>	
+</div>

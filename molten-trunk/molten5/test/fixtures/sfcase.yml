@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+widget_stuck:
+  id: 1
+  sf_id: widstuck
+  contact_id: xyz # derek
+  last_modified_date: <%= 2.days.ago.to_s(:db) %>
+  last_modified_by_id: chip # chip
+  product__c: Big Machine
+  status: Closed
+  owner_id: chip # chip
+  description: the widget is stuck
+sprocket_broken:
+  id: 2
+  sf_id: sprbro
+  contact_id: xyz # derek
+  last_modified_date: <%= 1.day.ago.to_s(:db) %>
+  status: In Process
+  last_modified_by_id: chip # chip
+long_id:
+  id: 3
+  sf_id: 50030000003NKnCAAW

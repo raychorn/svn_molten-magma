@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<presentation width="720" height="540" start="play" buildNum="6.0.432.432">
+	<presentationTitle>SnapEnwrap</presentationTitle>
+	<speakers>
+		<speaker>
+			<name>Bill Gascoyne</name>
+			<speakerTitle>Senior Technical Trainer</speakerTitle>
+			<image>spk12191.JPG</image>
+			<email>billg@molten-magma.com</email>
+			<logo>lgo12191.jpg</logo>
+		</speaker>
+	</speakers>
+	<backgrounds>
+		<background url="Master80000002.swf"/>
+		<background url="Master80000001.swf"/>
+	</backgrounds>
+	<search url="srchdata.xml"/>
+	<slides>
+		<slide id="324" frameRate="30" totalFrames="291" advance="auto" type="normal">
+			<content url="Slide1.swf"/>
+			<slideBackground index="0" frameToPlay="1" duration="2" showAfterFrame="0"/>
+			<slideTitle>Snap/enwrap System </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="1"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x1.mp3"/>
+		</slide>
+		<slide id="325" frameRate="30" totalFrames="576" advance="auto" type="normal">
+			<content url="Slide2.swf"/>
+			<slideBackground index="1" frameToPlay="1" duration="2" showAfterFrame="0"/>
+			<slideTitle>Agenda </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="2"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x2.mp3"/>
+		</slide>
+		<slide id="261" frameRate="30" totalFrames="1745" advance="auto" type="normal">
+			<content url="Slide3.swf"/>
+			<slideBackground index="1" frameToPlay="3" duration="2" showAfterFrame="0"/>
+			<slideTitle>What Is Snap/enwrap? </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="3"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x3.mp3"/>
+		</slide>
+		<slide id="330" frameRate="30" totalFrames="2109" advance="auto" type="normal">
+			<content url="Slide4.swf"/>
+			<slideBackground index="1" frameToPlay="5" duration="2" showAfterFrame="0"/>
+			<slideTitle>What Good Is It? </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="4"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x4.mp3"/>
+		</slide>
+		<slide id="262" frameRate="30" totalFrames="2535" advance="auto" type="normal">
+			<content url="Slide5.swf"/>
+			<slideBackground index="1" frameToPlay="7" duration="2" showAfterFrame="0"/>
+			<slideTitle>Terminology </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="5"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x5.mp3"/>
+		</slide>
+		<slide id="263" frameRate="30" totalFrames="2541" advance="auto" type="normal">
+			<content url="Slide6.swf"/>
+			<slideBackground index="1" frameToPlay="9" duration="2" showAfterFrame="0"/>
+			<slideTitle>What Does enwrap Do? </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="6"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x6.mp3"/>
+		</slide>
+		<slide id="264" frameRate="30" totalFrames="2541" advance="auto" type="normal">
+			<content url="Slide7.swf"/>
+			<slideBackground index="1" frameToPlay="11" duration="2" showAfterFrame="0"/>
+			<slideTitle>Relationships of Key Commands </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="7"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x7.mp3"/>
+		</slide>
+		<slide id="328" frameRate="30" totalFrames="4572" advance="auto" type="normal">
+			<content url="Slide8.swf"/>
+			<slideBackground index="1" frameToPlay="13" duration="2" showAfterFrame="0"/>
+			<slideTitle>How to Modify fix… commands </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="8"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x8.mp3"/>
+		</slide>
+		<slide id="327" frameRate="30" totalFrames="2850" advance="auto" type="normal">
+			<content url="Slide9.swf"/>
+			<slideBackground index="1" frameToPlay="15" duration="2" showAfterFrame="0"/>
+			<slideTitle>One Way to Add to fix… commands </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="9"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x9.mp3"/>
+		</slide>
+		<slide id="329" frameRate="30" totalFrames="2841" advance="auto" type="normal">
+			<content url="Slide10.swf"/>
+			<slideBackground index="1" frameToPlay="17" duration="2" showAfterFrame="0"/>
+			<slideTitle>Another Way to Add to fix… commands </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="10"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x10.mp3"/>
+		</slide>
+		<slide id="331" frameRate="30" totalFrames="1871" advance="auto" type="normal">
+			<content url="Slide11.swf"/>
+			<slideBackground index="1" frameToPlay="19" duration="2" showAfterFrame="0"/>
+			<slideTitle>Other Built-in Snap Procedures </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="11"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x11.mp3"/>
+		</slide>
+		<slide id="332" frameRate="30" totalFrames="771" advance="auto" type="normal">
+			<content url="Slide12.swf"/>
+			<slideBackground index="1" frameToPlay="21" duration="2" showAfterFrame="0"/>
+			<slideTitle>Summary </slideTitle>
+			<notes isHTML="true"></notes>
+			<slideThumbnail url="thumb.swf" frame="12"/>
+			<slideSpeaker index="0"/>
+			<audio url="a24x12.mp3"/>
+		</slide>
+	</slides>
+	<attachments></attachments>
+</presentation>

@@ -1,0 +1,66 @@
+
+
+	<% if solutions = current_contact.recent_sfsolutions.reject { |s| !s.portal_account_name_id__c.nil? and !current_contact.account_list.map(&:id).include?(s.portal_account_name_id__c) } and solutions.any? %>
+	<h3>Recently Viewed</h3>
+	<ul class="list">
+		<% solutions.each do |sol| %>
+		<li class="<%= cycle('shaded','') %>">
+		<%= link_to sol.name, :action => 'show', :id => sol %>
+			<div>
+			<% if cat = sol.categories.compact.first and !cat.nil? %>
+			In <%= category_links(sol.categories.compact.first) %>
+			<% end %>
+			Updated <%= format_time ct(sol.last_modified_date) %> 
+			</div>
+		</li>
+		<% end %>
+	</ul>
+	<% end %>
+
+
+
+
+
+	<h3>New Solutions</h3>
+	<ul class="list">
+		<% Sfsolution.find_new(current_contact).each do |sol| %>
+		<li class="<%= cycle('shaded','') %>">
+		<%= link_to sol.name, :action => 'show', :id => sol %>
+			<div>
+			<% if cat = sol.categories.compact.first and !cat.nil? %>
+			In <%= category_links(sol.categories.compact.first) %>
+			<% end %>
+			Updated <%= format_time ct(sol.last_modified_date) %>
+			</div>
+		</li>
+		<% end %>
+        <li><%= link_to 'More new solutions ...', :controller => 'solutions', :action => 'recent' %>
+	</ul>
+
+
+
+
+
+	<h3>Most Popular Solutions</h3>
+	<ul class="list">
+		<%# Sfsolution.find_popular.compact.each do |sol| %>
+		<% Sfsolution.find_popular_in_range(current_contact).map(&:first).compact.each do |sol| %>
+				<li class="<%= cycle('shaded','') %>">
+		<%= link_to sol.name, :action => 'show', :id => sol %>
+			<div>
+			<% if cat = sol.categories.compact.first and !cat.nil? %>
+			In <%= category_links(sol.categories.compact.first) %>
+			<% end %>
+			Updated <%= format_time ct(sol.last_modified_date) %>
+			</div>
+		</li>
+		<% end %>
+	</ul>
+
+
+
+<h3>RSS Feed <img src="/images/icons/feed-icon16x16.png"></h3>
+<%= link_to 'Subscribe to an RSS feed of new solutions.', :action => 'feed', :id => current_contact.token %>
+<br>&nbsp;<br>
+
+

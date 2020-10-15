@@ -1,0 +1,52 @@
+<div>
+<%= link_to 'Back to Case', :action => 'show', :id => @case %>
+</div>
+<br/>
+<h1 class="small_margin">
+	<%= @title = @case.subject %>
+</h1>
+
+<h2 class="gray buried_header">Close This Case</h2>
+
+<p>
+	To close this case, select the state below. You can also add a comment.
+</p>
+
+<%= form_tag :action => 'close', :id => @case %>
+	<table class="form">
+		<tr>
+			<td>State<br/>
+				<%= select_tag 'state', options_for_select(Sfcase::CLOSED_STATES) %>
+			</td>
+		</tr>
+		<tr>
+			<td>Satisfaction Level<br/>
+				<%= select_tag 'rating', options_for_select(['Excellent'] + Sfcase::RATINGS) %>
+			</td>
+		</tr>
+		<tr>
+			<td>Comment<br/>
+				<%= text_area_tag 'comment', params[:comment], :id => 'comment_form_body' %>
+			</td>
+		</tr>
+	</table>
+	<%= image_submit_tag 'buttons/close_case.gif' %>
+</form>
+
+<% content_for "sidebar" do %>
+	<div id="suggested_solutions_container">
+		
+	</div>	
+	
+	<div id="suggested_cases_container">
+		
+	</div>	
+
+	<%= render :partial => 'sidebar' %>			
+
+<% end %>
+
+<!-- WHY WAS THIS DONE? DOESN'T MAKE SENSE -->
+<script type="text/javascript" charset="utf-8">
+ // new Ajax.Request('/cases/suggested_solutions_and_cases', {asynchronous:true, evalScripts:true, parameters:'subject=<%= @case.subject %>;case_id=<%= @case.id %>'});
+</script>

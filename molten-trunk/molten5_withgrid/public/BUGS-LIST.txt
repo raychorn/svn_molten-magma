@@ -1,0 +1,63 @@
+List of Known Molten BUGS: (Most severe are closer to the top of the list.)
+
+* When viewing a user's account via back-door the cookies or server session left in a state that may cause Molten to perform undesired actions or actions with unintended SalesForce records.
+* When viewing multiple Molten User Accounts from multiple browser Tabs Molten may become confused as to which Session the user is using and this could result in undesired actions or corrupted data.
+
+* Molten Server Start-up after a reboot is flawed and requires human intervention to ensure Ferret starts before the Mongrels after which Monit should be started in that order - a better solution would be to have a server here at Magma monitor for this and take corrective actions via SSH.
+* Molten connects with Ferret in a manner that causes Molten to seem non-functional in case Ferret is started after Molten starts.  Molten should reconnect to Ferret as-needed and often enough to allow Molten to continue working under all conditions.
+
+* Switch from User Manager to Member allows the user to see all cases that were visible to the User Manager rather than just cases owned by the Member.
+* Member can see too many cases when searching for cases while entering a new case - probably related to security model (account tree).
+
+* Magic back-door should not be accessible to anyone who is not able to access tide.moltenmagma.com.  This bug could negatively impact the revenue stream.
+
+* BEGIN: The following two bugs are probably related to each other.
+* Molten does not perform a full one-way sync with SalesForce, items that were deleted from SalesForce are not being deleted from Molten. (Confirmed with 3 instances of this bug.)
+* Molten does not keep all the Production mySQL databases in-sync with each other, this can cause usability issues if adjacent users expect what they see to be in-sync as they work.
+* END!   Probably related to how Molten tracks when this action was last performed.
+
+* Pop-ups like Weekly Notes and others are not functional when Molten is being viewed via the magic back-door due to the type of window being used.  Solution is to detect when Molten is being used this way and force Molten into a new browser window so Pop-Ups work again.
+
+* Horizontal scroll bar remains when switching between many columns and fewer columns.
+* Timestamps seem to display GMT from SalesForce rather than localtime.
+* Force a logout after 20 minutes of inactivity.
+* Save state of the last tab selected from the header.
+* Usability issues with Forgot my password page and others like it - navigation is a problem.
+* Make sure Molten does not allow Free email account holders to gain access either directly or indirectly.
+* Beta View does not always stick as expected.
+* View All Cases is not the default after choosing to View All Cases followed by a Search that results in not finding a Case followed by clearing the search field.
+* Sorting Order does not stick in a consistent manner and users have to resort when doing so should not be required.
+* Attachments may not always show-up however this has not been confirmed.
+* sfCase needs to be updated to refresh weekly_notes__c to contain up to 21000 chars.  Weekly Notes entry field should let the user know how many chars have been entered out of the total allowed.
+* sfCase table needs to be engineered differently to allow weekly_notes__c to have 32000 chars.
+
+
+1. In the "Beta View", when we click on the status hyper links, the pop-up window that comes is a bit small. The buttons on the pop-up weren't fully visible. BTW, looks may have been fixed now. When I check now, it seems to be okay. 
+        - Krish still sees the original problem 
+
+2. When we go the "Modify Columns Display" and deselect "priority" or "expedited priority" (one of them), both columns still show up. We have to deselect both to remove them. 
+
+3. We would like to also like to have the "click-to-update" feature for the 2 other columns - Expected Build, Tag 
+
+4. By default, we would like to see the cases ordered on based on the "Opened" column. Currently we need to sort it twice to get to this state. 
+
+**5. Ferret does not always return results for a search, for instance when searching for Solutions based on keyword "ORCL" nothing is returned until "ORCL-" is entered.
+
+===== BEGIN:  10-31-2008 ==========
+When a case is closed in MOLTEN, somehow the attachments go missing.  I don’t notice this happening when the case status is anything other than closed. This is definitely a bug. Can you please look into this issue?
+
+Examples: Support case 116038. You don’t see the attachments in MOLTEN when closed, whereas in SF you see one attachment. Now, that I have changed the status of this case back to “awaiting cust. response” we can see the attachment.
+===== END!   10-31-2008 ==========
+
+===== BEGIN:  10-31-2008 ==========
+Molten should give the option of exporting .CSV in addition to .XLS when exporting data.
+===== END!   10-31-2008 ==========
+
+===== BEGIN: 11-15-2008 ==========
+Molten displays Recent Support Cases on the Home page that may not be associated with the Contact who is logged in.
+===== END!   11-15-2008 ==========
+
+===== BEGIN: 11-15-2008 ==========
+MOlten's display of Recent Support Cases are not "recent" at-all however they were (once upon a time) support cases Molten
+thought were associated with the Contact.
+===== END!   11-15-2008 ==========

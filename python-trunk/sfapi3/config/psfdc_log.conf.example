@@ -1,0 +1,54 @@
+[formatters]
+keys: basic,email
+
+[handlers]
+keys: console,rotating,criticalconsole
+
+[loggers]
+keys: root,pysfdc
+
+[formatter_basic]
+format: %(asctime)s %(name)s:%(levelname)s %(module)s:%(lineno)d:  %(message)s
+
+[formatter_email]
+format: %(asctime)s %(name)s:%(levelname)s
+ %(module)s:%(lineno)d:
+ %(message)s
+
+[handler_criticalconsole]
+class: StreamHandler
+args: ()
+level: CRITICAL
+formatter: basic
+
+[handler_console]
+class: StreamHandler
+args: ()
+formatter: basic
+
+[handler_rotating]
+; append to a 100MB file, keep 3 versions
+; default file location is PYSFDC_HOME/log/pysfdc.log
+class: handlers.RotatingFileHandler
+args: ['%(logfile)s', 'a', 104857600, 3]
+formatter: basic
+
+#[handler_criticalemail]
+#; send mail using SMTP server at mailhost.addr from fromaddr@domain to
+#; a list of addresses (without domains) having the specified subject
+#class: handlers.SMTPHandler
+#args: ['mail.host.com', 'fromaddr@host.com', ('toaddr@host.com',), 'email subject line']
+#formatter: email
+#level: CRITICAL
+
+; Log anything else to the rotating file log
+[logger_root]
+level: WARNING
+handlers: rotating
+
+[logger_pysfdc]
+level: INFO
+qualname: pysfdc
+handlers: rotating,criticalconsole
+;handlers: rotating,criticalconsole,criticalemail
+propagate: 0

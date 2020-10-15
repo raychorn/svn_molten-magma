@@ -1,0 +1,44 @@
+<%= render(:partial => 'edit_or_create') if @case.new_record? %>
+
+<h1 class="small_margin">
+        <% unless @case.new_record? or @case.closed? %>
+          <span id="subscribe_container" title="Click to subscribe / unsubscribe to the case watcher for your account cases.">
+                <%= link_to_subscribe_to_case unless @case.new_record? %>
+          </span>
+          <%= link_to(image_tag('buttons/close_case.gif', :alt => 'Close Case'),
+                                :action => 'close', :id => @case) unless @case.closed? %>
+          <%= link_to(image_tag('buttons/edit_case.gif', :alt => 'Edit Case'),
+                                :action => 'edit', :id => @case) if @case.actionable?(current_contact) %>
+        <% end %>
+        <%= link_to_function image_tag('buttons/print.gif', :alt => "Print", :width => 55, :height => 21, :align => 'center'),
+                                "$('case_additional_information').show();printpage();$('case_additional_information').hide();" %>
+        <%= @title = @case.subject %>
+        <%# @title = "Case #" + @case.case_number + ": " + @case.subject %>
+</h1>
+
+
+<%= render :partial => 'cases/show/details' %>
+
+<h2 class="gray buried_header">Description</h2>
+<%= @case.description.gsub(10.chr, '<br/>') %>
+
+<% unless @case.new_record? or @case.closed? %>
+<%= render(:partial => 'attachments/list', :locals => {:attachable => @case}) %>
+<% end %>
+
+<% unless @case.new_record? %>
+  <%= render(:partial => 'comments/list', :locals => {:commentable => @case}) %>
+<% end %>
+
+<%= render(:partial => 'edit_or_create') if @case.new_record? %>
+
+<% content_for "sidebar" do %>
+  <div id="suggested_solutions_container">
+  </div>
+
+  <div id="suggested_cases_container">
+  </div>
+
+  <%= render :partial => 'sidebar' %>
+
+<% end %>

@@ -1,0 +1,44 @@
+<h2 class="gray">Case Subscriptions</h2>
+
+<% if @case_subscriptions.any? %>
+
+<%= form_tag :controller => 'case_watchers', :action => 'update_contact_case_subscriptions' %>
+
+<div class="update_subscriptions_button">
+	<%= submit_tag 'Update Case Subscriptions' %>
+</div>
+
+<table class="listing">
+	<tr>
+		<th>Case</th>
+		<th>Subscribing?</th>
+	</tr>
+	<% cases = Array.new %>
+	<% @case_subscriptions.each do |s| %>
+		<%# prevent duplicates %>
+		<% if !cases.include?(s.case_watcher.support_case) and s.case_watcher.support_case %>
+			<tr class="<%= cycle('shaded','') %>">
+				<td>
+					<%= link_to s.case_watcher.support_case.subject, :controller => 'cases', :action => 'show', :id => s.case_watcher.case_number_id__c %>
+				</td>
+				<td>
+					<%= hidden_field_tag "cases[]", s.case_watcher.case_number_id__c %>
+					<%= check_box_tag "case_subscriptions[#{s.case_watcher.case_number_id__c}]", 1, true %>
+				</td>
+			</tr>
+			<% cases << s.case_watcher.support_case %>
+		<% end %>
+	<% end %>
+</table>
+<br/>
+<div class="update_subscriptions_button">
+	<%= submit_tag 'Update Case Subscriptions' %>
+</div>
+
+</form>
+
+<% else %>
+<br/>
+You are not subscribing to any support cases. 
+<br/><br/>
+<% end %>

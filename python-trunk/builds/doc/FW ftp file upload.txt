@@ -1,0 +1,51 @@
+From: Lilian Ho [mailto:lilian@intraware.com] 
+Sent: Monday, April 03, 2006 1:37 PM
+To: Donald Dy
+Cc: lava-ops
+Subject: RE: ftp file upload
+
+ 
+
+Hello Don,
+
+ 
+
+Hope you are doing well.  The best place to begin might be to direct your developer to our documentation posted to Manager:
+
+https://manager.subscribenet.com/subscribenet/documentation/Best_Practices_-_Product_Set_Up_and_Transactions.pdf
+
+ 
+
+There is a section on how to upload Files to Manager.  There are two options
+
+ 
+
+1)  HTTPS:  locating the file on your local machine and uploading to Manager repository (good for smaller files, < 250 MB).  This method allows you to upload files one at a time using the browser UI via SubscribeNet Manager.
+
+ 
+
+2)  FTP:  transferring file to Intraware's FTP staging server (use an FTP client, such as Filezilla to conduct transfers, as such clients have auto-resume functions in case of any interruptions during transfer itself).  This method allows you to upload files one at a time using the browser UI via SubscribeNet Manager - if the file is large, you will receive a message that it will load in the background, and you can move on to other functions in Manager without having to wait for the file upload to complete itself.  This option also allows you to use the bulk upload method via XML to upload files to the repository.
+
+ 
+
+Here are the login instructions to transfer files to our staging FTP server, prior to conducting the FTP upload option in Manager:
+
+Production:  (https:manager.subscribenet.com)
+
+Transfer files to the FTP staging server: upload.subscribenet.com
+Production Upload Username: lava
+Production Upload Password: uLz$u25J1%
+
+UAT Testing: (https:manageruat.subscribenet.com)
+
+Transfer files to the FTP staging server: upload.subscribenet.com
+UAT Upload Username: lavauat
+UAT Upload Password: YDBs3^7C76Ne
+
+If you would like to schedule more product/file training using Manager or our IXP tool (create transactions in excel, convert to .csv, then use our IXP tool to convert to .xml for upload to Manager as a bulk transaction), let me know what dates/times will work for you this week, Tues-Fri.  I can set up a web con call to review any items you would like clarification.
+
+Regards,
+Lilian
+
+Lilian Ho-Perez | Intraware | lilian@intraware.com | 925-253-4557 
+Manage Complex Entitlements, Enhance Customer Visibility, Accelerate Profits

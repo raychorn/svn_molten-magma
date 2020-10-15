@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+salesforce_form_submission:
+  id: 1
+  name: Salesforce Form Submissions
+  value: no_submit
+another:
+  id: 2
+  name: Technical Support Email
+  value: derek@highgroove.com
+send_comments:
+  id: 3
+  name: Send Comment Notifications
+  value: <%= AppSetting::SEND_COMMENT_NOTIFICATIONS[:do_not_send_notification] %>
+search_regex:
+  id: 4
+  name: Solutions Search RegEx
+  value: \"*\"

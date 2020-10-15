@@ -1,0 +1,22 @@
+<div class='solution_search_result'>
+<%= link_to highlight(solution.name,@term), :action => 'show', :id => solution %>
+
+<% if solution.account %>
+<span class="gray small">
+(<%= solution.account.name %>)
+</span>
+<% end %>
+<br/>
+
+<%= find_and_highlight(strip_tags(solution.note),@term) if solution.note %>
+<br/>
+<span class="extra_info">
+	<% if @category.nil? and (cats = solution.categories.compact.uniq and cats.any?) %>
+	In <%= cats.map { |cat| category_links(cat)   }.join(' and ') %>
+	<br/>
+	<% end %>
+        Relevancy: <%= solution.relevancy %>, <%= pluralize(solution.views, 'Click') if solution.views > 0 %>
+        <%= pluralize(solution.attachments.size, 'Attachment') if solution.attachments.any? %>
+        <!--- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updated: <%= clean_age(solution.last_modified_date) %> Ago --->
+</span>
+</div>

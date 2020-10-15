@@ -1,0 +1,39 @@
+<h2 class="gray">Account Subscriptions</h2>
+
+<% if @account_subscriptions.any? %>
+
+<%= form_tag :controller => 'case_watchers', :action => 'update_contact_account_subscriptions' %>
+
+<div class="update_subscriptions_button">
+	<%= submit_tag 'Update Account Subscriptions' %>
+</div>
+
+<table class="listing">
+	<tr>
+		<th>Account</th>
+		<th>Subscribing?</th>
+	</tr>
+	<% @account_subscriptions.each do |s| %>
+	<tr class="<%= cycle('shaded','') %>">
+		<td>
+			<%= s.case_watcher.account.name %>
+		</td>
+		<td>
+			<%= hidden_field_tag "accounts[]", s.case_watcher.account.id %>
+			<%= check_box_tag "account_subscriptions[#{s.case_watcher.account.id}]", 1, true %>
+		</td>
+	</tr>
+	<% end %>
+</table>
+<br/>
+<div class="update_subscriptions_button">
+	<%= submit_tag 'Update Account Subscriptions' %>
+</div>
+
+</form>
+
+<% else %>
+<br/>
+You are not subscribing to any accounts. 
+<br/><br/>
+<% end %>

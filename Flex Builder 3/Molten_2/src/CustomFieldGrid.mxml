@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas dataChange="dataSetup(event);" 
+	creationComplete="getTypeList()" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="100%" 
+	height="100%" 
+	backgroundColor="#f9eeff" 
+	xmlns:objects="com.salesforce.objects.*" 
+	xmlns:results="com.salesforce.results.*" 
+	xmlns:local="*">
+	<mx:Script>
+		<![CDATA[
+			import com.salesforce.objects.SF_Picklist;
+			import com.salesforce.objects.SoapObject;
+			import com.salesforce.objects.PicklistValue;
+			import flash.utils.describeType;
+			import com.salesforce.results.Field;
+			import com.salesforce.results.DescribeSObjectResult;
+			import mx.controls.Alert;
+			import com.salesforce.objects.AsyncRequestState;
+			import com.salesforce.objects.AsyncResult;
+			import com.salesforce.AsyncResponder;
+			import mx.core.Application;
+			import mx.utils.ObjectUtil;
+			import com.salesforce.objects.CustomObject;
+			import mx.controls.ComboBase;
+			import mx.collections.SortField;
+			import mx.collections.Sort;
+			import mx.controls.dataGridClasses.DataGridBase;
+			import com.salesforce.objects.TreatBlanksAs;
+			import mx.controls.ComboBox;
+			import mx.events.ListEvent;
+			import mx.containers.Grid;
+			import mx.controls.Text;
+			import com.salesforce.objects.FieldType;
+            import mx.collections.ArrayCollection;
+        	import com.salesforce.salesforce_internal;
+        	
+        	[Bindable]
+        	public var fieldTypes:ArrayCollection;
+        	
+            [Bindable]
+            public var myDP:ArrayCollection = new ArrayCollection();
+            
+			[Bindable]
+			private var objectList:ArrayCollection;
+			
+            private var currentObject:CustomObject;
+
+            private function dataSetup(event:Event):void {
+            	currentObject = data as CustomObject;
+            	myDP = currentObject.getFields();
+            }
+            
+            private function getTypeList():void {
+            	fieldTypes = FieldType.getAllEnums();
+            	var sort:Sort = new Sort();
+            	sort.fields = [ new SortField(null, true)];
+            	fieldTypes.sort = sort;
+            	fieldTypes.refresh();
+            	loader();
+            }
+
+			private function loader():void {
+				Application.application.apex.describeGlobal(new AsyncResponder(function(results:Object):void {
+					objectList = results.types;
+					objectList.filterFunction = filterCustomObjects;
+					objectList.refresh();
+					callLater(initFieldTab);
+				}, Application.application.genericFault));
+			}
+
+			private function filterCustomObjects(item:Object):Boolean {
+				var i:String = item as String;
+				i = i.substr(i.length - 3);
+				return i == "__c";
+			}
+            
+			private function initFieldTab():void {
+				if (cmbCustomObjectList.selectedItem == null) {
+					cmbCustomObjectList.selectedIndex = objectList[0];
+				}
+				var objName:String = cmbCustomObjectList.selectedItem as String;
+				Application.application.apex.describeSObject(objName, new AsyncResponder(handleDescribeResponse, Application.application.generateFault()));
+			}
+            
+            private function changeViewStack(name:String):void {
+            	var childView:Canvas = viewstack1.getChildByName(name) as Canvas;
+            	if (childView != null) {
+            		viewstack1.selectedChild = childView;// = viewstack1.getChildIndex(childView);
+            	}
+            }
+            private function handleGridRowChange(event:ListEvent):void {
+            	var newItem:Object = fieldGrid.dataProvider[event.rowIndex];
+            	if (newItem.type != null) {
+	            	var newItemName:String = newItem.type.getValue();
+	            	changeViewStack(newItemName);
+	            	theField = newItem as CustomField;
+	            }
+            }
+            public function handleTypeChange(event:Event):void {
+            	changeViewStack((event.currentTarget as ComboBox).selectedItem.toString());
+            }
+
+            [Bindable("change")]
+            public function convertTreatBlanksToBoolean():Boolean {
+            	return (theField.formulaTreatBlanksAs == TreatBlanksAs.BlankAsBlank);
+            }
+            
+            private function convertBooleanToTreatBlanks(val:Boolean):TreatBlanksAs {
+            	if (val == true) {
+            		return TreatBlanksAs.BlankAsBlank;
+            	} else {
+            		return TreatBlanksAs.BlankAsZero;
+            	}
+            }
+            
+			private function handleLabelChange(event:Event):void {
+				var regex:RegExp = /(\W+)/g;
+				txtNewName.text = txtNewLabel.text.replace(regex, "_");
+			}
+
+			private function gridFocusIn(event:Event):void {
+				//Setup the field details
+				if (fieldGrid.selectedItem != null) {
+					var cmb:Object = fieldGrid.dataProvider[fieldGrid.selectedIndex];
+					if (cmb != null) {
+						var newItemName:String = cmb.type.getValue();
+						changeViewStack(newItemName);
+						theField = cmb as CustomField;
+					} else {
+						changeViewStack("nothing");
+					}
+				} else {
+					changeViewStack("nothing");
+				}
+			}
+            private function newFocusIn(event:Event):void {
+            	//Setup the field details
+            	if (cbNewType.selectedItem != null) {
+            		changeViewStack(cbNewType.selectedItem.toString());
+            		theNewField.type = FieldType.fromValue(cbNewType.selectedItem.toString());
+            	} else {
+            		changeViewStack("nothing");
+            	}
+            }
+            
+            private function getPicklistValues(f:CustomField):void {
+            	var pickle:String = txtPicklistValues.text;
+            	var picks:Array = pickle.split(/\r/);
+            	f.picklist = new SF_Picklist();
+            	f.picklist.picklistValues = new Array();
+            	for (var i:int = 0;i<picks.length;i++) {
+            		var plv:PicklistValue = new PicklistValue();
+            		plv.label = picks[i];
+            		plv.value = picks[i];
+					f.picklist.picklistValues.push(plv);  		
+            	}
+            	f.picklist.sorted = chkSorted.selected;
+            	f.picklist.useFirstValueAsDefault = chkUseFirstValueAsDefault.selected;
+            }
+            
+            private function makeField(event:Event):void {
+            	use namespace salesforce_internal;
+            	
+            	if (!SimpleGrid.endsWith(theNewField.fullName, "__c")) {
+            		theNewField.fullName += "__c";
+            	}
+            	if (theNewField.type == FieldType.Picklist) {
+            		getPicklistValues(theNewField);
+            	} 
+            	var oldName:String = theNewField.fullName;
+            	theNewField.fullName = data.fullName + "." + oldName;
+            	var f:CustomField = theNewField.clone();
+            	Application.application.apex.metaConnection.createObject([f], new AsyncResponder(
+					handleResults, Application.application.genericFault));
+            	theNewField.fullName = oldName;
+            	trace("label: " + f.label);
+            	trace("name: " + f.fullName);
+            	trace("default: " + f.defaultValue);
+            	trace("type: " + f.type.toString());
+            	trace("length: " + f._length);
+            }
+            
+            private function handleResults(results:Array):void {
+		  		for (var i:int = 0;i<results.length;i++) {
+		  			var result:AsyncResult = results[i] as AsyncResult;
+			  		if (result.state == AsyncRequestState.Completed) {
+			  			//Alert.show("Create object complete, status: " + result.statusCode);
+			  			theNewField = new CustomField();
+			  			initFieldTab();
+			  		} else if (result.state == AsyncRequestState.Error) {
+			  			Alert.show(result.state + " - " + result.statusCode + "\n" + result.message);
+			  		} 
+			  	}
+            }
+            
+            
+			private function handleCustomObjectSelection(event:Event):void {
+				var objName:String = (event.currentTarget as ComboBox).selectedItem as String;
+				Application.application.apex.describeSObject(objName, new AsyncResponder(handleDescribeResponse, Application.application.genericFault));
+			}
+			private function handleDescribeResponse(dsr:DescribeSObjectResult):void {
+				var co:CustomObject = new CustomObject();
+				co.label = dsr.label;
+				co.pluralLabel = dsr.labelPlural;
+				co.fullName = dsr.name;
+				co.setExists(true);
+				var fields:Array = dsr.fields;
+				for (var key:String in fields) {
+					var field:Field = fields[key] as Field;
+					if (field.custom) {
+						var cf:CustomField = new CustomField();
+						cf.defaultValue = field.defaultValueFormula;
+						cf.externalId = field.externalId;
+						cf.label = field.label;
+						cf.fullName = field.name;
+						cf._length = field.length;
+						cf.precision = field.precision;
+						cf.scale = field.scale;
+						cf.referenceTo = field.referenceTo;
+						cf.relationshipName = field.relationshipName;
+						cf.required = !field.nillable;
+						cf.unique = field.unique;
+						cf.caseSensitive = field.caseSensitive;
+						cf.formula = field.calculatedFormula;
+						if (field.autoNumber) {
+							cf.type = FieldType.AutoNumber;
+						} else if (field.calculated) {
+							cf.type = FieldType.Formula;
+						} else {
+							cf.type = CustomObjectDialog.getFieldType(field);
+						}
+						co.addField(cf);
+					}
+				}
+				data = co;//.myDP = co.getFields();
+			}
+		]]>
+	</mx:Script>
+	<objects:CustomField id="theField">
+	</objects:CustomField>
+	<objects:CustomField id="theNewField">
+	</objects:CustomField>
+<!--	<objects:SF_Picklist>
+		<objects:picklistValues>
+			<objects:PicklistValue>
+			</objects:PicklistValue>
+		</objects:picklistValues>
+	</objects:SF_Picklist>-->
+
+	<!-- Existing field bindings (for the grid) -->
+	<mx:Binding source="cbExternalId.selected" destination="theField.externalId" />
+	<mx:Binding source="cbExternalId0.selected" destination="theField.externalId" />
+	<mx:Binding source="cbExternalId1.selected" destination="theField.externalId" />
+	<mx:Binding source="cbExternalId2.selected" destination="theField.externalId" />
+
+	<mx:Binding source="cbRequired.selected" destination="theField.required" />
+	<mx:Binding source="cbRequired0.selected" destination="theField.required" />
+	<mx:Binding source="cbRequired1.selected" destination="theField.required" />
+	<mx:Binding source="cbRequired2.selected" destination="theField.required" />
+	<mx:Binding source="cbRequired3.selected" destination="theField.required" />
+	<mx:Binding source="cbRequired4.selected" destination="theField.required" />
+	<mx:Binding source="cbRequired5.selected" destination="theField.required" />
+	<mx:Binding source="cbRequired6.selected" destination="theField.required" />
+	<mx:Binding source="cbRequired7.selected" destination="theField.required" />
+	<mx:Binding source="cbRequired8.selected" destination="theField.required" />
+	<mx:Binding source="cbRequired9.selected" destination="theField.required" />
+
+	<mx:Binding source="int(txtDecimalPlaces.text)"	 destination="theField.scale" />
+	<mx:Binding source="int(txtDecimalPlaces0.text)" destination="theField.scale" />
+	<mx:Binding source="int(txtDecimalPlaces1.text)" destination="theField.scale" />
+	
+	<mx:Binding source="txtDefaultValue.text" destination="theField.defaultValue" />
+	<mx:Binding source="txtDefaultValue0.text" destination="theField.defaultValue" />
+	<mx:Binding source="txtDefaultValue1.text" destination="theField.defaultValue" />
+	<mx:Binding source="txtDefaultValue2.text" destination="theField.defaultValue" />
+	<mx:Binding source="txtDefaultValue3.text" destination="theField.defaultValue" />
+	<mx:Binding source="txtDefaultValue4.text" destination="theField.defaultValue" />
+	<mx:Binding source="txtDefaultValue5.text" destination="theField.defaultValue" />
+	<mx:Binding source="txtDefaultValue6.text" destination="theField.defaultValue" />
+	<mx:Binding source="txtDefaultValue7.text" destination="theField.defaultValue" />
+	<mx:Binding source="txtDefaultValue8.text" destination="theField.defaultValue" />
+	<mx:Binding source="txtDefaultValue9.text" destination="theField.defaultValue" />
+
+	<mx:Binding source="txtFormula.text" destination="theField.formula" />
+	
+	<mx:Binding source="int(txtLength.text)" destination="theField._length" />
+	<mx:Binding source="int(txtLength0.text)" destination="theField._length" />
+	<mx:Binding source="int(txtLength1.text)" destination="theField._length" />
+	<mx:Binding source="int(txtLength2.text)" destination="theField._length" />
+	<mx:Binding source="int(txtLength3.text)" destination="theField._length" />
+	
+	<mx:Binding source="txtDisplayFormat.text" destination="theField.displayFormat" />
+	
+	<mx:Binding source="txtRelationshipName.text" destination="theField.relationshipName" />
+	<mx:Binding source="txtRelationshipName0.text" destination="theField.relationshipName" />
+	
+	<mx:Binding source="int(txtVisibleLines.text)" destination="theField.visibleLines" />
+	<mx:Binding source="int(txtVisibleLines0.text)" destination="theField.visibleLines" />
+	
+	<mx:Binding source="cbCaseSensitive.selected" destination="theField.caseSensitive" />
+
+	<mx:Binding source="cbUnique.selected" destination="theField.unique" />
+	<mx:Binding source="cbUnique0.selected" destination="theField.unique" />
+	<mx:Binding source="cbUnique1.selected" destination="theField.unique" />
+
+
+	<!-- Bindings for the new field box -->
+	<mx:Binding source="cbExternalId.selected" destination="theNewField.externalId" />
+	<mx:Binding source="cbExternalId0.selected" destination="theNewField.externalId" />
+	<mx:Binding source="cbExternalId1.selected" destination="theNewField.externalId" />
+	<mx:Binding source="cbExternalId2.selected" destination="theNewField.externalId" />
+
+	<mx:Binding source="cbRequired.selected" destination="theNewField.required" />
+	<mx:Binding source="cbRequired0.selected" destination="theNewField.required" />
+	<mx:Binding source="cbRequired1.selected" destination="theNewField.required" />
+	<mx:Binding source="cbRequired2.selected" destination="theNewField.required" />
+	<mx:Binding source="cbRequired3.selected" destination="theNewField.required" />
+	<mx:Binding source="cbRequired4.selected" destination="theNewField.required" />
+	<mx:Binding source="cbRequired5.selected" destination="theNewField.required" />
+	<mx:Binding source="cbRequired6.selected" destination="theNewField.required" />
+	<mx:Binding source="cbRequired7.selected" destination="theNewField.required" />
+	<mx:Binding source="cbRequired8.selected" destination="theNewField.required" />
+	<mx:Binding source="cbRequired9.selected" destination="theNewField.required" />
+	<mx:Binding source="rbChecked.selected.toString()" destination="theNewField.defaultValue" />
+	
+	<mx:Binding source="int(txtDecimalPlaces.text)"	 destination="theNewField.scale" />
+	<mx:Binding source="int(txtDecimalPlaces0.text)" destination="theNewField.scale" />
+	<mx:Binding source="int(txtDecimalPlaces1.text)" destination="theNewField.scale" />
+	
+	<mx:Binding source="txtDefaultValue.text" destination="theNewField.defaultValue" />
+	<mx:Binding source="txtDefaultValue0.text" destination="theNewField.defaultValue" />
+	<mx:Binding source="txtDefaultValue1.text" destination="theNewField.defaultValue" />
+	<mx:Binding source="txtDefaultValue2.text" destination="theNewField.defaultValue" />
+	<mx:Binding source="txtDefaultValue3.text" destination="theNewField.defaultValue" />
+	<mx:Binding source="txtDefaultValue4.text" destination="theNewField.defaultValue" />
+	<mx:Binding source="txtDefaultValue5.text" destination="theNewField.defaultValue" />
+	<mx:Binding source="txtDefaultValue6.text" destination="theNewField.defaultValue" />
+	<mx:Binding source="txtDefaultValue7.text" destination="theNewField.defaultValue" />
+	<mx:Binding source="txtDefaultValue8.text" destination="theNewField.defaultValue" />
+	<mx:Binding source="txtDefaultValue9.text" destination="theNewField.defaultValue" />
+
+	<mx:Binding source="txtFormula.text" destination="theNewField.formula" />
+	
+	<mx:Binding source="int(txtLength.text)" destination="theNewField._length" />
+	<mx:Binding source="int(txtLength0.text)" destination="theNewField._length" />
+	<mx:Binding source="int(txtLength1.text)" destination="theNewField._length" />
+	<mx:Binding source="int(txtLength2.text)" destination="theNewField._length" />
+	<mx:Binding source="int(txtLength3.text)" destination="theNewField._length" />
+	
+	<mx:Binding source="txtDisplayFormat.text" destination="theNewField.displayFormat" />
+	
+	<mx:Binding source="txtRelationshipName.text" destination="theNewField.relationshipName" />
+	<mx:Binding source="txtRelationshipName0.text" destination="theNewField.relationshipName" />
+	
+	<mx:Binding source="int(txtVisibleLines.text)" destination="theNewField.visibleLines" />
+	<mx:Binding source="int(txtVisibleLines0.text)" destination="theNewField.visibleLines" />
+	
+	<mx:Binding source="cbCaseSensitive.selected" destination="theNewField.caseSensitive" />
+
+	<mx:Binding source="cbUnique.selected" destination="theNewField.unique" />
+	<mx:Binding source="cbUnique0.selected" destination="theNewField.unique" />
+	<mx:Binding source="cbUnique1.selected" destination="theNewField.unique" />
+	
+	<mx:Binding source="txtNewLabel.text" destination="theNewField.label" />
+	<mx:Binding source="txtNewName.text" destination="theNewField.fullName" />
+	<mx:Binding source="cbNewType.selectedItem as FieldType" destination="theNewField.type" />
+	<mx:Binding source="txtNewDescription.text" destination="theNewField.description" />
+	<mx:Binding source="int(txtLength0.text)" destination="theNewField._length" />
+	
+	<mx:VDividedBox width="100%" height="100%">
+	<mx:VBox width="100%" height="100%">
+		<mx:HBox>
+			<mx:Label text="Custom Objects"/>
+			<mx:ComboBox id="cmbCustomObjectList" change="handleCustomObjectSelection(event)" dataProvider="{objectList}"></mx:ComboBox>
+		</mx:HBox>
+		<mx:DataGrid variableRowHeight="true" id="fieldGrid" change="handleGridRowChange(event);" dataProvider="{myDP}" editable="true" x="0" width="100%" height="100%" bottom="49" focusIn="gridFocusIn(event)">
+			<mx:columns>
+				<mx:DataGridColumn editable="true" editorDataField="text" headerText="Field Label" dataField="label" itemEditor="mx.controls.TextInput"/>
+				<mx:DataGridColumn editable="true" editorDataField="text" headerText="Field Name" dataField="fullName" itemEditor="mx.controls.TextInput"/>
+				<mx:DataGridColumn headerText="Type" editorDataField="selectedItem" dataField="type" rendererIsEditor="false">
+					<mx:itemEditor>
+						<mx:Component>
+							<mx:ComboBox dataProvider="{outerDocument.fieldTypes}" change="outerDocument.handleTypeChange(event)" />
+						</mx:Component>
+					</mx:itemEditor>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="Description" editorDataField="text" dataField="description" editable="true" itemEditor="mx.controls.TextArea" />
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:HBox width="100%" horizontalGap="1" paddingLeft="2" paddingRight="2" paddingBottom="3" backgroundColor="#dedede">
+			<mx:VBox width="100%" verticalGap="0">
+				<mx:Label text="Field Label" height="22" paddingTop="2"/>
+				<mx:TextInput text="{theNewField.label}" width="100%" change="handleLabelChange(event)" id="txtNewLabel" focusIn="newFocusIn(event)"/>
+			</mx:VBox>
+			<mx:VBox width="100%" verticalGap="0">
+				<mx:Label text="Field Name" height="22" paddingTop="2"/>
+				<mx:TextInput text="{theNewField.fullName}" id="txtNewName" focusIn="newFocusIn(event)"/>
+			</mx:VBox>
+			<mx:VBox width="100%" verticalGap="0">
+				<mx:Label text="Type" height="22" paddingTop="2"/>
+				<mx:ComboBox dataProvider="{fieldTypes}" width="100%" id="cbNewType" focusIn="newFocusIn(event)" change="newFocusIn(event)"/>
+			</mx:VBox>
+			<mx:VBox width="100%" verticalGap="0">
+				<mx:Canvas width="100%">
+					<mx:Label text="Description" x="0" y="2"/>
+					<mx:LinkButton label="Add Field"  right="0" enabled="true" click="makeField(event)"/>
+				</mx:Canvas>
+				<mx:TextInput text="{theNewField.description}" id="txtNewDescription" focusIn="newFocusIn(event)"/>
+			</mx:VBox>
+		</mx:HBox>
+	</mx:VBox>
+	<mx:ViewStack id="viewstack1" width="100%" height="100%" backgroundColor="#fdfdfd">
+		<mx:Canvas label="nothing" width="400" height="100%" id="nothing">
+			<mx:Label text="(no field is currently selected)" horizontalCenter="0" verticalCenter="0"/>
+		</mx:Canvas>
+		<mx:Canvas label="AutoNumber" width="400" height="100%" id="AutoNumber" backgroundColor="#fdfdfd">
+			<mx:Label x="10" y="35" text="Display Format"/>
+			<mx:TextInput text="{theField.displayFormat}" x="106" y="33" id="txtDisplayFormat"/>
+			<mx:Label x="10" y="61" text="External Id"/>
+			<mx:CheckBox selected="{theField.externalId}" x="106" y="61" height="18" width="18" id="cbExternalId"/>
+			<mx:Text x="132" y="61" text="Set this field as the unique record identifier from an external system" height="39" truncateToFit="true" width="258"/>
+			<mx:Label text="AutoNumber Field Type" horizontalCenter="1" top="4"/>
+		</mx:Canvas>
+		<mx:Canvas label="Formula" width="400" height="100%" id="Formula">
+			<mx:Label x="39" y="58" text="Formula"/>
+			<mx:TextArea text="{theField.formula}" x="97" y="57" width="293" height="54" id="txtFormula"/>
+			<mx:Label text="Formula Field Type" horizontalCenter="1" top="4"/>
+			<mx:Label x="16" y="32" text="Return Type"/>
+			<mx:ComboBox x="97" y="30" id="cmbReturnType"></mx:ComboBox>
+			<mx:CheckBox selected="{convertTreatBlanksToBoolean()}" x="16" y="119" label="Treat blanks as blanks (not zeroes)" id="chkTreatBlanksAsBlanks"/>
+		</mx:Canvas>
+		<mx:Canvas label="Lookup" width="400" height="100%" id="Lookup">
+			<mx:Label text="Lookup Field Type" horizontalCenter="1" top="4"/>
+			<mx:Label x="65" y="32" text="Related To"/>
+			<mx:ComboBox labelField="{theField.referenceTo}" x="139" y="30" id="cmbReferenceTo"></mx:ComboBox>
+			<mx:Label x="21" y="58" text="Relationship Name"/>
+			<mx:TextInput text="{theField.relationshipName}" x="139" y="56" id="txtRelationshipName"/>
+		</mx:Canvas>
+		<mx:Canvas label="MasterDetail" width="400" height="100%" id="MasterDetail">
+			<mx:Label text="Master-Detail Field Type" horizontalCenter="1" top="4"/>
+			<mx:Label x="65" y="32" text="Related To"/>
+			<mx:ComboBox x="139" y="30" id="cmbReferenceTo0"></mx:ComboBox>
+			<mx:Label x="21" y="58" text="Relationship Name"/>
+			<mx:TextInput text="{theField.relationshipName}" x="139" y="56" id="txtRelationshipName0"/>
+			<mx:CheckBox x="21" y="84" label="Required" id="cbRequired6" selected="true" enabled="false"/>
+		</mx:Canvas>
+		<mx:Canvas label="Phone" width="400" height="100%" id="Phone">
+			<mx:Label text="Phone Field Type" horizontalCenter="1" top="4"/>
+			<mx:CheckBox selected="{theField.required}" x="10" y="58" label="Required" id="cbRequired7"/>
+			<mx:Label x="10" y="32" text="Default Value"/>
+			<mx:TextInput text="{theField.defaultValue}" x="106" y="30" id="txtDefaultValue6"/>
+		</mx:Canvas>
+		<mx:Canvas label="TextArea" width="400" height="100%" id="TextArea">
+			<mx:Label text="Text Area Field Type" horizontalCenter="1" top="4"/>
+			<mx:CheckBox selected="{theField.required}" x="10" y="58" label="Required" id="cbRequired8"/>
+			<mx:Label x="10" y="32" text="Default Value"/>
+			<mx:TextInput text="{theField.defaultValue}" x="106" y="30" id="txtDefaultValue7"/>
+		</mx:Canvas>
+		<mx:Canvas label="LongTextArea" width="400" height="100%" id="LongTextArea">
+			<mx:Label text="Text Area (long) Field Type" horizontalCenter="1" top="4"/>
+			<mx:Label x="10" y="88" text="Default Value"/>
+			<mx:TextInput text="{theField.defaultValue}" x="106" y="86" id="txtDefaultValue8"/>
+			<mx:Label x="10" y="60" text="Length"/>
+			<mx:TextInput text="{theField._length}" x="106" y="58" id="txtLength3"/>
+			<mx:Label x="10" y="34" text="# Visible Lines"/>
+			<mx:TextInput text="{theField.visibleLines}" x="106" y="32" id="txtVisibleLines"/>
+		</mx:Canvas>
+		<mx:Canvas label="URL" width="400" height="100%" id="URL">
+			<mx:CheckBox selected="{theField.required}" x="10" y="58" label="Required" id="cbRequired9"/>
+			<mx:Label x="10" y="32" text="Default Value"/>
+			<mx:TextInput text="{theField.defaultValue}" x="106" y="30" id="txtDefaultValue9"/>
+			<mx:Label text="URL Field Type" horizontalCenter="1" top="4"/>
+		</mx:Canvas>
+		<mx:Canvas label="Checkbox" width="400" height="100%" id="Checkbox">
+			<mx:Canvas x="10" y="45" width="200" height="72" cornerRadius="6" borderStyle="solid" label="Default Value">
+				<mx:RadioButton click="theField.defaultValue = 'true'" selected="{theField.defaultValue == 'true'}" x="10" y="10" label="Checked" groupName="defaul" id="rbChecked"/>
+				<mx:RadioButton click="theField.defaultValue = 'false'" selected="{theField.defaultValue == 'false'}" x="10" y="36" label="Unchecked" groupName="default" id="rbUnchecked"/>
+			</mx:Canvas>
+			<mx:Label text="Cehckbox Field Type" horizontalCenter="1" top="4"/>
+			<mx:Label x="12" y="30" text="Default Value" alpha="1.0"/>
+		</mx:Canvas>
+		<local:SmartCanvas label="Picklist" width="400" height="100%" id="Picklist" fieldList="['sorted', 'useFirstValueAsDefault']">
+			<mx:Label text="Picklist Field Type" horizontalCenter="1" top="4"/>
+			<mx:Label x="10" y="29" text="Values"/>
+			<mx:TextArea x="60" y="30" width="330" height="59" id="txtPicklistValues"/>
+			<mx:CheckBox selected="{theField.picklist.sorted}" x="10" y="97" label="Sorted" id="chkSorted"/>
+			<mx:CheckBox selected="{theField.picklist.useFirstValueAsDefault}" x="10" y="117" label="Use first value as default value" id="chkUseFirstValueAsDefault"/>
+		</local:SmartCanvas>
+		<mx:Canvas label="MultiselectPicklist" width="400" height="100%" id="MultiselectPicklist">
+			<mx:Label text="Multiselect Picklist Field Type" horizontalCenter="1" top="4"/>
+			<mx:Label x="10" y="29" text="Values"/>
+			<mx:TextArea x="60" y="28" width="330" height="51" id="txtPicklistValues0"/>
+			<mx:CheckBox selected="{theField.picklist.sorted}" x="10" y="117" label="Sorted" id="chkSorted0"/>
+			<mx:CheckBox selected="{theField.picklist.useFirstValueAsDefault}" x="76" y="117" label="Use first value as default value" id="chkUseFirstValueAsDefault0"/>
+			<mx:Label x="10" y="89" text="# Visible Lines"/>
+			<mx:TextInput text="{theField.visibleLines}" x="104" y="87" id="txtVisibleLines0"/>
+		</mx:Canvas>
+		<mx:Canvas id="Number" label="Number" width="400" height="100%">
+			<mx:Label x="10" y="37" text="Length"/>
+			<mx:TextInput text="{theField._length}" x="106" y="35" id="txtLength"/>
+			<mx:Label x="10" y="63" text="Decimal Places"/>
+			<mx:TextInput text="{theField.precision}" x="106" y="61" id="txtDecimalPlaces"/>
+			<mx:CheckBox selected="{theField.required}" x="91" y="117" label="Required" id="cbRequired"/>
+			<mx:CheckBox selected="{theField.unique}" x="10" y="117" label="Unique" id="cbUnique"/>
+			<mx:CheckBox selected="{theField.externalId}" x="183" y="117" label="External Id" id="cbExternalId1"/>
+			<mx:Label x="10" y="89" text="Default Value"/>
+			<mx:TextInput text="{theField.defaultValue}" x="106" y="87" id="txtDefaultValue"/>
+			<mx:Label text="Number Field Type" horizontalCenter="1" top="4"/>
+		</mx:Canvas>
+		<mx:Canvas label="Text" width="400" height="100%" id="Text">
+			<mx:Label x="10" y="34" text="Length"/>
+			<mx:TextInput text="{theField._length}" x="106" y="32" id="txtLength0"/>
+			<mx:CheckBox selected="{theField.required}" x="106" y="87" label="Required" id="cbRequired0"/>
+			<mx:CheckBox selected="{theField.unique}" x="10" y="62" label="Unique" id="cbUnique0"/>
+			<mx:TextInput text="{theField.defaultValue}" x="106" y="113" id="txtDefaultValue0"/>
+			<mx:Label x="10" y="117" text="Default Value"/>
+			<mx:CheckBox selected="{theField.caseSensitive}" x="106" y="62" label="Case Sensitive" id="cbCaseSensitive" enabled="{cbUnique0.selected}"/>
+			<mx:CheckBox selected="{theField.externalId}" x="10" y="87" label="External Id" id="cbExternalId0"/>
+			<mx:Label text="Text Field Type" horizontalCenter="1" top="4"/>
+		</mx:Canvas>
+		<mx:Canvas label="Currency" width="400" height="100%" id="Currency">
+			<mx:Label x="10" y="37" text="Length"/>
+			<mx:TextInput text="{theField._length}" x="106" y="35" id="txtLength1"/>
+			<mx:Label x="10" y="63" text="Decimal Places"/>
+			<mx:TextInput text="{theField.precision}" x="106" y="61" id="txtDecimalPlaces0"/>
+			<mx:CheckBox selected="{theField.required}" x="10" y="117" label="Required" id="cbRequired1"/>
+			<mx:Label x="10" y="89" text="Default Value"/>
+			<mx:TextInput text="{theField.defaultValue}" x="106" y="87" id="txtDefaultValue1"/>
+			<mx:Label text="Currency Field Type" horizontalCenter="1" top="4"/>
+		</mx:Canvas>
+		<mx:Canvas label="Date" width="400" height="100%" id="Date">
+			<mx:CheckBox selected="{theField.required}" x="10" y="64" label="Required" id="cbRequired2"/>
+			<mx:Label text="Date Field Type" horizontalCenter="1" top="4"/>
+			<mx:Label x="10" y="36" text="Default Value"/>
+			<mx:TextInput text="{theField.defaultValue}" x="106" y="34" id="txtDefaultValue2"/>
+		</mx:Canvas>
+		<mx:Canvas label="DateTime" width="400" height="100%" id="DateTime">
+			<mx:CheckBox selected="{theField.required}" x="10" y="63" label="Required" id="cbRequired3"/>
+			<mx:Label x="10" y="35" text="Default Value"/>
+			<mx:TextInput text="{theField.defaultValue}" x="106" y="33" id="txtDefaultValue3"/>
+			<mx:Label text="DateTime Field Type" horizontalCenter="1" top="4"/>
+		</mx:Canvas>
+		<mx:Canvas label="Email" width="400" height="100%" id="Email">
+			<mx:CheckBox selected="{theField.required}" x="106" y="36" label="Required" id="cbRequired4"/>
+			<mx:CheckBox selected="{theField.unique}" x="10" y="36" label="Unique" id="cbUnique1"/>
+			<mx:TextInput text="{theField.defaultValue}" x="106" y="87" id="txtDefaultValue4"/>
+			<mx:Label x="10" y="91" text="Default Value"/>
+			<mx:CheckBox selected="{theField.externalId}" x="10" y="61" label="External Id" id="cbExternalId2"/>
+			<mx:Label text="Email Field Type" horizontalCenter="1" top="4"/>
+		</mx:Canvas>
+		<mx:Canvas label="Percent" width="400" height="100%" id="Percent">
+			<mx:Label x="10" y="37" text="Length"/>
+			<mx:TextInput text="{theField._length}" x="106" y="35" id="txtLength2"/>
+			<mx:Label x="10" y="63" text="Decimal Places"/>
+			<mx:TextInput text="{theField.precision}" x="106" y="61" id="txtDecimalPlaces1"/>
+			<mx:CheckBox selected="{theField.required}" x="10" y="117" label="Required" id="cbRequired5"/>
+			<mx:Label x="10" y="89" text="Default Value"/>
+			<mx:TextInput text="{theField.defaultValue}" x="106" y="87" id="txtDefaultValue5"/>
+			<mx:Label text="Percent Field Type" horizontalCenter="1" top="4"/>
+		</mx:Canvas>
+	</mx:ViewStack>
+	</mx:VDividedBox>
+	
+</mx:Canvas>

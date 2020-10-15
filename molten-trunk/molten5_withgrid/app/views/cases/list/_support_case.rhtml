@@ -1,0 +1,25 @@
+<tr valign="top" class="<%= cycle('shaded','') %> case_line">
+	<td class="case_number"><%= support_case.stripped_case_number %></td>
+	<% if ['list_beta', 'report'].include?(controller.action_name) or @beta == true %>
+	<td><%= support_case.status %></td>
+	<% end %>
+	<td class="subject">
+		<%= link_to truncate((params[:term] ? highlight(support_case.subject,params[:term]) : support_case.subject),AppConstants::CASE_SUBJECT_LENGTH), :controller => 'cases', :action => 'show', :id => support_case %>
+	</td>
+	<%= hidden_field_tag 'f_weekly_notes__c', '' %>
+	<%= hidden_field_tag 'f_weekly_case_number', '' %>
+	<% @cols.each do |col| %>
+	<td>
+		<% if (col[:col] == 'weekly_notes__c') and (['list_beta', 'report'].include?(controller.action_name) or @beta == true) %>
+                  <% if support_case.weekly_notes__c.nil? or (support_case.weekly_notes__c.length == 0) %>
+                    <%= link_to_function "(Click here to enter a new note...)", "toggleNotesOverlay('/cases/edit_weekly_notes/" + support_case.id.to_s + "')", :id => 'weekly_notes_link_' + support_case.id.to_s %>
+                  <% else %>
+                    <%= link_to_function support_case.weekly_notes__c.gsub(10.chr,'<br/>'), "toggleNotesOverlay('/cases/edit_weekly_notes/" + support_case.id.to_s + "')", :id => 'weekly_notes_link_' + support_case.id.to_s %>
+                  <% end %>
+		<% else %>
+		  <%= eval "support_case.#{col[:meth]}" %>
+		<% end %>
+	</td>
+	<% end %>
+	
+</tr>

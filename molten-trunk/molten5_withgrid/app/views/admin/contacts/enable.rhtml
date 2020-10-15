@@ -1,0 +1,11 @@
+<h1><%= @title= "#{@contact.name} has been enabled." %></h1>
+
+<% unless @contact.sfssl %>
+It appears the Self-Service user for this contact has not been enabled. 
+
+<p>
+	<%= link_to_salesforce "Enable the Self-Service user through Salesforce", @contact %>.
+</p>
+<% end %>
+
+<%= link_to 'Back', params[:from] %>

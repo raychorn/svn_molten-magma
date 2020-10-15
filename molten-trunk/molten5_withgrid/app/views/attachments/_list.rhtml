@@ -1,0 +1,14 @@
+<h2 class="gray buried_header">
+	<span>
+		  <% unless controller.controller_name == 'home' or attachable.is_a?(Sfsolution) %>
+		  <%= link_to_toggle_attach_file image_tag('buttons/attach_file.gif', 
+												   :alt => "Attach File", :width => 121, 
+												   :height => 20) %>
+		  <% end %>
+	</span>
+	<%= pluralize attachable.attachments.size, "Attachment" %>
+</h2>
+<%= render(:partial => 'attachments/new', :locals => {:attachable => attachable}) unless attachable.is_a?(Sfsolution) %>
+<table id="attachments">
+	<%= render :partial => 'attachments/attachment', :collection => attachable.attachments %>
+</table>

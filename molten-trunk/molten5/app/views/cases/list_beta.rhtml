@@ -1,0 +1,223 @@
+<%= render(:partial => 'cases/list/account_filter') if account_filter_viewable? %>
+<%= render(:partial => 'cases/list/weekly_notes') if account_filter_viewable? %>
+
+<h1 class="small_margin">
+	<span id="subscribe_container" title="Click to subscribe / unsubscribe to the case watcher for your account cases.">
+		<%= link_to_subscribe_to_cases %>
+		<div style="display:none" id='indicator'>
+			<%= image_tag('indicator_arrows_circle.gif', :style => "margin-left:42px;margin-right:42px;padding-top:5px") %>
+		</div>
+	</span>
+	<%= link_to image_tag('buttons/export.gif', :alt => "Export Cases to Excel", :align => 'center'),
+							:action => 'export_beta', :report_id => params[:id], :all => params[:all], :sort => params[:sort], :order => params[:order] %>
+	<%= link_to image_tag('buttons/new_case.gif', :alt => "New Case", :width => 81, :height => 22, :align => 'center'),
+				:action => 'new' %>
+    <%= link_to_function image_tag('buttons/classic_view.gif', :id => "classic_view_button", :alt => "Classic View"), "switch_to_classic_view();", :id => 'classic_view_link' %>
+	<% if @case_report %>
+    <%= link_to_function image_tag('buttons/save_report.gif', :id => "save_report_button", :alt => "Save Report"), "toggleSaveReportOverlay();", :id => 'save_report_link' %>
+	<% else %>
+    <%= link_to_function image_tag('buttons/save_report_as.gif', :id => "save_report_button", :alt => "Save Report As"), "toggleSaveReportOverlay();", :id => 'save_report_link' %>
+	<% end %>
+	<% if params[:all] == 'true' %>
+		<%= @title = "Viewing #{(@case_report and @case_report.name) || "All Support Cases"} at #{truncate current_contact.company.name, 20}" %> 
+		<div class="small" style="font-size:16px">
+		(<%= link_to "View Just My Cases", :all => 'false' %>)
+		(<%= link_to 'Modify Columns Display', :action => 'modify_column_display', :case_report_id => @case_report, :from => request.request_uri.gsub(/columns/,'') %>)
+		</div>
+	<% else %>
+		<%= @title = "Viewing #{(@case_report and @case_report.name) || "My Support Cases"}" %> 
+			<div class="small" style="font-size:16px">
+			<% if current_contact.privilege?(AppConstants::PRIVILEGE[:super_user]) %>
+			(<%= link_to "View All Cases at #{current_contact.company.name}", :all => true %>)
+			<% end %>
+			(<%= link_to 'Modify Columns Display', :action => 'modify_column_display', :case_report_id => @case_report, :from => request.request_uri.gsub(/columns/,'')
+       %>)
+			</div>
+	<% end %>
+
+</h1>
+<br/>
+<%= render :partial => 'search_box' %>
+
+<%= render :partial => 'save_report_as'%>
+
+<%= render :partial => 'cases/list/status_filter'%>
+
+
+<table class="listing">
+	<tr>
+		<th><%= link_to_sort 'Case #', 'case_number' %></th>
+		<th id="status_col">
+			<%= link_to_sort 'Status', 'status' %>
+			<%= link_to_function '[filters]', "toggleStatusOverlay();", :id => 'status_link' %>
+		</th>
+		<th><%= link_to_sort 'Subject', 'subject' %></th>
+		<% @cols.each do |col| %>
+		<th>
+		  <%= link_to_sort col[:desc], col[:sort] %>
+		  <% if col[:desc] == 'Account' and account_filter_viewable? %>
+                    <br/>
+                    <%= link_to_function '[filters]', "toggleAccountOverlay();", :id => 'account_link' %>
+		  <% end %>
+		</th>
+		<% end %>
+	</tr>
+	<%= render :partial => 'cases/list/support_case', :collection => @cases %>
+</table>
+
+<!-- status & account filters -->
+<%= render :partial => 'shared/overlay'%>
+<script type="text/javascript" charset="utf-8">
+	function get_case_number() {
+		try {
+			return $('f_weekly_case_number').value;
+		} catch (e) { }
+		return '';
+	}
+	
+	function set_case_weekly_note(str) {
+		case_number = parseInt($('f_weekly_case_number').value);
+		statusLink = $('weekly_notes_link_' + case_number);
+                str = (((str == null) || (str == '')) ? '(Click here to enter a new note...)' : str);
+		statusLink.innerHTML = str;
+	}
+	
+	var notesOverlay = new YAHOO.widget.Overlay("weekly_notes", {visible:false});  
+	notesOverlay.render();
+	function toggleNotesOverlay(case_number_or_url) {
+		t_weekly_notes = $('weekly_notes')
+		if (case_number_or_url.indexOf('/') > -1) {
+			toks = case_number_or_url.split('/');
+			case_number = toks[toks.length-1];
+			statusLink = $('weekly_notes_link_' + case_number);
+			if (t_weekly_notes.style["visibility"] != 'visible') {
+				fr = $('Molten2');
+	            fr.src = case_number_or_url;
+				offset = statusLink.cumulativeOffset();
+				_vwidth = getViewportWidth();
+				t_weekly_notes.width = _vwidth - 100;
+				fr.width = t_weekly_notes.width;
+				_w = t_weekly_notes.getDimensions();
+				_wwidth = parseInt(_w.width);
+				_left = parseInt(offset.left)-(_wwidth/2);
+				if (_left+_wwidth > _vwidth) {
+					_left = _left - ((_left+_wwidth) - _vwidth) - 50;
+				}
+				t_weekly_notes.style.display = '';
+				notesOverlay.cfg.setProperty('xy',[_left,offset.top + statusLink.getHeight()+3]);
+				notesOverlay.show();
+				statusLink.addClassName('status_shown');
+			}
+			else {
+				notesOverlay.hide();
+				statusLink.removeClassName('status_shown');
+				t_weekly_notes.style.display = 'none';
+			}
+		} else {
+			case_number = (case_number == null) ? $('f_weekly_case_number').value : case_number;
+			statusLink = $('weekly_notes_link_' + case_number);
+			if (t_weekly_notes.style["visibility"] != 'visible') {
+				fr = $('Molten2');
+				if ( (fr.src == null) || (fr.src == '') ) {
+	                            fr.src = '/flex/Molten2.html?x=' + getUUID$();
+				} else {
+	                            fr.src += '_' + getUUID$();
+	                        }
+	                        fr.src += '&y=' + case_number;
+				$('f_weekly_case_number').value = case_number;
+				offset = statusLink.cumulativeOffset();
+				_vwidth = getViewportWidth();
+				t_weekly_notes.width = _vwidth - 100;
+				fr.width = t_weekly_notes.width;
+				_w = t_weekly_notes.getDimensions();
+				_wwidth = parseInt(_w.width);
+				_left = parseInt(offset.left)-(_wwidth/2);
+				if (_left+_wwidth > _vwidth) {
+					_left = _left - ((_left+_wwidth) - _vwidth) - 50;
+				}
+				t_weekly_notes.style.display = '';
+				notesOverlay.cfg.setProperty('xy',[_left,offset.top + statusLink.getHeight()+3]);
+				notesOverlay.show();
+				statusLink.addClassName('status_shown');
+			}
+			else {
+				notesOverlay.hide();
+				statusLink.removeClassName('status_shown');
+				t_weekly_notes.style.display = 'none';
+			}
+		}
+		return false;
+	}
+	var statusOverlay = new YAHOO.widget.Overlay("status_filter", {visible:false});  
+	statusOverlay.render();
+	function toggleStatusOverlay() {
+		if ($('status_filter').style["visibility"] != 'visible') {
+			statusLink = $('status_link');
+			offset = statusLink.cumulativeOffset();
+			$('status_filter').style.display = '';
+			statusOverlay.cfg.setProperty('xy',[offset.left,offset.top + statusLink.getHeight()+3]);
+			statusOverlay.show();
+			$('status_link').addClassName('status_shown');
+		}
+		else {
+			statusOverlay.hide();
+			$('status_link').removeClassName('status_shown');
+			$('status_filter').style.display = 'none';
+		}
+		return false;
+	}
+	<% if account_filter_viewable? %>
+	var accountOverlay = new YAHOO.widget.Overlay("account_filter", {visible:false});
+	accountOverlay.render();
+	function toggleAccountOverlay() {
+		if ($('account_filter').style["visibility"] != 'visible') {
+			accountLink = $('account_link');
+			offset = accountLink.cumulativeOffset();
+			_w = $('account_filter').getDimensions();
+			_wwidth = parseInt(_w.width);
+			_left = parseInt(offset.left)-(_wwidth/2);
+			_vwidth = getViewportWidth();
+			if (_left+_wwidth > _vwidth) {
+				_left = _left - ((_left+_wwidth) - _vwidth) - 50;
+			}
+			$('account_filter').style.display = '';
+			accountOverlay.cfg.setProperty('xy',[_left,offset.top + accountLink.getHeight()+3]); 
+			accountOverlay.show();
+			$('account_link').addClassName('status_shown');
+		}
+		else {
+			accountOverlay.hide();
+			$('account_link').removeClassName('status_shown');
+			$('account_filter').style.display = 'none';
+		}
+		return false;
+	}
+	<% end %>
+	var saveReportOverlay = new YAHOO.widget.Overlay("save_report", {visible:false}); 
+	function toggleSaveReportOverlay() {
+  	saveReportOverlay.cfg.setProperty("context", ["save_report_button", "tl", "bl"]); 
+  	saveReportOverlay.render();
+		if ($('save_report').style["visibility"] != 'visible') {
+			saveReportOverlay.show();
+			$('save_report_link').addClassName('save_report_shown');
+		}
+		else {
+			saveReportOverlay.hide();
+			$('save_report_link').removeClassName('save_report_shown');
+		}
+		return false;
+	}
+</script>
+
+<%= will_paginate(@cases) %>
+
+<% content_for "sidebar" do %>
+	<%= render :partial => 'sidebar' %>
+<% end %>
+
+<script language="JavaScript" type="text/javascript">
+	if (window.location.href.indexOf('?order=') > -1) {
+		setCookie('sort_state', window.location.href, '/');
+	}
+</script>
+

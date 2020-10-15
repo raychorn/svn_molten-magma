@@ -1,0 +1,93 @@
+<h1 class="small_margin">
+<%= @title = "#{@account.name} Subscribers" %> 
+</h1>
+
+<h2>
+	<% if @subscribers.any? %>
+		<%= pluralize @subscribers.size, 'user' %> currently subscribed to account "<%= @account.name %>".
+	<% else %>
+		No users currently subscribed to account "<%= @account.name %>".
+	<% end %>
+</h2>
+
+<% if @instruction_text  %>
+<h3>
+	<%= @instruction_text %>
+</h3>
+<% end %>
+
+<div>
+	Once you subscribe a contact to account "<%= @account.name %>", contact will receive email notification
+	for any change on any case linked to <%= @account.name %>. If you want to subscribe someone to a particular
+	case, go back and open the case you want to share and click the "Share this Case" button.
+</div>
+
+<br/>
+
+<% if @siblings.any? %>
+  <%= select_tag 'id', options_for_select(([[@account.name,@account.id], ['----- Child Accounts -----',' ']]+@siblings.map { |a| [a.name,a.id]}),(@selected_account || @account).id),
+ 	  :onchange => 'switch_account();' %>
+ <br/><br/>
+
+<script type="text/javascript" charset="utf-8">
+	function switch_account() {
+		if ($F('id') != ' ') {
+			location.href='<%= request.path %>'+'?from_account='+$F('id');
+		}
+		else {
+			return false
+		}
+	}
+</script>
+<% end %>
+
+<h2 class="gray">
+Contacts
+</h2>
+
+<%= form_tag :action => 'update_subscriptions_from_account', :id => @account %>
+
+<div class="update_subscriptions_button">
+	<%= submit_tag 'Update Subscriptions' %>
+</div>
+
+<table class="listing">
+	<tr>
+		<th>Name</th>
+		<th>Email</th>
+		<th>Subscribing?</th>
+	</tr>
+	<%= render :partial => 'contact', :collection => @contacts %>
+</table>
+
+<div class="update_subscriptions_button">
+	<%= submit_tag 'Update Subscriptions' %>
+</div>
+
+</form>
+
+<% content_for "sidebar" do %>
+	
+	<ul>
+		<li class="selected">Current Subscribers</li>
+		<% if @subscribers.empty? %>
+			<li>
+				There are no subscribers.
+			</li>
+		<% end %>
+		<% @subscribers.each do |c| %>
+		<li>
+			<%= c.name %>
+			<div class="small" style="font-weight:normal">
+				<%= c.company.name  %>
+			</div>
+		</li>
+		<% end %>
+		<li>
+			<%= link_to 'View my case subscriptions', 
+						:controller => 'contact',
+						:action => 'settings' %>
+		</li>
+	</ul>			
+
+<% end %>

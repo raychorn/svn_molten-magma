@@ -1,0 +1,24 @@
+<% if @company %>
+<tr class="<%= cycle('shaded','') %>">
+	<td><%= contact.name %></td>
+	<td><%= contact.title %></td>
+	<td><%= contact.phone %></td>
+	<td><%= mail_to(contact.email, truncate(contact.email,25) )%></td>
+	<td><%= clean_age(contact.portal_last_login_date__c, :utc => true)%></td>
+</tr>
+<% else %>
+<tr class="<%= cycle('shaded','') %>">
+	<td><%= contact.name %></td>
+	<td><%= contact.email %></td>
+	<td><%= contact.company.name if contact.company %></td>
+	<td><%= clean_age(contact.portal_last_login_date__c, :utc => true)%></td>
+	<td>
+		<% if contact.portal_privilege and current_contact.privilege?(AppConstants::PRIVILEGE[:support_admin]) %>
+		<%= link_to('Log In', {:action => 'authenticate', :id => contact}, 
+					:confirm => "You will be logged out and logged in as #{contact.email}. Continue?") %>
+		<% else %>
+		<%= link_to('Enable', {:action => 'enable', :id => contact, :from => request.request_uri }) %>
+		<% end %>
+	</td>
+</tr>
+<% end %>

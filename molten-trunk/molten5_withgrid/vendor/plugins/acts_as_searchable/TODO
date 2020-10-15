@@ -1,0 +1,3 @@
+Check to see why "add_to_index" isn't called on update.
+Extend Searcher to handle multiple classes.
+Extend AssociationProxy with search calls that invoke appropriate QueryFilters to restrict the resultset.

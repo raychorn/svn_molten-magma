@@ -1,0 +1,59 @@
+<% form_for :acount_filter, :url => url_for_filters, :html => {:onsubmit => "javascript: return submitAccount();",:method => 'get', :id => 'account_form'} do |f| %>
+  <%= hidden_field_tag 'order', params['order'] %>
+  <%= hidden_field_tag 'sort', params['sort'] %>
+<table id="account_filter" style="display: none;">
+	<% ([current_contact.company] + current_contact.company.children).each_slice(2) do |accounts| %>
+		<tr>
+			<% accounts.each do |a| %>
+			<td>
+				<%= check_box_tag 'accounts[]', a.id, case_report_account_array.include?(a) %>
+			</td>
+			<td>
+				<%= a.name %>
+			</td>
+			<% end %>
+		</tr>
+	<% end %>
+	<tr>
+		<td colspan=4>
+			<%= submit_tag 'Filter'%> 
+			(<%= link_to_function 'Select All', "selectAllAccounts()"%>)
+			(<%= link_to_function 'Select None', "selectNoneAccounts()"%>)
+			(<%= link_to_function 'Cancel', "toggleAccountOverlay();"%>)
+		</td>
+	</tr>
+</table>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  var accountForm = $('account_form');
+  
+  // Used to submit the account form filter. 
+  // Ensures that at least 1 account is selected and 
+  // grabs the search term. 
+  function submitAccount() {
+    count = false;
+    for (i = 0; i < accountForm.length; i++) {
+	        if (accountForm[i].type == 'checkbox' && accountForm[i].checked == true) count = true;
+	  }
+	  if (count == false) {
+	    alert('Please select at least 1 account.');
+	    return false;
+	  }
+	  else {
+	    return true;
+	  }
+  }
+  
+  // Selects all case statuses
+  function selectAllAccounts(){
+    for (i = 0; i < accountForm.length; i++)
+	        if (accountForm[i].type == 'checkbox') accountForm[i].checked = true;
+  }
+  
+  // Deselects all case statuses
+  function selectNoneAccounts(){
+    for (i = 0; i < accountForm.length; i++)
+	        if (accountForm[i].type == 'checkbox') accountForm[i].checked = false;
+  }
+</script>

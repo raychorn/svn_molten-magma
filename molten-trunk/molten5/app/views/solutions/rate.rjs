@@ -1,0 +1,2 @@
+page.replace_html 'rating_container', :partial => 'solutions/show/rating_inner'
+page.hide 'vote_form'

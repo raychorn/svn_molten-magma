@@ -1,0 +1,4 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+highgroove:
+  id: 1
+  sf_id: abc

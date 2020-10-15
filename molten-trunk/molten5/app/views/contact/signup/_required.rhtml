@@ -1,0 +1,64 @@
+<h2 class="gray">All Fields Are Required</h2>
+
+<table class="form">
+        <tr>
+                <td><label for="salutation">Salutation</label><br/>
+                        <!-- <select  id="salutation" name="salutation">
+                                <option value="">--None--</option><option value="Mr.">Mr.</option>
+                                <option value="Ms.">Ms.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Dr.">Dr.</option>
+                                <option value="Prof.">Prof.</option>
+                        </select> -->
+                        <%= select 'lead', 'salutation',
+                                           [['--None--',''],'Mr.', 'Ms.', 'Mrs.', 'Dr.', 'Prof.'] %>
+                </td>
+        </tr>
+        <tr>
+                <td>
+                        <span class ="multi">
+                                <label for="first_name">First Name</label><br/>
+                        <!-- <input  maxlength="40" type="text" id="first_name" size="20" name="first_name"> -->
+                        <%= text_field 'lead', 'first_name', :maxlength => 40, :size => 20 %>
+                        </span>
+                        <span><label for="last_name">Last Name</label><br/>
+                                <!-- <input  maxlength="40" type="text" id="last_name" size="20" name="last_name"> -->
+                                <%= text_field 'lead', 'last_name', :maxlength => 40, :size => 20 %>
+                        </span>
+                </td>
+        </tr>
+        <tr>
+                <td>
+                        <span class ="multi">
+                                <label for="company">Company</label><br/>
+                                <!-- <input  maxlength="80" type="text" id="company" size="20" name="company"> -->
+                                <%= text_field 'lead', 'company', :maxlength => 80, :size => 20 %>
+                        </span>
+                        <span>
+                                <label for="phone">Phone</label><br/>
+                                <!-- <input  maxlength="40" type="text" id="phone" size="20" name="phone"> -->
+                                <%= text_field 'lead', 'phone', :maxlength => 40, :size => 20 %>
+                        </span>
+                </td>
+        </tr>
+        <tr>
+                <td>
+                        <span class ="multi"><label for="email">Email</label><br/>
+                                <!-- <input  maxlength="80" type="text" id="email" size="20" name="email"> -->
+                                <%= text_field 'lead', 'email', :maxlength => 80, :size => 20 %>
+                        </span>
+                        <span>
+                                Please use corporate email accounts to register in MOLTEN.
+                                These accounts should be reflective of where you work.
+                                Private email accounts like gmail, yahoo etc. will not be accepted.
+                        </span>
+                </td>
+        </tr>
+        <tr>
+                <td><label for="country">Country</label><br/>
+                        <!-- <%= select_tag 'country', country_options_for_select(nil, ["United States"]) %> -->
+                        <%= country_select 'lead', 'country', ["United States"],
+                                                           :include_blank => true %>
+                </td>
+        </tr>
+</table>

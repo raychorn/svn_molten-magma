@@ -1,0 +1,5 @@
+<div class="article_container">
+	<h2 class="small_margin"><%= link_to truncate(article.title, AppConstants::ARTICLE_LIST_TITLE_LENGTH), :action => 'show', :id => article %></h2>
+	<div class="gray">Posted <%= format_time(ct(article.created_date)) %></div>
+	<%= truncate(article.body, AppConstants::ARTICLE_LIST_BODY_LENGTH) %>
+</div>

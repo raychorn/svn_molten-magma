@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document-metadata version="1.0" xmlns="http://breeze.macromedia.com/">
+	<document-info>
+		<title>BlastTalusMigration</title>
+		<summary></summary>
+		<author/>
+		<keywords/>
+		<thumbnail href="data/thumb/thumb_slide_000001.jpg"/><view-link href="/Viewer.swf?slide={position}"/>
+	</document-info>
+	<section type="slide" position="1" xmlns="">
+		<title>Blast to Talus Migration Guidelines </title>
+		<content>Blast to Talus Migration Guidelines </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000001.jpg"/></section>
+	<section type="slide" position="2" xmlns="">
+		<title>Agenda </title>
+		<content>Magma Confidential - 2 Blast/Talus Migration Agenda Volcano databases New commands Flow Reports Tips </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000002.jpg"/></section>
+	<section type="slide" position="3" xmlns="">
+		<title>Talus Volcano Compatibility </title>
+		<content>Magma Confidential - 3 Blast/Talus Migration Talus Volcano Compatibility Volcano databases are forward compatible from Blast Fusion to Talus When importing a Blast Fusion library volcano into Talus: SuperCells in the library portion of the volcano are removed HyperCells are generated in their place See following slide for example logfile Talus Volcano database cannot be ported back into Blast Fusion If it is necessary to backport a design implemented in Talus into Blast Fusion, you must use either An industry standard data format (DEF, Verilog, etc.)  A Blast Fusion command change file (if Talus is used for small changes) </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000003.jpg"/></section>
+	<section type="slide" position="4" xmlns="">
+		<title>Talus Volcano Import Example </title>
+		<content>Magma Confidential - 4 Blast/Talus Migration Talus Volcano Import Example MSG-10 While running 'import volcano library.volcano’ LAVA-333 This volcano erupted Fri Jul 20 15:53:51 2007 EST for user training (Training) (v19c1) LAVA-27 Reading library /tsmc65lp LCD-200 WARNING: Hyper model '/tsmc65lp/AND2I/AND2I_SUPER' is incorrect. LCD-200 WARNING: Hyper model '/tsmc65lp/AND2/AND2_SUPER' is incorrect. … LCD-200 WARNING: Hyper model '/tsmc65lp/XOR62_1/XOR62_1_SUPER' is incorrect. LCD-200 WARNING: Hyper model '/tsmc65lp/XOR62_2/XOR62_2_SUPER' is incorrect. LCD-201 WARNING: Incorrect hyper models encountered in library, please rerun 'run prepare hyper /tsmc65lp' MSG-10 While running 'run prepare hyper { /tsmc65lp }': … LC-187 Preparation of hypercells with strength-based timing model is completed. LC-332 run prepare hyper finished successfully, libraries are readonly now.  </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000004.jpg"/></section>
+	<section type="slide" position="5" xmlns="">
+		<title>Talus Commonly Used New Commands </title>
+		<content>Magma Confidential - 5 Blast/Talus Migration Talus Commonly Used New Commands The following table shows the Blast Fusion commands that were replaced by new Talus commands Standard flow replacements are taken care of in the Talus fix… commands If you are using them explicitly, you must make these changes  run optimize size run gate size check model run gate trim run prepare super Blast Fusion Command check design run optimize strength run prepare hyper New Talus Command </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000005.jpg"/></section>
+	<section type="slide" position="6" xmlns="">
+		<title>Talus Library Preparation </title>
+		<content>Magma Confidential - 6 Blast/Talus Migration Talus Library Preparation Talus uses a new cell abstract, HyperCells, not SuperCells Working with HyperCells is the same as using SuperCells, with the following exceptions: run prepare super command has been replaced by  run prepare hyper This command is called automatically by run prepare lib, so you might not need to make any script changes The run prepare hyper command is automatically called when you import a Blast Fusion library volcano into Talus If your script explicitly calls run prepare super, you need to replace it with run prepare hyper or the script halts and outputs an error </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000006.jpg"/></section>
+	<section type="slide" position="7" xmlns="">
+		<title>Talus Library Preparation (contd) </title>
+		<content>Magma Confidential - 7 Blast/Talus Migration Talus Library Preparation (contd) Library arc reports have a strength column instead of a gain column See following slide for an example In Talus, strength is the parameter that indicates a library cell's relative drive capabilities   The naming convention for the HyperCells added to each cell  entity is entity_HYPER SuperCells are entity_SUPER in Blast Fusion </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000007.jpg"/></section>
+	<section type="slide" position="8" xmlns="">
+		<title>Talus Library Arc Report </title>
+		<content>Magma Confidential - 8 Blast/Talus Migration Talus Library Arc Report /tsmc65lp/NAND2 (i0 -&gt; o) inverting   domain:MAGMA_NO_DOMAIN model         hide  typ load  strength  input cap  area  rise delay  fall delay  slew  max slew  leakage   vtclass ------------  ----  --------  --------  ---------  ----  ----------  ----------  ----  --------  --------  ------- LPH_NAND2X0                1    1.0000       0.53     2          60          89    30       600     2.8 p        1 LPH_NAND2X1                1    1.5271       0.74     2          58          85    28       600     3.3 p        1 LPH_NAND2X2                2    3.5079       1.18     2          58          73    24       600     4.7 p        1 LPH_NAND2X3                3    4.9122       1.91     3          58          77    25       600     8.0 p        1 LPH_NAND2X4                4    6.8466       2.36     3          59          75    24       600     9.4 p        1 LPH_NAND2X6                6   11.4941       3.09     4          62          76    24       600    14.3 p        1 LPH_NANDS2X8               8   15.4993       4.12     5          63          77    24       600    19.0 p        1 LPH_NAND2X8   DT           9   18.6349       0.97     5         181         241    20       600    24.3 p        1 ------------  ----  --------  --------  ---------  ----  ----------  ----------  ----  --------  --------  ------- NAND2_HYPER                8                                     60          79    26       600 /tsmc65lp/NAND2 (i0 -&gt; o) inverting model         hide  typ load  gain  input cap  area  rise delay  fall delay  slew  max slew  leakage   vtclass ------------  ----  --------  ----  ---------  ----  ----------  ----------  ----  --------  --------  ------- LPH_NAND2X0                1   103       0.53     2          60          89    30       600     2.8 p        1 LPH_NAND2X1                1   116       0.74     2          58          85    28       600     3.3 p        1 LPH_NAND2X2                2   167       1.18     2          58          73    24       600     4.7 p        1 LPH_NAND2X3                3   149       1.91     3          58          77    25       600     8.0 p        1 LPH_NAND2X4                4   163       2.36     3          59          75    24       600     9.4 p        1 LPH_NAND2X6                6   200       3.09     4          62          76    24       600    14.3 p        1 LPH_NANDS2X8               8   197       4.12     5          63          77    24       600    19.0 p        1 LPH_NAND2X8   D            9   895       0.97     5         181         241    20       600    24.3 p        1 ------------  ----  --------  ----  ---------  ----  ----------  ----------  ----  --------  --------  ------- NAND2_SUPER                8   148                           60          79    25       600 Talus Blast Fusion </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000008.jpg"/></section>
+	<section type="slide" position="9" xmlns="">
+		<title>Analyzing a Strength Based Report </title>
+		<content>Magma Confidential - 9 Blast/Talus Migration Analyzing a Strength Based Report fix time provides reliable handoff criteria for timing and area Strength report at fix-time-final (preplacement) Maximum strength means largest cells used Lower Pct of max strength means smaller # of failing end points 2.1% of maximum strength – good chance of QoR closure report strength distribution Success criterion: &lt;10% cells with maximum strength AND positive slack numbers   *  Cell Strength Distribution  * Strength           Count     Pct ---------------------------------- Minimum strength     15733   53.2% Low strength         12497   42.3% High strength          721    2.4% Maximum strength       627    2.1%  Worst negative slack = -31.0ps Total negative slack = -0.3ns Area = 0.529mm2 </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000009.jpg"/></section>
+	<section type="slide" position="10" xmlns="">
+		<title>Talus Flow Scripts </title>
+		<content>Magma Confidential - 10 Blast/Talus Migration Talus Flow Scripts Flow scripts require only minor modifications to run in Talus: Every instance of “SUPER” must be replaced with “HYPER” Typically commands like force plan clock and force hide run prepare super must be replaced with run prepare hyper There might be other modifications necessary if the flow is very complex or makes use of lower-level commands A run script translated in this manner does not necessarily produce optimal results in Talus More on this in the “Tips” section </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000010.jpg"/></section>
+	<section type="slide" position="11" xmlns="">
+		<title>Talus fix… Commands </title>
+		<content>Magma Confidential - 11 Blast/Talus Migration Talus fix… Commands Magma has optimized the Talus RTL-to-GDSII flow Goal:  Better out-of-the-box results for our customers Minimizes the work you have to do to get optimal results  Better QA with controlled tests; results more predictable and reliable Continually improve QoR on fix… commands How to qualify Talus Run the Talus fix… commands, as is, then compare to Blast Fusion results  You should find better results overall using out-of-the-box Talus  If you need to customize a Talus flow Use the snap system, outside the fix… commands  Contact your AE if you need to change a fix… command </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000011.jpg"/></section>
+	<section type="slide" position="12" xmlns="">
+		<title>Talus fix… Commands (contd) </title>
+		<content>Magma Confidential - 12 Blast/Talus Migration Talus fix… Commands (contd) AEs can assist customers in modifying their fix… commands with the following commands: Replace and remove commands in the fix… command  config snap replace Add commands to the fix… command  config snap output on -snap before | after AEs can create a custom encrypted fix… command </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000012.jpg"/></section>
+	<section type="slide" position="13" xmlns="">
+		<title>Talus Timing Reports </title>
+		<content>Magma Confidential - 13 Blast/Talus Migration Talus Timing Reports The timing reports in Talus have some minor differences: Before sizing, the timing reports shows HyperCells for most of the logic in the paths The GAIN path report column has been replaced by STRENGTH There is a new column for the adaptive buffering feature called ADAPTIVE_BUFFERS The following is an example of the data path section of a Talus timing report Data path pin name    model name       slack  slew  strength  adaptive buffers  edge ----------  ---------------  -----  ----  --------  ----------------  ---- #reg[12]/q  SDFFR_2_HYPER      -55    29     2.874             0.193  RISE #3_C2/i0_0  AOI21_2_HYPER      -55    29                              RISE #C2_3_C2/o  AOI21_2_HYPER      -55    52     1.764             0.000  FALL #_INV_C1/i  INV_2_HYPER        -55    52                              FALL #_INV_C1/o  INV_2_HYPER        -55    29    15.412             0.011  RISE #1_70/i0_0  AOI32_2_HYPER      -55    29                              RISE … </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000013.jpg"/></section>
+	<section type="slide" position="14" xmlns="">
+		<title>Talus Logfiles </title>
+		<content>Magma Confidential - 14 Blast/Talus Migration Talus Logfiles Talus  *  Cell Strength Distribution  * Strength           Count     Pct ---------------------------------- Minimum strength      8905   74.1% Low strength          2322   19.3% High strength          463    3.9% Maximum strength       333    2.8% Blast Fusion * Output Gain Distribution * Gain Range       Count     Pct ------------------------------  0.35...0.50       130    0.9%  0.50...1.00      3819   26.2% ------------------------------  1.00...2.00      3527   24.2%  2.00...4.00      3065   21.1%  4.00...8.00      2367   16.3%  8.00..10.00      1649   11.3%  The gain table from run gate trim has been replaced by a strength table from run optimize strength This table represents the percentage of the various cell strengths used in the design The following is an example log file showing this change. </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000014.jpg"/></section>
+	<section type="slide" position="15" xmlns="">
+		<title>Tip #1 for Migration to Talus </title>
+		<content>Magma Confidential - 15 Blast/Talus Migration Tip #1 for Migration to Talus Tuned Blast Fusion scripts do not necessarily produce the best results in Talus In some cases, a highly-tuned Blast Fusion flow ported directly into Talus produces results inferior to the default Talus flow This is not universal, but should be considered when migrating  </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000015.jpg"/></section>
+	<section type="slide" position="16" xmlns="">
+		<title>Tip #2 for Migration to Talus </title>
+		<content>Magma Confidential - 16 Blast/Talus Migration Tip #2 for Migration to Talus Custom Blast Fusion fix… scripts need to be re-evaluated in Talus Using a Blast Fusion fix… script in Talus is probably not wise Assuming the same fix… script customizations work the same in Talus as in Blast Fusion is not wise either It is best to verify this explicitly Talus fix… command changes should be done via the snap methodology (An application note fully describes this) </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000016.jpg"/></section>
+	<section type="slide" position="17" xmlns="">
+		<title>Tip #3 for Migration to Talus </title>
+		<content>Magma Confidential - 17 Blast/Talus Migration Tip #3 for Migration to Talus fix time results are less optimistic Since the HyperCell delay model is load-aware, the fix time results are less optimistic If you are over constraining fix time in Blast Fusion, check that the same methodology is valid in Talus </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000017.jpg"/></section>
+	<section type="slide" position="18" xmlns="">
+		<title>Tip #4 for Migration to Talus </title>
+		<content>Magma Confidential - 18 Blast/Talus Migration Tip #4 for Migration to Talus HyperCell and SuperCell timing are not directly comparable Since the HyperCell delay model is load-aware, the stage delays are different Adaptive buffering also adds stage delays to the Talus reports </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000018.jpg"/></section>
+	<section type="slide" position="19" xmlns="">
+		<title>Tip #5 for Migration to Talus </title>
+		<content>Magma Confidential - 19 Blast/Talus Migration Tip #5 for Migration to Talus CTS results are different in Talus We have seen significantly different insertion delay and skew in Talus Any CTS controls need to be re-verified in Talus, including Latency offsets and skew groups Skew targets Options and customizations for CTS flow (-overdrive) Do not be surprised by a significant reduction in skew buffers  </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000019.jpg"/></section>
+	<section type="slide" position="20" xmlns="">
+		<title>Summary </title>
+		<content>Magma Confidential - 20 Blast/Talus Migration Summary Volcano databases New commands Flow Reports Tips </content>
+		<related-content></related-content>
+		<thumbnail href="data/thumb/thumb_slide_000020.jpg"/></section>
+</document-metadata>

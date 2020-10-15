@@ -1,0 +1,17 @@
+<h2 class="gray buried_header"><%= title %></h2>
+<% left = categories.size / 2 %>
+<% total = categories.size %>
+<% if categories.any? %>
+<table width="100%">
+	<tr>
+		<td style="width:50%" valign="top">
+			<%= render :partial => 'solutions/list/category', 
+			:collection => categories[0..left] %>
+		</td>
+		<td valign="top">
+			<%= render :partial => 'solutions/list/category', 
+			:collection => categories[left+1..total] %>
+		</td>
+	</tr>
+</table>
+<% end %>

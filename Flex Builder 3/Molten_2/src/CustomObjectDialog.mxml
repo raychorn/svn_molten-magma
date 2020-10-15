@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="636" height="480" xmlns:objects="com.salesforce.objects.*" title="Metadata Manager" xmlns:ns1="*" xmlns:salesforce="http://www.salesforce.com" backgroundColor="#bdbdbd" backgroundAlpha="1.0" borderColor="#607F75" borderAlpha="1" color="#E6DF84">
+	<mx:Script>
+		<![CDATA[
+			import com.salesforce.results.Field;
+			import com.salesforce.results.DescribeSObjectResult;
+			import mx.events.ListEvent;
+			import mx.collections.ArrayCollection;
+			import com.salesforce.objects.LoginRequest;
+			import mx.events.EffectEvent;
+			import mx.effects.Parallel;
+			import mx.effects.Resize;
+			import mx.effects.AnimateProperty;
+			import com.salesforce.objects.SharingModel;
+			import mx.utils.StringUtil;
+			import com.salesforce.AsyncResponder;
+			import mx.core.Application;
+			import com.salesforce.objects.DeploymentStatus;
+			import mx.controls.Text;
+			import com.salesforce.objects.FieldType;
+			import mx.utils.ObjectUtil;
+			import mx.managers.PopUpManager;
+			import com.salesforce.objects.CustomObject;
+
+			private function handleLabelChange(event:Event):void {
+				var regex:RegExp = /(\W+)/g;
+				obj.fullName = txtLabel.text.replace(regex, "_");
+			}
+			private function handleLabelFocusOut(event:Event):void {
+				if (obj.pluralLabel == null || obj.pluralLabel.length == 0) {
+					obj.pluralLabel = txtLabel.text + "s";
+				}
+				if (obj.nameField.label == null || obj.nameField._length == 0) {
+					txtRecordName.text = txtLabel.text + " Name";
+				}
+			}
+			private function handleCancelClick(event:Event):void {
+				trace(ObjectUtil.toString(obj));
+				PopUpManager.removePopUp(this);	
+			}
+			private function toDeploymentStatus(val:Boolean):DeploymentStatus {
+				if (val == true) {
+					return DeploymentStatus.Deployed;
+				} else {
+					return DeploymentStatus.InDevelopment;
+				}
+			}
+			
+			private function toFieldType(val:String):FieldType {
+				return FieldType.fromValue(val);
+			}
+			
+			private function toFieldTypeIndex(ft:FieldType):int {
+				if (ft == FieldType.AutoNumber) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+			
+			private function handleCreateClick(event:Event):void {
+				trace(nameField.toString());
+				obj.nameField = nameField;
+				
+		  		//var obj:CustomObject = makeObject();
+		  		var fName:String = obj.fullName.substr(obj.fullName.length - 3);
+		  		if (fName != "__c") {
+		  			obj.fullName += "__c";
+		  		}
+		  		Application.application.apex.metaConnection.createObject([obj], new AsyncResponder(Application.application.showCreateResult, Application.application.genericFault));
+			}
+			
+			private function handleTypeChange(event:Event):void {
+				var selected:FieldType = cmbFieldType.selectedItem.data as FieldType;
+				nameField.type = selected;
+				if (selected == FieldType.AutoNumber) {
+					animateDown();
+				} else {
+					animateUp();
+				}
+			}
+			
+			private function animateDown():void {
+				var ap:AnimateProperty = new AnimateProperty(this);
+				ap.fromValue = this.height;
+				ap.toValue = this.height + 62;
+				ap.property = "height";
+				var p:Parallel = new Parallel();
+				p.addChild(ap);
+				p.duration = 300;
+				p.addEventListener(EffectEvent.EFFECT_END, function(event:Event):void {
+					txtStartingNumber.visible = txtDisplayFormat.visible = label1.visible = label2.visible = true;
+				});
+				p.play();
+			}
+			
+			private function animateUp():void {
+				var ap:AnimateProperty = new AnimateProperty(this);
+				ap.fromValue = this.height;
+				ap.toValue = this.height - 62;
+				ap.property = "height";
+				txtStartingNumber.visible = txtDisplayFormat.visible = label1.visible = label2.visible = false;
+				var p:Parallel = new Parallel();
+				p.addChild(ap);
+				p.duration = 300;
+				p.play();
+			}
+			
+			public static function getFieldType(field:Field):FieldType {
+				var ret:FieldType;
+				switch (field.type) {
+					case "string":
+						ret = FieldType.Text;
+						break;
+					case "picklist":
+						ret = FieldType.Picklist;
+						break;
+					case "multipicklist":
+						ret = FieldType.MultiselectPicklist;
+						break;
+					case "combobox":
+						ret = FieldType.Text;
+						break;
+					case "reference":
+						ret = FieldType.Lookup;
+						break;
+					case "boolean":
+						ret = FieldType.Checkbox;
+						break;
+					case "currency":
+						ret = FieldType.Currency;
+						break;
+					case "textarea":
+						if (field.length > 255) {
+							ret = FieldType.LongTextArea;
+						} else {
+							ret = FieldType.TextArea;
+						}
+						break;
+					case "int":
+						ret = FieldType.Number;
+						break;
+					case "double":
+						ret = FieldType.Number;
+						break;
+					case "percent":
+						ret = FieldType.Percent;
+						break;
+					case "phone":
+						ret = FieldType.Phone;
+						break;
+					case "id":
+						ret = FieldType.Text;
+						break;
+					case "date":
+						ret = FieldType.Date;
+						break;
+					case "datetime":
+						ret = FieldType.DateTime;
+						break;
+					case "url":
+						ret = FieldType.Url;
+						break;
+					case "email":
+						ret = FieldType.Email;
+						break;
+				}
+				return ret;
+			}
+		]]> 
+	</mx:Script>
+	<objects:CustomField id="nameField">
+		<objects:label>{txtRecordName.text}</objects:label>
+		<objects:type>{FieldType.Text}</objects:type>
+		<objects:displayFormat>{txtDisplayFormat.text}</objects:displayFormat>
+		<objects:startingNumber>{txtStartingNumber.text as int}</objects:startingNumber>
+		<objects:fullName>{""}</objects:fullName>
+	</objects:CustomField>
+	<objects:CustomObject id="obj">
+		<objects:description>{txtDescription.text}</objects:description>
+		<objects:label>{txtLabel.text}</objects:label>
+		<objects:fullName>{txtName.text}</objects:fullName>
+		<objects:pluralLabel>{txtPLabel.text}</objects:pluralLabel>
+		<objects:nameField>{nameField}</objects:nameField>
+		<objects:deploymentStatus>{toDeploymentStatus(rbDeployed.selected)}</objects:deploymentStatus>
+		<objects:sharingModel>{SharingModel.ReadWrite}</objects:sharingModel>
+		<objects:enableActivities>{cbAllowActivities.selected}</objects:enableActivities>
+		<objects:enableHistory>{cbTrackFieldHistory.selected}</objects:enableHistory>
+		<objects:enableReports>{cbAllowReports.selected}</objects:enableReports>
+	</objects:CustomObject>
+	<mx:TabNavigator id="tn" width="100%" height="100%" color="#373737">
+		
+	<mx:Canvas width="100%" height="100%" id="canvas1" label="New Custom Object">
+		
+		<mx:Label x="10" y="10" text="Label"/>
+		<mx:Label x="10" y="36" text="Plural Label"/>
+		<mx:Label x="10" y="62" text="Name"/>
+		<mx:TextInput id="txtLabel" text="{obj.label}" focusOut="handleLabelFocusOut(event);" change="handleLabelChange(event)"  x="88" y="8"/>
+		<mx:TextInput x="88" y="34" id="txtPLabel" text="{obj.pluralLabel}" />
+		<mx:TextInput x="88" y="60" id="txtName" text="{obj.fullName}" />
+		<mx:Label x="12" y="106" text="Descriiption" />
+		<mx:TextArea x="89" y="105" width="232" id="txtDescription" text="{obj.description}" height="64"/>
+		<mx:Label x="12" y="181" text="Record Name"/>
+		<mx:TextInput x="89" y="179" id="txtRecordName" text="{obj.nameField.label}"/>
+		<mx:Label x="12" y="207" text="Data Type"/>
+		<mx:ComboBox change="handleTypeChange(event)" x="89" y="207" id="cmbFieldType" selectedIndex="{toFieldTypeIndex(obj.nameField.type)}">
+			<mx:ArrayCollection>
+				<mx:Object label="Text" data="{FieldType.Text}"/>
+				<mx:Object label="AutoNumber" data="{FieldType.AutoNumber}" />
+			</mx:ArrayCollection>
+		</mx:ComboBox>
+		<mx:RadioButton x="10" label="In Development" groupName="deployment" bottom="120"/>
+		<mx:RadioButton x="10" label="Deployed" groupName="deployment" selected="true" id="rbDeployed" bottom="94"/>
+		<mx:Canvas x="10" width="372" height="80" cornerRadius="6" borderStyle="solid" borderColor="#303030" bottom="6">
+			<mx:CheckBox x="10" y="10" label="Allow Reports" id="cbAllowReports" selected="{obj.enableReports}"/>
+			<mx:CheckBox x="10" y="36" label="Allow Activities" id="cbAllowActivities" selected="{obj.enableActivities}"/>
+			<mx:CheckBox x="140" y="10" label="Track Field History" id="cbTrackFieldHistory" selected="{obj.enableHistory}"/>
+		</mx:Canvas>
+		<mx:Label id="label1" x="39" y="244" text="Display Format" visible="false"/>
+		<mx:Label id="label2" x="39" y="270" text="Starting Number" visible="false"/>
+		<mx:TextInput x="135" y="242" id="txtDisplayFormat" text="{obj.nameField.displayFormat}" visible="false"/>
+		<mx:TextInput x="135" y="268" id="txtStartingNumber" text="{obj.nameField.startingNumber}" visible="false"/>
+	
+	</mx:Canvas>
+	<mx:Canvas label="Existing Objects" width="100%" height="100%">
+		<ns1:CustomFieldGrid id="fieldGrid" x="0" y="0" width="100%" height="100%">
+		</ns1:CustomFieldGrid>
+	</mx:Canvas>
+	</mx:TabNavigator>
+	<mx:ControlBar horizontalAlign="right">
+		<mx:Button label="Cancel" click="handleCancelClick(event);" color="#2a2a2a"/>
+		<mx:Button label="Create" click="handleCreateClick(event)" color="#3d3d3d"/>
+	</mx:ControlBar>
+</mx:Panel>

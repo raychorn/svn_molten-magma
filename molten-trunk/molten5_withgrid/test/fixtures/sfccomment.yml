@@ -1,0 +1,8 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+widstuck_comment:
+  id: 1
+  sf_id: 1
+  parent_id: widstuck
+another:
+  id: 2
+  sf_id: 2

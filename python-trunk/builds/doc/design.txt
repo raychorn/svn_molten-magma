@@ -1,0 +1,135 @@
+We will have 2 scripts to deal with upload:
+
+- "intraware_manage.py" will select the files from SFDC, manage the OS issues and prepare the stage for upload
+- "intraware_upload.py" will only will upload the file to Intraware
+
+Scripts will need a large, common disk space for manipulation; that space needs to be allocated on NFS mount and mounted on ebb, flow and granite.
+
+- scripts will use new field in SFDC called "upload_status" in build record to report status of build in terms of upload to Intraware.
+
+- "upload_status" will be a pull down with the following possible values:
+
+<empty> - no attempts on upload have been made; action: prepare the build for upload
+<error> - error occured in previous try; action: the same as <empty>
+<In Process> - build prepared for upload; action: upload the file
+<Done> - build uploaded; action: no action
+<Do Not release> - build on hold; action: no action
+
+
+- scripts will use 3 additional fields in build record (meta data): file size (Payload_Size_cc), MD5 (MD5_Digest__C), SHA1 (SHA1_Digest__c)
+- scripts will use one more additional field: OS file build date
+
+Synopsis of "intraware_manage.py"
+=================================
+
+code will be written in python
+code can run on any server that has file space mounted: flow, ebb, granite
+code will be triggered by cron deamon, possibly every 15 minutes
+
+
+Once it starts, software will:
+
+- issue a filelock so that other process can not run
+- connect (login) to SFDC
+- retreive all build records that have:
+
+	the field "build_type__c" has value of "Patch Build"
+
+	and
+
+	the field "Build_Path__c" is not empty
+
+	and
+
+	the field "Magma_Intraware_Upload__c" has value of "In Process", "" (empty) or "error"
+
+
+- read all meta data for selected records
+- for each build record that is in "In process":
+
+	- check if payload exists in "upload" location; if yes continue to next payload (that payload is not uploaded yet)
+	- if not: assume payload uploaded
+	- connect to Intraware, check if payload is there: compare payload size in Intraware with SFDC. 
+	- If payload is not in Intraware or size is not OK, exit (something went wrong, report the error)
+	- (assume payload processed sucesfully)
+	- change the satus in SFDC to "Completed"
+	- to trigger Intraware association, update the field “Intraware_Upload” in SFDC and set it to “Ready for Intraware File Association”. Setting this field to “Ready for Intraware File Association”, will trigger intraware to make the association between the payload that we uploaded and the build record metadata. 
+	- write all of the above into transaction log
+
+	- NOTE: Intraware, upon completion of the file association, will then mark the field to “File Associated”.
+
+
+- for each build record that is in "empty" status or "error" status:
+
+	- locate the build on file system (files will be stored on internal network)
+	- if build not found update status to "Error", "Build Not Found", so it will be picked in next scan
+	- tar the file directory, gzip in the temporary directory
+	- sign the file using Magma certicicate, create signature file <file>.asc
+	- calculate: file size, MD5, SHA1
+	- create additional files: <file>.MD5 <file>.SHA1, <file>.filesize
+	- create mirrored directory infrastructure in Intraware, is it doesn't exist already
+	- upload *.MD5, *.SHA1, *.filesize, *.asc to Intraware to the same directory as on our system
+	- update SFDC build record field "build_creation_date"
+	- update meta data in SFDC: file size, MD5, SHA1
+	- change status in SFDC to "In Process"; then (on success)
+	- move the file from temporary location to upload directory --> file becomes "payload"
+	- write all of the above into transaction log
+
+
+- release file lock
+- logout from SFDC
+- exit
+
+
+
+Synopsis of "intraware_upload.py"
+=================================
+
+code will be written in python
+code can run on any server that has file space mounted: flow, ebb, granite
+code will be triggered by cron deamon, possibly every 30 minutes
+multiple instances of the the script can be running at the same time
+
+
+- check if there are any files for upload; if not exit, if yes continue
+- for each file check the lock; if exists skip to next file
+- for each file that is not locked:
+
+	- issue a filelock so that other process can not copy the same file
+	- copy each file to Intraware (SFTP)
+	- on success of copy: delete temporary file
+	- release file lock
+	- write all of the above into transaction log
+
+- exit
+
+
+Questions:
+
+- what is the filter to find list of builds in SFDC ready for upload to Intraware?
+
+
+
+Necessary software
+==================
+
+SFTP Python library of some sort. Decided to use "paramiko".
+
+
+Fow windows:
+
+	downloaded pycrypto-2.0.win32-py2.3.exe 
+	from http://twisted.sourceforge.net/contrib/ and installed on my machine
+
+
+	downlaode paramiko 1.5.3
+	from http://www.lag.net/paramiko/, 
+
+For Unix:
+	login as zope on ebb
+	cd /local/python/active
+	wget http://www.lag.net/paramiko/download/paramiko-1.5.3.zip
+	cd paramiko-1.5.3
+	easy_install ./
+
+	

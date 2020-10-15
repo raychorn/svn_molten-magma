@@ -1,0 +1,11 @@
+chip:
+  id: 1
+  sf_id: chip_ssl
+derek:
+  id: 2
+  sf_id: xyz_ssl
+derek_haynes:
+  id: 3
+  contact_id: 0033000000Ka6moAAB # derek_haynes
+  sf_id: derek_haynes_ssl
+  username: derek.haynes@highgroove.com

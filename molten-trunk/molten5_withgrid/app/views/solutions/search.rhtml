@@ -1,0 +1,34 @@
+<h1><%= @title = "Search Solutions"%></h1>
+
+<%= render :partial => 'search' %>
+
+<% if @solutions_specific and @solutions_specific.any? and (!params[:account_specific]  or params[:account_specific] == '1') %>
+<h2 class="gray" style="margin:0px auto">
+	Account-Specific Solutions <%= @solutions_specific.offset + 1 %>-<%= @solutions_specific.last_item %> of
+	<%= @solutions_specific.total_entries %> for "<%= @term %>"
+</h2>
+
+<%= render :partial => 'solutions/search/solution', :collection => @solutions_specific %>
+
+<%= will_paginate @solutions_specific %>
+
+<% end %>
+
+<% if params[:account_specific] == '0' or !params[:account_specific] %>
+
+<h2 class="gray" style="margin:0px auto">
+	Solutions <%= @solutions.offset + 1 %>-<%= @solutions.last_item %> of
+	<%= @solutions.total_entries %> for "<%= @term %>"
+</h2>
+
+<%= pages :params => {:account_specific => '0'} %>
+
+<%= render :partial => 'solutions/search/solution', :collection => @solutions %>
+
+<%= will_paginate(@solutions) %>
+
+<% end %>
+
+<% content_for "sidebar" do %>
+<%= render :partial => 'sidebar' %>
+<% end %>

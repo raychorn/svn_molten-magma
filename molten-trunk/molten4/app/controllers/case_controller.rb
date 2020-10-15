@@ -1,0 +1,5 @@
+class CaseController < ApplicationController
+
+   
+  
+end

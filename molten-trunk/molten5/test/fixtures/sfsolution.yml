@@ -1,0 +1,16 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+make_a_pizza:
+  id: 1
+  sf_id: make_pizza
+  last_modified_date: <%= 2.days.ago.to_s(:db) %>
+  product_name__c: Brick Oven
+  solution_name: Make a pizza
+  status: Published
+wash_dishes:
+  id: 2
+  sf_id: wash_dishes
+  last_modified_date: <%= 1.day.ago.to_s(:db) %>
+fold_clothes:
+  id: 3
+  sf_id: fold_clothes
+  last_modified_date: <%= 1.day.ago.to_s(:db) %>

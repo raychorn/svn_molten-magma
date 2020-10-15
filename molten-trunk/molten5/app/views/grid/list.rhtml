@@ -1,0 +1,31 @@
+<h1><strong>Flexigrid</strong> on Rails</h1>
+<table id="flex1" width="500" bgcolor="silver"></table>
+<script type="text/javascript">
+  $("#flex1").flexigrid
+    (
+    {
+    url: '/grid/grid_data',
+    dataType: 'json',
+    colModel : [
+      {display: 'ISO', name : 'iso', width : 40, sortable : true, align: 'left'},
+      {display: 'Name', name : 'name', width : 180, sortable : true, align: 'left'},
+      {display: 'Printable Name', name : 'printable_name', width : 120, sortable : true, align: 'left'},
+      {display: 'ISO3', name : 'iso3', width : 130, sortable : true, align: 'left', hide: true},
+      {display: 'Numcode', name : 'numcode', width : 120, sortable : true, align: 'left'},
+    ],
+    searchitems : [
+      {display: 'Name', name : 'name'},
+      {display: 'ISO', name : 'iso'}
+    ],
+    sortname: "iso",
+    sortorder: "desc",
+    usepager: true,
+    title: 'Countries',
+    useRp: true,
+    rp: 15,
+    showTableToggleBtn: true,
+    width: 500,
+    height: 200
+    }
+  );
+</script>

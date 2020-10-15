@@ -1,0 +1,23 @@
+<h2 class="gray buried_header">Change Your Password</h2>
+
+<%= form_tag :action => 'update_password' %>
+
+<% unless current_contact %>
+	<%= hidden_field_tag 'id', @contact.id %>
+	<%= hidden_field_tag 'token', @contact.token %>
+<% end %>
+
+<table class="form">
+	<tr>
+		<td>New Password<br/>
+			<%= password_field_tag 'password' %>
+		</td>
+	</tr>
+	<tr>
+		<td>Confirm New Password:<br/>
+			<%= password_field_tag 'password_confirmation' %>
+		</td>
+	</tr>
+</table>
+<%= submit_tag 'Change My Password' %>
+</form>

@@ -1,0 +1,26 @@
+<div id ="footer_links">
+  <a href='/'>Home</a>| 
+  <%= link_to "Customized Home Page", :controller => '/home', :action => 'custom' %> |
+  <%= link_to "Support Cases", :controller => '/cases' %> | 
+  <% if not current_contact.nil? %>
+	  <% if current_contact.privilege?(AppConstants::PRIVILEGE[:admin]) or current_contact.privilege?(AppConstants::PRIVILEGE[:marketing_admin]) or current_contact.privilege?(AppConstants::PRIVILEGE[:support_admin]) or current_contact.privilege?(AppConstants::PRIVILEGE[:user_manager]) or current_contact.privilege?(AppConstants::PRIVILEGE[:super_user]) or current_contact.privilege?(AppConstants::PRIVILEGE[:member]) %>
+	    <%= link_to "Solutions", :controller => '/solutions' %> |
+	  <% end %>
+  <% end %>
+  <%= link_to "Account", :controller => '/contact', :action => 'settings' %> |
+  <a href="/FAQ.html" target="_blank">FAQ</a> | <%= mail_to "molten_feedback@molten-magma.com", 'Report Problems' %>
+</div>
+<%= AppConstants::APP_NAME %>, Version: <a href="/CHANGELOG.txt" target="_blank"><%= AppConstants::MOLTEN_VERSION %></a>, 
+
+<% if current_contact %>
+  <!-- current contact id -->
+  <%= current_contact.id %>
+  <!-- end current contact id -->
+<% end %>
+
+<br/>
+<div id="magma_locations">
+<%= link_to 'Magma China', "http://www.moltenmagma.com.cn/" %> | 
+<%= link_to 'Magma Japan', 'http://www.moltenmagma.co.jp/' %> | 
+<%= link_to 'Magma Taiwan', 'http://www.moltenmagma.com.tw/' %>
+</div>

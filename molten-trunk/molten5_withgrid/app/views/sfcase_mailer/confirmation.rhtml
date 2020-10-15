@@ -1,0 +1,16 @@
+<%= @support_case.contact.name %>,
+
+This is to confirm that we have received your opened support case. 
+
+Your case will be available after it is added to our queue.
+
+The support case details are below:
+
+Subject: <%= @support_case.subject %>
+Product: <%= @support_case.product %>
+
+Description ---
+<%= @support_case.description %>
+
+
+The <%= AppConstants::APP_NAME %> Team.

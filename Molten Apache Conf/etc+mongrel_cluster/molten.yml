@@ -1,0 +1,11 @@
+---
+cwd: /var/www/apps/molten/current
+port: "8100"
+environment: production
+address: 127.0.0.1
+pid_file: /var/www/apps/molten/shared/log/mongrel.pid
+log_file: /var/www/apps/molten/shared/log/mongrel.log
+servers: 60
+num_processors: 1
+user: admin
+group: admin

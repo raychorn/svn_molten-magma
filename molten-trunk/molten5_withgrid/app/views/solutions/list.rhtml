@@ -1,0 +1,12 @@
+<h1><%= @title = "Solutions" %></h1>
+	
+<%= render :partial => 'search' %>
+
+<%= render :partial => 'solutions/list/browse',
+ 		   :locals => {:title => "Browse Solution Categories",
+					   :categories => @categories} %>
+
+<% content_for("sidebar") do %>
+	<%= render :partial => 'sidebar' %>
+<% end %>
+

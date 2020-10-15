@@ -1,0 +1,63 @@
+<h3>Saved Reports</h3>
+<% if @saved_reports.any? %>
+<ul class="list" style="<%= @more_reports.any? ? 'margin-bottom:0' : '' %>">
+  <%= render :partial => 'cases/list/report', :collection => @saved_reports %>
+</ul>
+<% else %>
+  No saved reports.
+<% end %> <%# @reports %>
+<% if @more_reports.any? %>
+
+  <ul class="list" id="more_reports" style="display:none;margin-top:0;padding-top:0;margin-bottom:0;padding-bottom:0">
+    <%= render :partial => 'cases/list/report', :collection => @more_reports %>
+  </ul>
+
+  <div id="show_more">
+    <%= pluralize @more_reports.size, 'more report' %>. 
+    <%= link_to_function '[Show]', "toggleMoreReports()"%>
+  </div>
+
+  <div id="hide_more" style="display:none">
+    <%= link_to_function '[Hide More Reports]', "toggleMoreReports()"%>
+  </div>
+  
+  <script type="text/javascript" charset="utf-8">
+    // Toggles the display of more reports
+    function toggleMoreReports() {
+      more_reports = $('more_reports');
+      if (more_reports.style["display"] == 'none') {
+        Effect.SlideDown(more_reports);
+      }
+      else {
+        Effect.SlideUp(more_reports);
+      }
+      $('show_more').toggle();
+      $('hide_more').toggle();
+    }
+  </script>
+  
+<% end %> <%# @more_reports %>
+
+<% cache(:action => 'sidebar', :part => 'recently_viewed', :id => current_contact.id) do %>
+
+<% if cases = current_contact.recent_sfcases.compact and cases.any? %>
+<h3>Recently Viewed</h3>
+<ul class="list">
+	<% cases.each do |support_case | %>
+	<li class="<%= cycle('shaded','') %>">
+		<%= link_to support_case.subject, :action => 'show', :id => support_case %>
+		<div>
+		Case # <%= support_case.stripped_case_number %>, <%= support_case.sf_type %>, 
+		<%= "#{support_case.customer_priority}, " if support_case.customer_priority %>
+		Updated <%= format_time ct(support_case.last_updated__c) %>
+		</div>
+	</li>
+	<% end %>
+</ul>
+<% end %>
+
+<% end %>
+
+<h3>RSS Feed <img src="/images/icons/feed-icon16x16.png"></h3>
+<%= link_to 'Subscribe to an RSS feed of your support case activity.', :action => 'feed', :id => current_contact.token %>
+<h3>&nbsp;</h3>

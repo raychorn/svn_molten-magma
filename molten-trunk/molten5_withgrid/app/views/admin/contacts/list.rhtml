@@ -1,0 +1,52 @@
+<h1>
+	<%= @title = (@company.nil? ? '' : "#{@company.name} ") + "Contacts" %>
+</h1>
+
+<% unless current_contact.portal_privilege == AppConstants::PRIVILEGE[:super_user] %>
+<%= render :partial => 'search' %>
+
+<h2 id="contact_list_links"><%= link_to 'All', :action => 'list' %> |
+	<%= link_to 'Admins', :action => 'customers' %> |
+	<%= link_to 'Customers', :action => 'list' %>
+	
+	<%= form_tag url_for(:action => 'list'), :method => 'get' %>
+	<%= select_tag 'company_id', options_for_select(Sfaccount.find(:all, :order => 'name').map { |a| [truncate(a.name,50),a.id]  },
+													@company.nil? ? nil : @company.id) %>
+	<%= submit_tag 'Go' %>
+	</form>
+</h2>
+
+<% end %>
+
+<h2 class="gray">
+<%= pluralize @contacts.total_entries, 'Total Contacts' %> <%= @company ? " at #{@company.name}" : '' %>
+</h2>
+
+<%= will_paginate @contacts %>
+<table class="listing">
+	<% if @company %>
+	<tr>
+		<th><%= link_to_sort 'Name', 'last_name' %></th>
+		<th><%= link_to_sort 'Title', 'title' %></th>
+		<th>Phone #</th>
+		<th><%= link_to_sort 'Email', 'email' %></th>
+		<th><%= link_to_sort 'Last Logged In', 'portal_last_login_date__c' %></th>
+		<th><!-- login --></th>
+	</tr>
+	<% else %>
+	<tr>
+		<th><%= link_to_sort 'Name', 'last_name' %></th>
+		<th><%= link_to_sort 'Email', 'email' %></th>
+		<th>Company</th>
+		<th><%= link_to_sort 'Last Logged In', 'portal_last_login_date__c' %></th>
+		<th><!-- login --></th>
+	</tr>
+	<% end %>
+	<%= render :partial => 'admin/contacts/list/contact', :collection => @contacts %>
+</table>
+
+<%= will_paginate @contacts %>
+
+<% unless current_contact.portal_privilege == AppConstants::PRIVILEGE[:super_user] %>
+<%= render :partial => 'search' %>
+<% end %>

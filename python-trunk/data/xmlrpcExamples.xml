@@ -1,0 +1,472 @@
+
+“filter” query Request (specifying nested Boolean combination filters)
+For brevity, the example shows only the .filter. member the request. The nested AND, OR, and NOT filter 
+combination in the example is (lastName = .Smith. AND (firstName = .John. OR firstName = .Mike.) AND NOT 
+(birthdate >= Jan 1 1970)).
+
+filter=
+[{'field':'lastName','value':'Smith' }
+,{'operator':'or'
+    ,'value': [{'field':'firstName','value':'John'}
+               {'field':'firstName','value':'Mike'}
+              ]
+ }
+,{'operator':'not'
+    ,'value':
+             {'operator':'greater than'
+             ,'field':'birthdate'
+             ,'value':<dateTime.iso8601>19700101T00:00:00</dateTime.iso8601>
+             }
+ }      
+]  
+
+<member><name>filter</name>
+<value><array>
+  
+  <value><struct>
+    <member><name>field</name><value>lastName</value></member>
+    <member><name>value</name><value>Smith</value></member>
+  </struct></value>
+  
+  <value><struct>
+    <member><name>operator</name><value>or</value></member>
+    <member><name>value</name>
+      <value><array>
+          <value><struct>
+              <member><name>field</name><value>firstName</value></member>
+              <member><name>value</name><value>John</value></member>
+          </struct></value>
+          <value><struct>
+              <member><name>field</name><value>firstName</value></member>
+              <member><name>value</name><value>Mike</value></member>
+          </struct></value>
+      </array></value>
+    </member>
+  </struct></value>
+  
+  <value><struct>
+      <member><name>operator</name><value>not</value></member>
+      <member><name>value</name>
+         <value><struct>
+           <member><name>operator</name><value>greater than</value></member>
+           <member><name>field</name>   <value>birthdate</value></member>
+           <member><name>value</name>   <value><dateTime.iso8601>19700101T00:00:00</dateTime.iso8601></value></member>
+         </struct></value>
+      </member>
+  </struct></value>
+
+</array></value> 
+</member>
+
+______________________________________________________________________________________________
+INSERT CALL XML-RPC EXAMPLES
+insert Request (for a contact)
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodCall>
+  <methodName>sfdc.insert</methodName>
+  <params><param><value><struct>
+    <member>
+      <name>version</name>
+      <value><string>2.0</string></value>
+    </member>
+    <member>
+      <name>type</name>
+      <value><string>contact</string></value>
+    </member>
+    <member>
+      <name>record</name>
+      <value><struct>
+        <member><name>firstName</name><value>Jim</value></member>
+        <member><name>lastName</name><value>Smith</value></member>
+        <member><name>accountID</name>
+          <value>0010000000000O9</value></member>
+        <member><name>title</name><value>VP of Sales</value></member>
+        <member><name>email</name>
+          <value>JimSmith@yahoo.com</value></member>
+        <member><name>businessPhone</name>
+          <value>777-7777</value></member>
+        <member><name>mailingAddress</name>
+          <value>1 Main St.</value></member>
+        <member><name>mailingAddressCity</name>
+          <value>Seattle</value></member>
+        <member><name>mailingAddressState</name>
+          <value>WA</value></member>
+        <member><name>description</name>
+          <value>Jim is good</value></member>
+      </struct></value>
+    </member>
+  </struct></value></param></params>
+</methodCall>
+insert Response
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodResponse>
+  <params><param>
+    <value><struct>
+      <member><name>changed</name>
+        <value><struct>
+          <member><name>email</name>
+            <value>jimsmith@yahoo.com</value>
+          </member></struct></value>
+      </member>
+      <member><name>id</name>
+        <value>003000000008N56</value>
+      </member></struct></value></param>
+  </params>
+</methodResponse>
+
+UPDATE CALL XML-RPC EXAMPLES
+update Request (for a contact)
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodCall>
+  <methodName>sfdc.update</methodName>
+  <params><param><value><struct>
+    <member>
+      <name>version</name>
+      <value><string>2.0</string></value>
+    </member>
+    <member>
+      <name>type</name>
+      <value><string>contact</string></value>
+    </member>
+    <member>
+      <name>record</name>
+      <value><struct>
+        <member><name>id</name>
+          <value>003000000008N56</value></member>
+        <member><name>firstName</name>
+          <value>James</value></member>
+        <member><name>accountID</name>
+          <value>0010000000000O9</value></member>
+        <member><name>title</name>
+          <value>VP of Sales</value></member>
+        <member><name>email</name>
+          <value>jsmith@yahoo.com</value></member>
+      </struct></value>
+    </member>
+  </struct></value></param></params>
+</methodCall>
+update Response
+The response for an update call is the same as for an insert call (see insert Response on page 106). 
+
+DELETE CALL XML-RPC EXAMPLES
+delete Request (for a contact)
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodCall>
+  <methodName>sfdc.delete</methodName>
+  <params><param><value><struct>
+    <member>
+      <name>version</name>
+      <value><string>2.0</string></value>
+    </member>
+    <member>
+      <name>type</name>
+      <value><string>contact</string></value>
+    </member>
+    <member>
+      <name>id</name>
+      <value><string>003000000007ySI</string></value>
+    </member>
+  </struct></value></param></params>
+</methodCall>
+delete Response
+A successful delete response is empty. An unsuccessful call generates a fault response.
+
+QUERY CALL XML-RPC EXAMPLES
+“filter” query Request (specifying a single criterion for a contact)
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodCall>
+  <methodName>sfdc.query</methodName>
+  <params><param><value><struct>
+    <member>
+      <name>version</name>
+      <value><string>2.0</string></value>
+    </member>
+    <member>
+      <name>type</name>
+      <value><string>contact</string></value>
+    </member>
+    <member>
+      <name>filter</name>
+      <value><array>
+         <value><struct>
+          <member><name>field</name><value>lastName</value></member>
+          <member><name>value</name><value>Benioff</value></member>
+        </struct></value>
+      </array></value>
+    </member>
+    <member>
+      <name>select</name>
+      <value><array>
+        <value>id</value>
+        <value>lastName</value>
+        <value>firstName</value>
+        <value>accountID</value>
+        <value>department</value>
+        <value>reportsToID</value>
+      </array></value>
+    </member>
+  </struct></value></param></params>
+</methodCall>
+“filter” query Request (specifying a simple OR filter of two fields)
+For brevity, the example shows only the .filter. member the request. The OR filter in the example is (lastName 
+= .Benioff. OR lastName = .Sclavos.).
+<member><name>filter</name>
+<value><array><value><struct>
+    <member><name>operator</name><value>or</value></member>
+    <member><name>value</name><value><array>
+    <value><struct>
+    <member><name>field</name><value>lastName</value></member>
+        <member><name>value</name><value>Benioff</value></member>
+    </struct></value>
+    <value><struct>
+    <member><name>field</name><value>lastName</value></member>
+        <member><name>value</name><value>Sclavos</value></member>
+    </struct></value>
+      </array></value></member>
+  </struct></value></array></value></member>
+
+“filter” query Request (specifying nested Boolean combination filters)
+For brevity, the example shows only the .filter. member the request. The nested AND, OR, and NOT filter 
+combination in the example is (lastName = .Smith. AND (firstName = .John. OR firstName = .Mike.) AND NOT 
+(birthdate >= Jan 1 1970)).
+<member><name>filter</name>
+<value><array>
+  <value><struct>
+  <member><name>field</name><value>lastName</value></member>
+    <member><name>value</name><value>Smith</value></member>
+  </struct></value>
+  <value><struct>
+    <member><name>operator</name><value>or</value></member>
+    <member><name>value</name><value><array>
+    <value><struct>
+    <member><name>field</name><value>firstName</value></member>
+        <member><name>value</name><value>John</value></member>
+    </struct></value>
+    <value><struct>
+    <member><name>field</name><value>firstName</value></member>
+        <member><name>value</name><value>Mike</value></member>
+    </struct></value>
+      </array></value></member>
+  </struct></value>
+  <value><struct>
+    <member><name>operator</name><value>not</value></member>
+    <member><name>value</name><value><struct>
+  <member><name>operator</name><value>greater than</value></member>
+  <member><name>field</name><value>birthdate</value></member>
+      <member><name>value</name>
+        <value><dateTime.iso8601>19700101T00:00:00</dateTime.iso8601></value>
+      </member>
+      </struct></value></member>
+  </struct></value>
+</array></value></member>
+query Response
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodResponse>
+  <params><param><value>
+    <array><data>
+      <value><struct>
+        <member><name>id</name><value>003000000000aBc</value></member>
+        <member><name>lastName</name><value>Benioff</value></member>
+        <member><name>firstName</name><value>Marc</value></member>
+        <member><name>accountID</name>
+          <value>001000000000146</value></member>
+        <member><name>department</name>
+          <value>Executive</value></member>
+        <member><name>reportsToID</name>
+          <value>000000000000000</value></member>
+      </struct></value>
+      <value><struct>
+        <member><name>id</name><value>003000000000654</value></member>
+        <member><name>lastName</name><value>Benioff</value></member>
+        <member><name>firstName</name><value>Jim</value></member>
+        <member><name>accountID</name>
+          <value>000000000000000</value></member>
+        <member><name>department</name>
+          <value>Sales</value></member>
+        <member><name>reportsToID</name>
+          <value>003000000000aBc</value></member>
+      </struct></value>
+    </data></array>
+  </value></param></params>
+</methodResponse>
+
+BATCH CALL XML-RPC EXAMPLES
+batch Request (for inserting contacts)
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodCall>
+  <methodName>sfdc.batch</methodName>
+  <params><param><value><struct>
+    <member>
+      <name>version</name>
+      <value><string>2.0</string></value>
+    </member>
+    <member>
+      <name>type</name>
+      <value><string>contact</string></value>
+    </member>
+    <member>
+      <name>operation</name>
+      <value><string>insert</string></value>
+    </member>
+    <member>
+      <name>arguments</name>
+      <value><array>
+        <value><struct>
+          <member><name>firstName</name><value>Jane</value></member>
+          <member><name>lastName</name><value>Smith</value></member>
+        </struct></value>
+        <value><struct>
+          <member><name>lastName</name><value>Jones</value></member>
+          <member><name>businessPhone</name>
+            <value>555-9999</value></member>
+        </struct></value>
+      </array></value>
+    </member>
+  </struct></value></param></params>
+</methodCall>
+batch Response
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodResponse>
+  <params><param><value>
+    <array>
+      <data>
+        <value><struct>
+          <member><name>id</name>
+            <value>003000000008NG6</value>
+          </member></struct></value>
+        <value><struct>
+          <member><name>id</name>
+            <value>003000000008NG7</value>
+          </member></struct></value>
+      </data>
+    </array></value></param>
+  </params>
+</methodResponse>
+
+SEARCH CALL XML-RPC EXAMPLES
+search Response
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodCall>
+  <methodName>sfdc.search</methodName>
+  <params><param><value><struct>
+    <member>
+      <name>version</name>
+      <value><string>2.0</string></value>
+    </member>
+    <member>
+      <name>type</name>
+      <value><string>contact</string></value>
+    </member>
+    <member>
+      <name>scope</name>
+      <value><string>name</string></value>
+    </member>
+    <member>
+      <name>searchValue</name>
+      <value><string>Smith</string></value>
+    </member>
+  </struct></value></param></params>
+</methodCall>
+search Request
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodResponse>
+  <params><param>
+    <value>
+      <array>
+        <data>
+          <value>003000000000wFF</value>
+          <value>003000000008sRt</value>
+          <value>003000000008u7p</value>
+          <value>003000000000tN2</value>
+          <value>003000000007rpt</value>
+          <value>003000000008u7L</value>
+          <value>003000000008pjc</value>
+          <value>003000000008u7a</value>
+          <value>003000000006iYi</value>
+          <value>003000000001Ujd</value>
+          <value>003000000008u7e</value>
+          <value>003000000008qBu</value>
+          <value>003000000008u7Z</value>
+        </data>
+      </array></value></param>
+  </params>
+</methodResponse>
+
+SET_PASSWORD CALL XML-RPC EXAMPLES
+set_password Request
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodCall>
+  <methodName>sfdc.set_password</methodName>
+  <params><param><value><struct>
+    <member>
+      <name>version</name>
+      <value><string>2.0</string></value>
+    </member>
+    <member>
+      <name>session_id</name>
+        <value><string>Q0DEqyenM0pEfH17f2AgFmNkZWZuKgECJF=</string></value>
+    </member>
+    <member>
+      <name>userID</name>
+        <value><string>006a0000000EUaa</string></value>
+    </member>
+    <member>
+      <name>password</name>
+        <value><string>my_password</string></value>
+    </member>
+  </struct></value></param></params>
+</methodCall>
+set_password Response
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodResponse>
+  <params><param>
+    <value>my_password</value></param>
+  </params>
+</methodResponse>
+
+RESET_PASSWORD CALL XML-RPC EXAMPLES
+reset_password Request
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodCall>
+  <methodName>sfdc.reset_password</methodName>
+  <params><param><value><struct>
+    <member>
+      <name>version</name>
+        <value><string>2.0</string></value>
+    </member>
+    <member>
+      <name>session_id</name>
+        <value><string>Q0DEqyenM0pEfH17f2AgFmNkZWZuKgECJF=</string></value>
+    </member>
+    <member>
+      <name>userID</name>
+        <value><string>006a0000000EUaa</string></value>
+    </member>
+  </struct></value></param></params>
+</methodCall>
+reset_password Response
+<?xml version="1.0" encoding="UTF-8" ?>
+<methodResponse>
+  <params><param>
+    <value>KG6Cm0</value></param>
+  </params>
+</methodResponse>
+
+GET_SERVER_TIMESTAMP CALL XML-RPC EXAMPLES
+get_server_timestamp Request
+<?xml version="1.0"?>
+<methodCall>
+  <methodName>sfdc.get_server_timestamp</methodName>
+  <params><param><value><struct>
+    <member>
+      <name>version</name>
+      <value><string>2.0</string></value>
+    </member>
+  </struct></value></param></params>
+</methodCall>
+get_server_timestamp Response
+<?xml version="1.0" encoding="UTF-8" ?>
+<params><param>
+  <value><dateTime.iso8601>20030609T18:38:24</dateTime.iso8601></value></param>
+</params>
+</methodResponse>

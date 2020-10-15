@@ -1,0 +1,159 @@
+#!/usr/bin/env bash
+#
+# if 'bash' gives us bash v1, try to relaunch script bash v2 by name
+BASHVER=`echo $BASH_VERSION | cut -b 1 -`
+if [ $BASHVER = "1" ]; then
+    exec bash2 $0 $*
+fi
+
+scriptlist=(base3 crstateval crstatset checkbuildobject crrefresh \
+            refreshentitycache entity magma scm submitscm taskbranchstatus \
+            teambranchstatus walkscm walksf walkfix walkact walkutil walk \
+            check killzombie setstamp resetent walkscmblast5 walkscmtalus1.0 walkscmother)
+
+if [ -L $0 ]; then
+    RAWPATH=`readlink $0`;
+else
+    RAWPATH=$0
+fi
+
+LAUNCHERNAME=`basename $RAWPATH`
+LAUNCHERDIR=`echo $RAWPATH | sed -e 's/\/[^\/]*$//'`
+
+
+# get the absolute pathname of LAUNCHERDIR
+CURDIR=`pwd`
+if [ $LAUNCHERNAME != $LAUNCHERDIR ]; then
+    cd $LAUNCHERDIR
+fi
+LAUNCHERDIR=`pwd -P`
+cd $CURDIR
+
+SFORCE_HOME=$LAUNCHERDIR/..
+SFLIBDIR=$SFORCE_HOME/sflib
+
+. $SFLIBDIR/paths.sh
+
+PYTHONPATH=$SFLIBDIR
+export PYTHONPATH
+
+case $LAUNCHERNAME in
+    base3)
+        RUNCMD="sfBase3.py -d $*";;
+
+    refreshentitycache)
+        RUNCMD="sfEntity.py -c refresh do";;
+
+    resetent)
+        RUNCMD="sfEntity.py -creset -dddd -e $* do";;
+        
+    entity)
+        RUNCMD="sfEntity.py -d $*";;
+
+    magma)
+        RUNCMD="sfMagma.py -d $*";;
+
+    crstateval)
+        RUNCMD="sfCr.py -c status $*";;
+
+        checkbuildobject)
+        RUNCMD="buildChecker.py $*";;
+
+    crstatset)
+        RUNCMD="sfCr.py -c status --set $*";;
+
+    crrefresh)
+        RUNCMD="sfCr.py -c refresh --set $*";;
+
+    submitscm)
+        RUNCMD="sfTaskBranchAction.py $0 -asubmitscm $*";;
+
+    taskbranchstatus)
+        RUNCMD="sfTaskBranchAction.py -a stat $* do";;
+
+    teambranchstatus)
+        RUNCMD="sfTeamBranch.py -c stat $* do";;
+
+    walksf)
+        RUNCMD="walkSF.py -d $* do";;
+
+    walkfix)
+        RUNCMD="walkSF.py -cwalkfix $* do";;
+
+    check)
+        RUNCMD="walkSF.py -ccheck  -b $* do";;
+
+    setstamp)
+        RUNCMD="walkSF.py -csetStamp $*";;
+
+    walkact)
+        RUNCMD="walkSF.py -cwalkact $* do";;
+
+    scm)
+        RUNCMD="walkSCM.py $*";;
+
+    walk)
+        RUNCMD="walkSCM.py -b $*";;
+
+    walkscm)
+        RUNCMD="walkSCM.py -wall -sactive -lupdate $*";;
+
+    walkscmblast5)
+        RUNCMD="walkSCMblast5.py -wall -sactive -lupdate $*";;
+    
+    walkscmtalus1.0)
+        RUNCMD="walkSCMtalus1.0.py -wall -sactive -lupdate $*";;
+    
+    walkscmother)
+        RUNCMD="walkSCMOther.py -wall -sactive -lupdate $*";;
+
+    killzombie)
+        RUNCMD="../sfutil/killZombie.py -p python2.3 -t 600 $* do";;
+
+    walkutil)
+        RUNCMD="walkUtil.py $* do";;
+
+    launcher)
+        # get a copy of the scriptlist
+        launcherlist=${scriptlist[*]}
+
+        # add "mklinks" to the end of it
+        #launcherlist[${#launcherlist[*]}]=mklinks
+
+        CURDIR=`pwd`
+        cd $LAUNCHERDIR
+
+        for script in ${launcherlist[@]};
+        do
+            if [[ $1 == 'rm' ]]; then
+                echo "removing $script"
+                rm -f $script
+            fi
+
+            if [ ! -e $script ]; then
+                ln $LAUNCHERNAME $script
+            fi
+        done
+
+        cd $CURDIR
+        ## commands to hard link launcher script to all the individual
+        ## command names
+        exit;;
+
+    *)
+        echo "ERROR: launcher unhandled case"
+        exit;;
+esac
+
+# use it as the basis of the python script name
+SCRIPTPATH=$SFLIBDIR/$RUNCMD
+
+PYTHON_EXE=`which python2.3`
+
+UNAME=`uname`
+if [ $UNAME = 'Linux' ]; then
+    $PYTHON_EXE $SCRIPTPATH
+else
+    echo 'Solaris not supported!'
+fi
+

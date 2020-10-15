@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title><%= AppConstants::APP_NAME %> <%= "| #{@title}" if @title %></title>
+<%= stylesheet_link_tag "default.css" %>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<%= javascript_include_tag :defaults %>
+</head>
+<body class="blank">
+
+        <div id="blank_container">
+<div id="login_container">
+<img alt="Magma Design Automation, Inc." height="39" src="/images/header/magma_logo.gif?1152801542" width="346" />
+
+<table id="login_form" align="center">
+        <tr><td align="center"><br/>
+<h1 class="small_margin"><center>
+        <%= @title = "MOLTEN Scheduled Maintenance" %>
+</center></h1>
+<!--- Login --->
+<!--- Registration --->
+<!--- Dashboard --->
+        </td></tr>
+        <tr>
+                <td align="center"><center>
+                        <div class="article_container">
+                                <h2 class="small_margin"><%= @downtime.name %></h2>
+                                <br/><%= @downtime.body %>
+                                <br/><br/>&nbsp;
+                        </div>
+                </center></td>
+        </tr>
+</table>
+</div>
+</div>
+<%= render_partial 'shared/google_analytics' %>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	applicationComplete="login();"      
+	xmlns:salesforce="*"
+	xmlns:salesforce1="com.salesforce.*">
+	<mx:Script>
+		<![CDATA[
+			import com.hurlant.crypto.symmetric.BlowFishKey;
+			import com.salesforce.results.QueryResult;
+			import mx.controls.Alert;
+			import mx.collections.SortField;
+			import mx.collections.Sort;
+			import com.salesforce.objects.PicklistValue;
+			import com.salesforce.results.PickListEntry;
+			import mx.collections.ArrayCollection;
+			import com.salesforce.results.Field;
+			import com.salesforce.events.SendEvent;
+			import com.salesforce.AsyncResponder;
+			import com.salesforce.objects.LoginRequest;
+			import com.moltenmagma.events.LoggedInEvent;
+		  	import mx.utils.ObjectUtil;
+		  	import com.hurlant.util.Hex;
+		  	
+		  	private var isSSL:Boolean = false;
+		  	
+		  	private var _protocol:String = 'http';
+		  	
+			private var _username:String = 'c3adc3afc3acc3b4c3a5c3aec39fc3a1c3a4c3adc3a9c3aec380c3adc3a1c3a7c3adc3a1c2adc3a4c3a1c2aec3a3c3afc3ad';
+			private var _password:String = 'c3b5c2b2c3a3c3a1c3aec3b3c3acc3a5c3a5c3b0c3b2c397c389c2b2c398c2b9c38ac3a1c3abc384c3acc3b8c3aac3a3c3b5c381c3afc3a6c3a8c3a7c3a7c386c3a2c3a1c3a6';
+
+		  	private function do_query(soql:String,callback_name:String,selector:String):* {
+				var ar:ArrayCollection = new ArrayCollection();
+				apex.query(soql, 
+					new AsyncResponder(function (qr:QueryResult):void
+					  {
+					    for (var j:int=0;j<qr.records.length;j++) { 
+					    	ar.addItem(qr.records[j]);
+					    }
+					    if (callback_name) {
+					    	var obj:Object = {};
+					    	var i:int;
+					    	for (i = 0; i < ar.length; i++) {
+					    		obj[ar.getItemAt(i)[selector]] = 1
+					    	}
+					    	var s:String;
+					    	var a:Array = [];
+					    	for (s in obj) {
+					    		a.push(s);
+					    	}
+					    	var _ar:ArrayCollection = new ArrayCollection(a)
+							var sortLabels:Sort = new Sort();
+							sortLabels.fields=[new SortField()];
+							_ar.sort = sortLabels;
+							_ar.refresh();
+							
+							ExternalInterface.call(callback_name,_ar.toArray());
+					    }
+					  } )
+				);
+				return ar;
+		  	}
+			
+		  	private function do_query2(soql:String,callback_name:String,selector:String):* {
+				var ar:ArrayCollection = new ArrayCollection();
+				apex.query(soql, 
+					new AsyncResponder(function (qr:QueryResult):void
+					  {
+					    for (var j:int=0;j<qr.records.length;j++) { 
+					    	ar.addItem(qr.records[j]);
+					    }
+					    if (callback_name) {
+					    	var s:String;
+					    	var a:Array = [
+								"Abstraction-BlackBox",
+								 "Abstraction-GlassBox",
+								 "AO - Area Optimization",
+								 "Budgeting",
+								 "Buffering",
+								 "Capsize",
+								 "Chip assembly",
+								 "Clock Routing",
+								 "Congestion",
+								 "CrossTalk",
+								 "Data Model",
+								 "Data Model - Design",
+								 "Data Model - Verilog",
+								 "Data Model - Volcano",
+								 "DE - Delay Estimation",
+								 "Delay Calculation",
+								 "Detail Routing",
+								 "DFM",
+								 "DFM-CAA",
+								 "DFM-CMP",
+								 "DFM-LithoRouter",
+								 "DFM-Redundant Via",
+								 "DFM-Wire Spreading",
+								 "DFM-Wire Widening",
+								 "DFT",
+								 "DFT ATPG",
+								 "DFT Check",
+								 "DFT Insert",
+								 "DFT JTAG",
+								 "DFT Logic BIST",
+								 "DFT Memory BIST",
+								 "DFT Optimize",
+								 "DFT Repair",
+								 "DFT Scan",
+								 "DI - Design Interface",
+								 "Documentation",
+								 "Documentation - Error Message",
+								 "Documentation - Manpage",
+								 "ECO",
+								 "ElectroMigration",
+								 "Extraction",
+								 "FINESIM",
+								 "FineSim Pro",
+								 "FlipChip",
+								 "FloorPlanning",
+								 "Flow",
+								 "FPGA",
+								 "FPGA â€“ Design Interface",
+								 "FPGA â€“ Flow",
+								 "FPGA - Device Modeling",
+								 "FPGA - RTL Synthesis",
+								 "FPGA - Mapping/Optimization",
+								 "FPGA - QA/QR",
+								 "FPGA â€“ Asic Prototyping",
+								 "FPGA â€“ Placement",
+								 "Global Routing",
+								 "GUI",
+								 "GUI - Clock Tree Browser",
+								 "GUI - FPFA NodeFinder",
+								 "GUI - FPGA",
+								 "GUI - FPGA Constraint Editor",
+								 "GUI - FPGA Project Manager",
+								 "GUI - Layout / FP : Flylines",
+								 "GUI - Layout / FP : Pin Menu",
+								 "GUI - Layout / FP : Power Menu",
+								 "GUI - Layout / FP : Selection & Editing",
+								 "GUI - Layout / FP : Viewing",
+								 "GUI - Model Browser",
+								 "GUI - Schematic",
+								 "GUI - Timing Viewer",
+								 "Hierarchical Analysis",
+								 "Hold Buffering",
+								 "Infrastructure",
+								 "Layout",
+								 "Library",
+								 "Library Gdsii",
+								 "Library-Lefdef",
+								 "Library Liberty",
+								 "Licensing - Analysis and Signoff",
+								 "Licensing - Design Implementation",
+								 "Licensing - Logic Design",
+								 "Licensing - Physical Verification",
+								 "Logic Optimization",
+								 "Logic Synthesis",
+								 "Low Power Issues",
+								 "LVS",
+								 "m2i",
+								 "Molten Qualified Library",
+								 "MCAPI",
+								 "mjexe",
+								 "Mojave",
+								 "MPM - Multiple Project Management",
+								 "MTCL",
+								 "NETLIST Import",
+								 "Not Applicable",
+								 "Optimization Flow",
+								 "OS / Runtime Environment",
+								 "Padring placement/routing",
+								 "Physical verification",
+								 "Pin Assignment",
+								 "Placement",
+								 "PL - Placement",
+								 "Power&Rail Analysis",
+								 "Power Grid Syn (APS)",
+								 "Power Routing",
+								 "Prototyping",
+								 "Quartz Formal",
+								 "Quartz Formal Correspondence",
+								 "Quartz Formal GUI",
+								 "Quartz Formal RTL Import",
+								 "Quartz Formal Solvers",
+								 "RLC/QuickCap",
+								 "RTL Formal",
+								 "RTL Synthesis",
+								 "Salesforce.com Workflow Test",
+								 "SA-Packing",
+								 "SA-partitioning",
+								 "SA-Placement",
+								 "SA-Routing",
+								 "Schematic Design",
+								 "SCM",
+								 "SiliconSmart",
+								 "SiliconSmart - Cellrater",
+								 "Simulation Env",
+								 "Snap/Enwrap",
+								 "Special Cell Insertion",
+								 "SPS Backend",
+								 "SPS Frontend",
+								 "Statistical Static Timing Analysis",
+								 "TA - Timing Analyzer",
+								 "TCL",
+								 "Timing",
+								 "Timing-Delay",
+								 "Timing-Sdc",
+								 "Track Routing",
+								 "Training"
+					    	];
+							ExternalInterface.call(callback_name,a);
+					    }
+					  } )
+				);
+				return ar;
+		  	}
+			
+			public function get_components_for_product(prod_name:String,callback_name:String):void {
+				var soql:String = "Select c.Component__c, c.Id, c.Product__c from Case c where c.Product__c = '" + prod_name + "' ORDER BY c.Component__c";
+				var ar:ArrayCollection = this.do_query2(soql,callback_name,'Component__c');
+			}
+
+			private function set_bit_seven(input:String):String {
+				var i:int;
+				var out:String = '';
+				for (i = 0; i < input.length; i++) {
+					out += String.fromCharCode(input.charCodeAt(i) | 128);
+				}
+				return out;
+			}
+			
+			private function unset_bit_seven(input:String):String {
+				var i:int;
+				var out:String = '';
+				for (i = 0; i < input.length; i++) {
+					out += String.fromCharCode(input.charCodeAt(i) & 127);
+				}
+				return out;
+			}
+			
+			private function encode(str:String):String {
+				return Hex.fromString(this.set_bit_seven(str));
+			}
+			
+			private function decode(str:String):String {
+				return this.unset_bit_seven(Hex.toString(str));
+			}
+			
+			 private function login():void {
+			 	var url:String = Application.application.url;
+			 	this.isSSL = (url.indexOf('https://') > -1);
+			 	var toks:Array = url.split(':');
+			 	if (toks[0] != 'file') {
+				 	this._protocol = toks[0];
+			 	}
+			 	
+		//		ExternalInterface.addCallback("get_components_for_product", get_components_for_product);
+
+				var username:String = this.decode(this._username);
+				var password:String = this.decode(this._password);
+				
+				var lr:LoginRequest = new LoginRequest(	{
+					username : username,		// put your own info here to test standalone
+					password : password,		// put your own info here to test standalone	
+					callback : new AsyncResponder(function (result:Object):void
+						{ 
+						    ta_contents.text = "Login successful:\n" + ObjectUtil.toString(result);
+						    describeSObjects();
+						} )
+					} );
+					
+				apex.login(lr); 
+			}
+	
+			private function onClickButton(event:MouseEvent):void {
+				this.ta_contents.text = 'describeSObjects() !';
+				this.describeSObjects();
+			}
+
+			private function sendRequestListener(event:SendEvent):void {
+				XML.prettyIndent = 4;
+				XML.prettyPrinting = true;
+				var x:XML = new XML(event.soapRequest);
+				soapLog.text = x.toString();
+			}
+	
+			private function describeSObjects():void {
+				apex.describeSObjects( //	["Account","Contact"], 
+					["Case"], 
+					new AsyncResponder(describeSObjects_CB, genericFault));
+				}
+
+			private function describeSObjects_CB(result:Object):void {
+				var fld:Field = result[0].fields.Product__c;
+				var lst:ArrayCollection = fld.picklistValues; 
+				var vals:ArrayCollection = new ArrayCollection();
+				var sortLabels:Sort = new Sort();
+				sortLabels.fields=[new SortField("label")];
+				lst.sort = sortLabels;
+				lst.refresh();
+				var e:PickListEntry;
+				for (var i:String in lst) {
+					e = lst[i];
+					vals.addItem(e.label);
+				}
+				ExternalInterface.call('populate_products',vals.toArray());
+	//			this.ta_contents.text = 'describeSObjects_CB Result\n' + ObjectUtil.toString(result);
+				this.ta_contents.text = 'There are ' + vals.length + ' items.';
+			}
+
+			private function genericFault(fault:Object):void {
+				this.ta_contents.text = 'fault from operation: ' + ObjectUtil.toString(fault);
+			}
+  
+		]]>
+	</mx:Script>
+	<salesforce1:Connection id="apex" protocol="{this._protocol}" sendRequest="sendRequestListener(event)" serverUrl="{this._protocol}://www.salesforce.com/services/Soap/u/11.0"/> 
+	<mx:VBox width="100%" visible="false">
+		<mx:HBox width="100%">
+			<mx:HBox width="10%">
+				<mx:Button id="btn_click_me" label="Click Me" click="onClickButton(event)"/>
+			</mx:HBox>
+			<mx:HBox width="90%" height="200">
+				<mx:TextArea id="ta_contents" width="100%" height="100%"/>
+			</mx:HBox>
+		</mx:HBox>
+		<mx:HBox width="100%" height="200">
+	        <mx:TextArea id="soapLog" width="100%" height="100%" cornerRadius="5"/>
+		</mx:HBox>
+	</mx:VBox>
+</mx:Application>
